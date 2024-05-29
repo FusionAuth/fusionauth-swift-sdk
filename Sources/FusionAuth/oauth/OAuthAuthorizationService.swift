@@ -91,48 +91,63 @@ public class OAuthAuthorizationService {
                     return
                 }
 
-                guard accessToken != nil else {
+                guard let accessToken = accessToken else {
                     continuation.resume(throwing: OAuthError.accessTokenNil)
                     return
                 }
 
-                var request = URLRequest(url: userinfoEndpoint)
-                request.allHTTPHeaderFields = ["Authorization": "Bearer \(accessToken!)"]
-
-                URLSession.shared.dataTask(with: request) { data, response, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    }
-                    guard error == nil else {
-                        continuation.resume(throwing: error!)
-                        return
-                    }
-                    guard let response = response as? HTTPURLResponse else {
-                        continuation.resume(throwing: OAuthError.noAuthorizationCode)
-                        return
-                    }
-                    guard let data = data else {
-                        print("HTTP response data is empty")
-                        return
-                    }
-
-                    if response.statusCode != 200 {
-                        let responseText: String? = String(data: data, encoding: String.Encoding.utf8)
-                        print("HTTP: \(response.statusCode), Response: \(String(data: data, encoding: String.Encoding.utf8) ?? "RESPONSE_TEXT")")
-
-                        continuation.resume(throwing: OAuthError.accessTokenNil)
-                        return
-                    }
-
+                Task {
                     do {
-                        let userInfo = try JSONDecoder().decode(UserInfo.self, from: data)
+                        let userInfo = try await self.getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
                         continuation.resume(returning: userInfo)
-                    } catch let jsonError as NSError {
-                        print(jsonError)
-                        continuation.resume(throwing: jsonError)
+                        return
+                    } catch let error as NSError {
+                        continuation.resume(throwing: error)
+                        return
                     }
-                }.resume()
+                }
             }
+        }
+    }
+
+    private func getUserInfo(userinfoEndpoint: URL, accessToken: String) async throws -> UserInfo {
+        try await withCheckedThrowingContinuation { continuation in
+            var request = URLRequest(url: userinfoEndpoint)
+            request.allHTTPHeaderFields = ["Authorization": "Bearer \(accessToken)"]
+
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                }
+                guard error == nil else {
+                    continuation.resume(throwing: error!)
+                    return
+                }
+                guard let response = response as? HTTPURLResponse else {
+                    continuation.resume(throwing: OAuthError.noAuthorizationCode)
+                    return
+                }
+                guard let data = data else {
+                    print("HTTP response data is empty")
+                    return
+                }
+
+                if response.statusCode != 200 {
+                    let responseText: String? = String(decoding: data, as: UTF8.self)
+                    print("HTTP: \(response.statusCode), Response: \(String(decoding: data, as: UTF8.self) ?? "RESPONSE_TEXT")")
+
+                    continuation.resume(throwing: OAuthError.accessTokenNil)
+                    return
+                }
+
+                do {
+                    let userInfo = try JSONDecoder().decode(UserInfo.self, from: data)
+                    continuation.resume(returning: userInfo)
+                } catch let jsonError as NSError {
+                    print(jsonError)
+                    continuation.resume(throwing: jsonError)
+                }
+            }.resume()
         }
     }
 
