@@ -29,4 +29,11 @@ public class FusionAuthState: ObservableObject {
         self.idToken = authState.lastTokenResponse?.idToken
     }
 
+    public func clear() {
+        self.refreshToken = nil
+        self.accessToken = nil
+        self.accessTokenExpirationTime = nil
+        self.idToken = nil
+    }
+
 }

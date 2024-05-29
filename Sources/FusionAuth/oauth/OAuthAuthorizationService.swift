@@ -28,6 +28,8 @@ public class OAuthAuthorizationService {
 
     private var tokenTask: Task<String, Error>?
 
+    private var logoutSession: OIDExternalUserAgentSession?
+
     init(fusionAuthUrl: String, clientId: String, tenantId: String?, locale: String?, additionalScopes: [String]) {
         self.fusionAuthUrl = fusionAuthUrl
         self.clientId = clientId
@@ -108,6 +110,51 @@ public class OAuthAuthorizationService {
                 }
             }
         }
+    }
+
+    @MainActor
+    public func logout(options: OAuthLogoutOptions, view: UIViewController) async throws {
+        let idToken = OAuthAuthorizationService.appAuthState?.lastTokenResponse?.idToken
+
+        guard let idToken = idToken else {
+            throw OAuthError.accessTokenNil
+        }
+
+        let configuration = try await getConfiguration()
+
+        guard let userAgent = OIDExternalUserAgentIOS(presenting: view) else {
+            return
+        }
+
+        let request: OIDEndSessionRequest
+
+        if options.state == nil || options.state!.isEmpty {
+            request = OIDEndSessionRequest(configuration: configuration,
+                                               idTokenHint: idToken,
+                                               postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
+                                               additionalParameters: nil)
+        } else {
+            request = OIDEndSessionRequest(configuration: configuration,
+                                               idTokenHint: idToken,
+                                               postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
+                                           state: options.state!,
+                                               additionalParameters: nil)
+        }
+
+        let response: Bool = try await withCheckedThrowingContinuation { continuation in
+            self.logoutSession = OIDAuthorizationService.present(request, externalUserAgent: userAgent) { _, error in
+                if error != nil {
+                    continuation.resume(throwing: error!)
+                    return
+                }
+
+                continuation.resume(returning: true)
+            }
+        }
+
+        self.logoutSession = nil
+        OAuthAuthorizationService.appAuthState = nil
+        AuthorizationManager.fusionAuthState.clear()
     }
 
     private func getUserInfo(userinfoEndpoint: URL, accessToken: String) async throws -> UserInfo {

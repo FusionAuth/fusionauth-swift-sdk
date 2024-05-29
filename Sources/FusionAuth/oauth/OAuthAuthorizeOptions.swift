@@ -6,7 +6,7 @@ import Foundation
 /// for more information.
 public struct OAuthAuthorizeOptions {
     /// The redirect URI to be used for the OAuth authorize request.
-    /// Default is "io.fusionauth.app:/oauth2redirect".
+    /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
     let redirectUri: String
     /// The identity provider hint to be used for the OAuth authorize request.
     let idpHint: String?
@@ -38,14 +38,14 @@ public struct OAuthAuthorizeOptions {
         state: String? = nil,
         userCode: String? = nil
     ) {
-            self.redirectUri = redirectUri
-            self.idpHint = idpHint
-            self.codeChallenge = codeChallenge
-            self.codeChallengeMethod = codeChallengeMethod
-            self.loginHint = loginHint
-            self.deviceDescription = deviceDescription
-            self.nonce = nonce
-            self.state = state
-            self.userCode = userCode
-        }
+        self.redirectUri = redirectUri
+        self.idpHint = idpHint
+        self.codeChallenge = codeChallenge
+        self.codeChallengeMethod = codeChallengeMethod
+        self.loginHint = loginHint
+        self.deviceDescription = deviceDescription
+        self.nonce = nonce
+        self.state = state
+        self.userCode = userCode
+    }
 }
