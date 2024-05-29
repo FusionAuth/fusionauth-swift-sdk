@@ -5,19 +5,19 @@
 /// AuthorizationManager uses a TokenManager to manage the access tokens and a Storage implementation
 /// to store the authorization state.
 public class AuthorizationManager {
-    
+
     public static let fusionAuthState = FusionAuthState()
-    
+
     public static let instance = AuthorizationManager()
-    
+
     private var configuration: AuthorizationConfiguration?
-    
+
     private init() {}
-    
+
     public func initialize(configuration: AuthorizationConfiguration, storage: String?) {
         self.configuration = configuration
     }
-    
+
     public func oauth() -> OAuthAuthorizationService {
         return OAuthAuthorizationService(
             fusionAuthUrl: configuration!.fusionAuthUrl,
@@ -27,5 +27,5 @@ public class AuthorizationManager {
             additionalScopes: configuration!.additionalScopes
         )
     }
-    
+
 }
