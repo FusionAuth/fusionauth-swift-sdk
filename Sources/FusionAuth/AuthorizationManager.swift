@@ -1,3 +1,5 @@
+import os
+
 /// AuthorizationManager is a singleton object that manages the authorization state of the user.
 /// It provides methods to initialize the authorization manager, check if the user is authenticated,
 /// retrieve access tokens, refresh access tokens, and clear the authorization state.
@@ -26,6 +28,16 @@ public class AuthorizationManager {
             locale: configuration!.locale,
             additionalScopes: configuration!.additionalScopes
         )
+    }
+
+}
+
+extension AuthorizationManager {
+
+    public static var log: Logger?
+
+    public static func setLogLevel(_ level: OSLogType) {
+        self.log = Logger(subsystem: "io.fusionauth.mobilesdk", category: "AuthorizationManager")
     }
 
 }

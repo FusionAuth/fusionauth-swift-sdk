@@ -38,8 +38,10 @@ public class OAuthAuthorizationService {
         self.additionalScopes = additionalScopes
     }
 
-    @MainActor
-    public func authorize(options: OAuthAuthorizeOptions, view: UIViewController) async throws -> OIDAuthState {
+    @discardableResult
+    public func authorize(options: OAuthAuthorizeOptions) async throws -> OIDAuthState {
+        AuthorizationManager.log?.trace("Starting OAuth authorization...")
+
         let configuration = try await getConfiguration()
 
         let request = OIDAuthorizationRequest(configuration: configuration,
@@ -50,26 +52,32 @@ public class OAuthAuthorizationService {
                                               additionalParameters: getParametersFromOptions(options))
 
         let authState: OIDAuthState = try await withCheckedThrowingContinuation { continuation in
-            OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: view) { authState, error in
-                if error != nil {
-                    continuation.resume(throwing: error!)
-                    return
-                }
+            DispatchQueue.main.async {
+                OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: UIApplication.shared.topViewController!) { authState, error in
+                    if error != nil {
+                        continuation.resume(throwing: error!)
+                        return
+                    }
 
-                guard let authorizationState = authState else {
-                    continuation.resume(throwing: OAuthError.authStateNil)
-                    return
-                }
+                    guard let authorizationState = authState else {
+                        continuation.resume(throwing: OAuthError.authStateNil)
+                        return
+                    }
 
-                continuation.resume(returning: authorizationState)
-            })
+                    continuation.resume(returning: authorizationState)
+                })
+            }
         }
 
         OAuthAuthorizationStore.shared.clear()
 
         OAuthAuthorizationService.appAuthState = authState
 
-        AuthorizationManager.fusionAuthState.update(authState: authState)
+        DispatchQueue.main.async {
+            AuthorizationManager.fusionAuthState.update(authState: authState)
+        }
+
+        AuthorizationManager.log?.trace("Finishing OAuth authorization...")
 
         return authState
     }
@@ -112,8 +120,7 @@ public class OAuthAuthorizationService {
         }
     }
 
-    @MainActor
-    public func logout(options: OAuthLogoutOptions, view: UIViewController) async throws {
+    public func logout(options: OAuthLogoutOptions) async throws {
         let idToken = OAuthAuthorizationService.appAuthState?.lastTokenResponse?.idToken
 
         guard let idToken = idToken else {
@@ -122,7 +129,7 @@ public class OAuthAuthorizationService {
 
         let configuration = try await getConfiguration()
 
-        guard let userAgent = OIDExternalUserAgentIOS(presenting: view) else {
+        guard let userAgent = await OIDExternalUserAgentIOS(presenting: UIApplication.shared.topViewController!) else {
             return
         }
 
@@ -130,31 +137,36 @@ public class OAuthAuthorizationService {
 
         if options.state == nil || options.state!.isEmpty {
             request = OIDEndSessionRequest(configuration: configuration,
-                                               idTokenHint: idToken,
-                                               postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
-                                               additionalParameters: nil)
+                                           idTokenHint: idToken,
+                                           postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
+                                           additionalParameters: nil)
         } else {
             request = OIDEndSessionRequest(configuration: configuration,
-                                               idTokenHint: idToken,
-                                               postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
+                                           idTokenHint: idToken,
+                                           postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
                                            state: options.state!,
-                                               additionalParameters: nil)
+                                           additionalParameters: nil)
         }
 
         let response: Bool = try await withCheckedThrowingContinuation { continuation in
-            self.logoutSession = OIDAuthorizationService.present(request, externalUserAgent: userAgent) { _, error in
-                if error != nil {
-                    continuation.resume(throwing: error!)
-                    return
-                }
+            DispatchQueue.main.async {
+                self.logoutSession = OIDAuthorizationService.present(request, externalUserAgent: userAgent) { _, error in
+                    if error != nil {
+                        continuation.resume(throwing: error!)
+                        return
+                    }
 
-                continuation.resume(returning: true)
+                    continuation.resume(returning: true)
+                }
             }
         }
 
         self.logoutSession = nil
         OAuthAuthorizationService.appAuthState = nil
-        AuthorizationManager.fusionAuthState.clear()
+
+        DispatchQueue.main.async {
+            AuthorizationManager.fusionAuthState.clear()
+        }
     }
 
     private func getUserInfo(userinfoEndpoint: URL, accessToken: String) async throws -> UserInfo {
@@ -199,6 +211,8 @@ public class OAuthAuthorizationService {
     }
 
     private func getConfiguration(force: Bool = false) async throws -> OIDServiceConfiguration {
+        AuthorizationManager.log?.trace("Retrieving configuration from FusionAuth")
+
         if !force {
             if let configurationTask {
                 return try await configurationTask.value
