@@ -14,11 +14,19 @@ let package = Package(
             name: "FusionAuth",
             targets: ["FusionAuth"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", .upToNextMajor(from: "1.7.5")),
+        .package(url: "https://github.com/realm/SwiftLint.git", exact: "0.55.0")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "FusionAuth"
+            name: "FusionAuth",
+            dependencies: [
+                .product(name: "AppAuth", package: "AppAuth-iOS")
+            ],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")]
         ),
         .testTarget(
             name: "FusionAuthTests",
