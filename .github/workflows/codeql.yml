@@ -30,8 +30,8 @@ jobs:
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
 
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    #runs-on: [ self-hosted, macos ]
+    #runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: [ self-hosted, macos ]
 
     #timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     timeout-minutes: 120
@@ -50,6 +50,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        swift: ["5.10"]
+        os: [macos-latest]
         include:
           - language: swift
             #build-mode: autobuild
@@ -65,11 +67,6 @@ jobs:
       - name: Checkout repository
         #uses: actions/checkout@v4
         uses: actions/checkout@v4.1.7
-
-      - name: Set up Swift 5.10
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: '5.10'
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
