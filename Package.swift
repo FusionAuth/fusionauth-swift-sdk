@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     name: "FusionAuth",
     platforms: [
+        .macOS(.v12),
         .iOS(.v15)
     ],
     products: [
