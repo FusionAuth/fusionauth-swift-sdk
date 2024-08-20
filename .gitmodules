@@ -1,0 +1,3 @@
+[submodule "Samples/Quickstart"]
+	path = Samples/Quickstart
+	url = https://github.com/sonderformat-llc/fusionauth-ios-mobilesdk-test-app

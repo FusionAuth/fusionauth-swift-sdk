@@ -4,4 +4,11 @@
    <FileRef
       location = "group:">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Samples">
+      <FileRef
+         location = "group:Samples/Quickstart/TestApp.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>
