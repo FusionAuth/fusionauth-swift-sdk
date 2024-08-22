@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 extension UIApplication {
@@ -19,7 +20,7 @@ extension UIApplication {
     var topViewController: UIViewController? {
         return UIApplication.shared
             .connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.keyWindow}
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow}
             .last?
             .rootViewController?
             .topViewController()
@@ -60,3 +61,4 @@ extension UIViewController {
     }
 
 }
+#endif

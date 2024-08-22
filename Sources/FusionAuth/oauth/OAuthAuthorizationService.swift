@@ -1,7 +1,13 @@
 import Foundation
 import AppAuth
-import UIKit
 import SwiftUI
+import AuthenticationServices
+
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 enum OAuthError: Error {
     case oIDConfigurationNil
@@ -37,6 +43,16 @@ public class OAuthAuthorizationService {
         self.locale = locale
         self.additionalScopes = additionalScopes
     }
+    
+    #if os(macOS)
+    private func getPresenting() -> NSWindow {
+        return ASPresentationAnchor()
+    }
+    #else
+    private func getPresenting() -> UIViewController {
+        return UIApplication.shared.topViewController!
+    }
+    #endif
 
     @discardableResult
     public func authorize(options: OAuthAuthorizeOptions) async throws -> OIDAuthState {
@@ -53,7 +69,7 @@ public class OAuthAuthorizationService {
 
         let authState: OIDAuthState = try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async {
-                OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: UIApplication.shared.topViewController!) { authState, error in
+                OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: self.getPresenting()) { authState, error in
                     if error != nil {
                         continuation.resume(throwing: error!)
                         return
@@ -129,9 +145,13 @@ public class OAuthAuthorizationService {
 
         let configuration = try await getConfiguration()
 
-        guard let userAgent = await OIDExternalUserAgentIOS(presenting: UIApplication.shared.topViewController!) else {
+        #if os(macOS)
+        let userAgent = OIDExternalUserAgentMac(presenting: getPresenting())
+        #else
+        guard let userAgent = OIDExternalUserAgentIOS(presenting: getPresenting()) else {
             return
         }
+        #endif
 
         let request: OIDEndSessionRequest
 
@@ -148,7 +168,7 @@ public class OAuthAuthorizationService {
                                            additionalParameters: nil)
         }
 
-        let response: Bool = try await withCheckedThrowingContinuation { continuation in
+        let _: Bool = try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async {
                 self.logoutSession = OIDAuthorizationService.present(request, externalUserAgent: userAgent) { _, error in
                     if error != nil {
@@ -192,8 +212,7 @@ public class OAuthAuthorizationService {
                 }
 
                 if response.statusCode != 200 {
-                    let responseText: String? = String(decoding: data, as: UTF8.self)
-                    print("HTTP: \(response.statusCode), Response: \(String(decoding: data, as: UTF8.self) ?? "RESPONSE_TEXT")")
+                    print("HTTP: \(response.statusCode), Response: \(String(decoding: data, as: UTF8.self))")
 
                     continuation.resume(throwing: OAuthError.accessTokenNil)
                     return
