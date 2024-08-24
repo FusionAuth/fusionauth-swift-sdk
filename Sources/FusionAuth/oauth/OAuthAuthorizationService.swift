@@ -43,7 +43,7 @@ public class OAuthAuthorizationService {
         self.locale = locale
         self.additionalScopes = additionalScopes
     }
-    
+
     #if os(macOS)
     private func getPresenting() -> NSWindow {
         return ASPresentationAnchor()
