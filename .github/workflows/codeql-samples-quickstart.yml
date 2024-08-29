@@ -14,12 +14,8 @@ name: "CodeQL - Sample Quickstart"
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - Samples
   pull_request:
     branches: [ "main" ]
-    paths:
-      - Samples
   schedule:
     - cron: '39 6 * * 1'
   # Allows you to run this workflow manually from the Actions tab
