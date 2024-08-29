@@ -21,11 +21,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Define the default working directory for the different steps
-defaults:
-  run:
-    working-directory: ./Samples/Quickstart
-
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
@@ -52,9 +47,7 @@ jobs:
       # only required for workflows in private repositories
       actions: read
       contents: read
-    defaults:
-      run:
-        working-directory: Samples/Quickstart
+
     strategy:
       fail-fast: false
       matrix:
@@ -100,6 +93,8 @@ jobs:
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
           queries: security-and-quality
+          paths:
+            - Samples
 
       # If the analyze step fails for one of the languages you are analyzing with
       # "We were unable to automatically build your code", modify the matrix above
@@ -111,8 +106,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.12
+      #- name: Autobuild
+      #  uses: github/codeql-action/autobuild@v3.25.12
 
 
       #- if: matrix.build-mode == 'manual'
