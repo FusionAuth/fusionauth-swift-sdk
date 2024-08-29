@@ -17,11 +17,11 @@
 		0E8454CA2BF50C62007C5E0D /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C92BF50C62007C5E0D /* LoggedInView.swift */; };
 		0E8454CC2BF50CE8007C5E0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CB2BF50CE8007C5E0D /* HomeView.swift */; };
 		0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */; };
-		CAABEC062C2078D600DE23FF /* FusionAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CAABEC052C2078D600DE23FF /* FusionAuth */; };
+		9326C2A12C80692B001C9CDB /* fusionauth-ios-mobilesdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E2795F52BD937B800738892 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E2795F52BD937B800738892 /* fusionauth-quickstart-swift-ios-native.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fusionauth-quickstart-swift-ios-native.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E2795F82BD937B800738892 /* TestAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppApp.swift; sourceTree = "<group>"; };
 		0E2795FA2BD937B800738892 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0E2795FC2BD937BA00738892 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -31,6 +31,7 @@
 		0E8454C92BF50C62007C5E0D /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		0E8454CB2BF50CE8007C5E0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChangeView.swift; sourceTree = "<group>"; };
+		9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-ios-mobilesdk"; path = ../../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAABEC062C2078D600DE23FF /* FusionAuth in Frameworks */,
 				0E3A85562BD94071008D2419 /* FusionAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				0E2795F72BD937B800738892 /* TestApp */,
+				9326C2432C8067DA001C9CDB /* Packages */,
 				0E2795F62BD937B800738892 /* Products */,
 				0E8454C42BF50595007C5E0D /* Frameworks */,
 			);
@@ -58,7 +59,7 @@
 		0E2795F62BD937B800738892 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0E2795F52BD937B800738892 /* TestApp.app */,
+				0E2795F52BD937B800738892 /* fusionauth-quickstart-swift-ios-native.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,12 +95,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9326C2432C8067DA001C9CDB /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0E2795F42BD937B800738892 /* TestApp */ = {
+		0E2795F42BD937B800738892 /* fusionauth-quickstart-swift-ios-native */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E2796032BD937BA00738892 /* Build configuration list for PBXNativeTarget "TestApp" */;
+			buildConfigurationList = 0E2796032BD937BA00738892 /* Build configuration list for PBXNativeTarget "fusionauth-quickstart-swift-ios-native" */;
 			buildPhases = (
 				0E2795F12BD937B800738892 /* Sources */,
 				0E2795F22BD937B800738892 /* Frameworks */,
@@ -109,13 +118,12 @@
 			);
 			dependencies = (
 			);
-			name = TestApp;
+			name = "fusionauth-quickstart-swift-ios-native";
 			packageProductDependencies = (
 				0E3A85552BD94071008D2419 /* FusionAuth */,
-				CAABEC052C2078D600DE23FF /* FusionAuth */,
 			);
 			productName = TestApp;
-			productReference = 0E2795F52BD937B800738892 /* TestApp.app */;
+			productReference = 0E2795F52BD937B800738892 /* fusionauth-quickstart-swift-ios-native.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -133,7 +141,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0E2795F02BD937B800738892 /* Build configuration list for PBXProject "TestApp" */;
+			buildConfigurationList = 0E2795F02BD937B800738892 /* Build configuration list for PBXProject "fusionauth-quickstart-swift-ios-native" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -143,13 +151,12 @@
 			);
 			mainGroup = 0E2795EC2BD937B800738892;
 			packageReferences = (
-				CAABEC042C2078D600DE23FF /* XCRemoteSwiftPackageReference "fusionauth-ios-mobilesdk" */,
 			);
 			productRefGroup = 0E2795F62BD937B800738892 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0E2795F42BD937B800738892 /* TestApp */,
+				0E2795F42BD937B800738892 /* fusionauth-quickstart-swift-ios-native */,
 			);
 		};
 /* End PBXProject section */
@@ -160,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E2796002BD937BA00738892 /* Preview Assets.xcassets in Resources */,
+				9326C2A12C80692B001C9CDB /* fusionauth-ios-mobilesdk in Resources */,
 				0E2795FD2BD937BA00738892 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,7 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestApp/Preview Content\"";
-				DEVELOPMENT_TEAM = BL932QB4LC;
+				DEVELOPMENT_TEAM = UFXSK3CAAL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -326,6 +334,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -340,7 +352,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestApp/Preview Content\"";
-				DEVELOPMENT_TEAM = BL932QB4LC;
+				DEVELOPMENT_TEAM = UFXSK3CAAL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -355,6 +367,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -364,7 +380,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0E2795F02BD937B800738892 /* Build configuration list for PBXProject "TestApp" */ = {
+		0E2795F02BD937B800738892 /* Build configuration list for PBXProject "fusionauth-quickstart-swift-ios-native" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E2796012BD937BA00738892 /* Debug */,
@@ -373,7 +389,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E2796032BD937BA00738892 /* Build configuration list for PBXNativeTarget "TestApp" */ = {
+		0E2796032BD937BA00738892 /* Build configuration list for PBXNativeTarget "fusionauth-quickstart-swift-ios-native" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E2796042BD937BA00738892 /* Debug */,
@@ -384,25 +400,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		CAABEC042C2078D600DE23FF /* XCRemoteSwiftPackageReference "fusionauth-ios-mobilesdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sonderformat-llc/fusionauth-ios-mobilesdk.git";
-			requirement = {
-				branch = prototype;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		0E3A85552BD94071008D2419 /* FusionAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = FusionAuth;
-		};
-		CAABEC052C2078D600DE23FF /* FusionAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAABEC042C2078D600DE23FF /* XCRemoteSwiftPackageReference "fusionauth-ios-mobilesdk" */;
 			productName = FusionAuth;
 		};
 /* End XCSwiftPackageProductDependency section */

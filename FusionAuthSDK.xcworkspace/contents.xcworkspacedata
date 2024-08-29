@@ -8,7 +8,7 @@
       location = "container:"
       name = "Samples">
       <FileRef
-         location = "group:Samples/Quickstart/TestApp.xcodeproj">
+         location = "group:/Users/aaron/Documents/xcode/fusionauth-ios-mobilesdk/Samples/Quickstart/fusionauth-quickstart-swift-ios-native.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
