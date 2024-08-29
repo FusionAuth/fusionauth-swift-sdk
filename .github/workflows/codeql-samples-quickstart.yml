@@ -21,6 +21,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Define the default working directory for the different steps
+defaults:
+  run:
+    working-directory: Samples/Quickstart
+
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
