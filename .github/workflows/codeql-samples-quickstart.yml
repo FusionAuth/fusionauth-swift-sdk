@@ -47,7 +47,9 @@ jobs:
       # only required for workflows in private repositories
       actions: read
       contents: read
-
+    defaults:
+      run:
+        working-directory: Samples/Quickstart
     strategy:
       fail-fast: false
       matrix:
