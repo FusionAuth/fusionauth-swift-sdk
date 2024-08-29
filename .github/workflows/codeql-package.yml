@@ -55,7 +55,7 @@ jobs:
         os: [macos-latest]
         include:
           - language: swift
-            build-mode: autobuild
+            build-mode: manual
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -104,9 +104,11 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.26.5
+      #- name: Autobuild
+      #  uses: github/codeql-action/autobuild@v3.26.5
 
+      - name: Manual build
+        run: swift build
 
       #- if: matrix.build-mode == 'manual'
       #  shell: bash
