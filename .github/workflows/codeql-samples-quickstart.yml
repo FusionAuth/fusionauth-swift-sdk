@@ -53,6 +53,13 @@ jobs:
       matrix:
         swift: ["5.10.1"]
         os: [macos-latest]
+        destination:
+          - "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro Max"
+          - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro Max"
+          - "platform=tvOS Simulator,OS=17.5,name=Apple TV"
+          - "platform=visionOS Simulator,OS=1.2,name=Apple Vision Pro"
+          - "platform=watchOS Simulator,OS=10.5,name=Apple Watch Series 7 (45mm)"
+          - "platform=macOS,name=My Mac"
         include:
           - language: swift
             build-mode: manual
@@ -109,7 +116,7 @@ jobs:
       #  uses: github/codeql-action/autobuild@v3.26.5
 
       - name: Manual Build
-        run: xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native
+        run: xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "$DESTINATION"
 
       #- if: matrix.build-mode == 'manual'
       #  shell: bash
