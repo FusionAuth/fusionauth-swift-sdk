@@ -116,9 +116,7 @@ jobs:
       #  uses: github/codeql-action/autobuild@v3.26.5
 
       - name: Manual Build
-        run: xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "$DESTINATION"
-        with:
-          DESTINATION: ${{ matrix.destination }}
+        run: xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}"
 
       #- if: matrix.build-mode == 'manual'
       #  shell: bash
