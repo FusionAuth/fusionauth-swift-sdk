@@ -54,12 +54,10 @@ jobs:
         swift: ["5.10.1"]
         os: [macos-latest]
         destination:
-          - "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro Max"
-          - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro Max"
-          - "platform=tvOS Simulator,OS=17.5,name=Apple TV"
-          - "platform=visionOS Simulator,OS=1.2,name=Apple Vision Pro"
-          - "platform=watchOS Simulator,OS=10.5,name=Apple Watch Series 7 (45mm)"
-          - "platform=macOS,name=My Mac"
+          - "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro"
+          - "platform:iOS Simulator,OS:17.5,name:iPhone 15 Pro"
+          - "platform:iOS Simulator,OS:18.1,name:iPhone 15 Pro"
+          - "platform:iOS Simulator,OS:18.1,name:iPhone 15 Pro Max"
         include:
           - language: swift
             build-mode: manual
