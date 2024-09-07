@@ -54,16 +54,12 @@ jobs:
         swift: ["5.10.1"]
         os: [macos-latest]
         xcode: ["15.4"]
+        language:  [swift]
+        build-mode: [manual]
         destination:
           - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro"
           - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro"
           - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro Max"
-        include:
-          - language: swift
-            build-mode: manual
-            xcode: "14.3"
-            swift: "5.10.1"
-            destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro"
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
