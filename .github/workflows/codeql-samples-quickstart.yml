@@ -59,7 +59,6 @@ jobs:
         destination:
           - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro"
           - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro"
-          - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro Max"
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
