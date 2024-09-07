@@ -53,6 +53,7 @@ jobs:
       matrix:
         swift: ["5.10.1"]
         os: [macos-latest]
+        xcode: ["15.4"]
         destination:
           - "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro"
           - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro"
@@ -73,7 +74,13 @@ jobs:
       - name: Initialize latest xcode
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ matrix.xcode }}
+
+      - name: Remove old xcode versions
+        run: |
+          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
+          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1 | grep -v ${{ matrix.xcode }} | xargs rm -rf
+          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
 
       - name: Initialize Swift
         uses: swift-actions/setup-swift@v2.1.0
@@ -112,13 +119,6 @@ jobs:
       # If this step fails, then you should remove it and run the build manually (see below)
       #- name: Autobuild
       #  uses: github/codeql-action/autobuild@v3.26.5
-
-      - name: Remove old xcode versions
-        run: |
-          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
-          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r | tail -n +2 | xargs rm -rf
-          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
-
 
       - name: Manual Build
         run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
