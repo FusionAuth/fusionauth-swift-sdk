@@ -23,7 +23,7 @@ on:
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
+    name: Analyze (${{ matrix.language }} ${{ matrix.swift }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
     #   - https://gh.io/supported-runners-and-hardware-resources
@@ -54,9 +54,9 @@ jobs:
         swift: ["5.10.1"]
         os: [macos-latest]
         xcode: ["15.4"]
-        include:
-          - language: swift
-            build-mode: manual
+        language: [swift]
+        build-mode: [manual]
+
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
