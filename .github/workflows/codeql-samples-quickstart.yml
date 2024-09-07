@@ -78,8 +78,11 @@ jobs:
 
       - name: Remove old xcode versions
         run: |
+          echo "Searching for Xcode versions:"
           find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
+          echo "Removing old Xcode versions..."
           find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1 | grep -v ${{ matrix.xcode }} | xargs rm -rf
+          echo "Available Xcode versions after removal:"
           find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
 
       - name: Initialize Swift
@@ -119,6 +122,11 @@ jobs:
       # If this step fails, then you should remove it and run the build manually (see below)
       #- name: Autobuild
       #  uses: github/codeql-action/autobuild@v3.26.5
+
+      - name: Check Disk Space
+        run: |
+          sleep 10
+          df -h
 
       - name: Manual Build
         run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
