@@ -134,6 +134,14 @@ jobs:
           sleep 10
           df -h
 
+      - name: Remove old xcode versions
+        run: find /Applications/ -name "Xcode*" | sort -r | tail --lines=+2 | xargs rm -rf
+
+      - name: Check Disk Space 5
+        run: |
+          sleep 10
+          df -h
+
       - name: Manual build
         run: swift build
 
