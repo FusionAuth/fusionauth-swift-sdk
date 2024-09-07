@@ -74,11 +74,11 @@ jobs:
       - name: Remove old xcode versions
         run: |
           echo "Searching for Xcode versions:"
-          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
           echo "Removing old Xcode versions..."
-          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1 | grep -v ${{ matrix.xcode }} | xargs rm -rf
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1 | grep -v ${{ matrix.xcode }} | xargs rm -rf
           echo "Available Xcode versions after removal:"
-          find /Applications/ -name "Xcode_*" -maxdepth 1 -mindepth 1
+          find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
 
       - name: Initialize Swift
         uses: swift-actions/setup-swift@v2.1.0
