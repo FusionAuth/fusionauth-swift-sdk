@@ -135,7 +135,10 @@ jobs:
           df -h
 
       - name: Remove old xcode versions
-        run: find /Applications/ -name "Xcode*" | sort -r
+        run: |
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r | tail -n +2 | xargs rm -rf
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
 
       - name: Check Disk Space 5
         run: |

@@ -114,7 +114,11 @@ jobs:
       #  uses: github/codeql-action/autobuild@v3.26.5
 
       - name: Remove old xcode versions
-        run: find /Applications/ -name "Xcode*" | sort -r
+        run: |
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r | tail -n +2 | xargs rm -rf
+          find /Applications/ -name "Xcode*" -maxdepth 1 -mindepth 1 | sort -r
+
 
       - name: Manual Build
         run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
