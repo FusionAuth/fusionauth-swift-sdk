@@ -1,14 +1,3 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
-#
 name: "CodeQL - Sample Quickstart"
 
 on:
@@ -23,7 +12,7 @@ on:
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
+    name: Analyze (${{ matrix.language }} ${{ matrix.swift }} ${{ matrix.destination }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
     #   - https://gh.io/supported-runners-and-hardware-resources
@@ -54,28 +43,24 @@ jobs:
         swift: ["5.10.1"]
         os: [macos-latest]
         xcode: ["15.4"]
+        language:  [swift]
+        build-mode: [manual]
         destination:
-          - "platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro"
           - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro"
           - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro"
-          - "platform=iOS Simulator,OS=18.1,name=iPhone 15 Pro Max"
-        include:
-          - language: swift
-            build-mode: manual
-        # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
-        # Use `c-cpp` to analyze code written in C, C++ or both
-        # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
-        # Use 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+
     steps:
+      # Initialize the latest version of Xcode.
       - name: Initialize latest xcode
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
           xcode-version: ${{ matrix.xcode }}
 
+      # Remove any other Xcode version.
       - name: Remove old xcode versions
         run: |
           echo "Searching for Xcode versions:"
@@ -85,35 +70,32 @@ jobs:
           echo "Available Xcode versions after removal:"
           find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
 
+      # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
         uses: swift-actions/setup-swift@v2.1.0
         with:
           swift-version: ${{ matrix.swift }}
 
+      # Get the Swift version.
       - name: Get swift version
         run: swift --version
 
+      # Checkout the repository.
       - name: Checkout repository
         uses: actions/checkout@v4.1.7
 
+      # Initialize CodeQL.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.26.6
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
 
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
           queries: security-and-quality
           config-file: .github/codeql/codeql-samples-config.yml
 
-      # If the analyze step fails for one of the languages you are analyzing with
-      # "We were unable to automatically build your code", modify the matrix above
-      # to set the build mode to "manual" for that language. Then modify this step
-      # to build your code.
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
 
@@ -123,31 +105,19 @@ jobs:
       #- name: Autobuild
       #  uses: github/codeql-action/autobuild@v3.26.5
 
+      # Check Disk Space before the build.
       - name: Check Disk Space
         run: |
           sleep 10
           df -h
 
+      # Perform the build manually.
       - name: Manual Build
         run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
 
-      #- if: matrix.build-mode == 'manual'
-      #  shell: bash
-      #  run: |
-      #     echo 'If you are using a "manual" build mode for one or more of the' \
-      #       'languages you are analyzing, replace this with the commands to build' \
-      #       'your code, for example:'
-      #     echo '  make bootstrap'
-      #     echo '  make release'
-      #
-      #     swift build
-      #
-      #     echo ' swift build -c release '
-      #
-      #     exit 1
-
-
+      # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3.26.6
+        if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
