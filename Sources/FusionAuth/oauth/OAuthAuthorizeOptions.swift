@@ -28,7 +28,7 @@ public struct OAuthAuthorizeOptions {
     let userCode: String?
 
     public init(
-        redirectUri: String = "\(Bundle.main.bundleIdentifier ?? ""):/oauth2redirect/ios-provider",
+        redirectUri: String = "\(Bundle.main.bundleIdentifier):/oauth2redirect/ios-provider",
         idpHint: String? = nil,
         codeChallenge: String? = nil,
         codeChallengeMethod: OAuthCodeChallengeMethod? = nil,
