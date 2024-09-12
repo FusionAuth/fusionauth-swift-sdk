@@ -109,7 +109,7 @@ jobs:
 
       # Manual build with the release configuration.
       - name: Manual build
-        run: swift build -c release
+        run: swift build --build-tests --configuration debug -v
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
