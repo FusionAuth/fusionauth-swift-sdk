@@ -146,5 +146,6 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3.26.6
+        if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
