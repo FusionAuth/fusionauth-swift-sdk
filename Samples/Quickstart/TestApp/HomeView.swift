@@ -29,17 +29,9 @@ struct HomeView: View {
                 Text("Your balance is:")
                 Text("$0.00").font(.largeTitle)
                 Button("Log out") {
-                    AuthorizationManager.instance
-                        .initialize(configuration:
-                        AuthorizationConfiguration(
-                            clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
-                            fusionAuthUrl: "http://localhost:9011",
-                            additionalScopes: ["email", "profile"]
-                        ), storage: ""
-                    )
                     Task {
                         do {
-                            try await AuthorizationManager.instance
+                            try await AuthorizationManager.shared
                                 .oauth()
                                 .logout(options: OAuthLogoutOptions())
                         } catch let error as NSError {
@@ -52,17 +44,9 @@ struct HomeView: View {
     }
 
     func getUserInfo() {
-        AuthorizationManager.instance
-            .initialize(configuration:
-            AuthorizationConfiguration(
-                clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
-                fusionAuthUrl: "http://localhost:9011",
-                additionalScopes: ["email", "profile"]
-            ), storage: ""
-        )
         Task {
             do {
-                self.userInfo = try await AuthorizationManager.instance
+                self.userInfo = try await AuthorizationManager.shared
                     .oauth()
                     .userInfo()
             } catch let error as NSError {

@@ -1,4 +1,5 @@
 import os
+import AppAuth
 
 /// AuthorizationManager is a singleton object that manages the authorization state of the user.
 /// It provides methods to initialize the authorization manager, check if the user is authenticated,
@@ -8,16 +9,30 @@ import os
 /// to store the authorization state.
 public class AuthorizationManager {
 
-    public static let fusionAuthState = FusionAuthState()
+    private static let fusionAuthState = FusionAuthState()
 
     public static let instance = AuthorizationManager()
 
     private var configuration: AuthorizationConfiguration?
+    private var tokenManager: TokenManager?
 
     private init() {}
 
-    public func initialize(configuration: AuthorizationConfiguration, storage: String?) {
+    public func initialize(configuration: AuthorizationConfiguration, storage: Storage?) {
         self.configuration = configuration
+        self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
+        
+        if let authState = tokenManager?.getAuthState() {
+            AuthorizationManager.instance.fusionAuthState().update(authState: authState)
+        }
+    }
+    
+    public func fusionAuthState() -> FusionAuthState {
+        return AuthorizationManager.fusionAuthState
+    }
+    
+    public func getTokenManager() -> TokenManager {
+        return tokenManager!
     }
 
     public func oauth() -> OAuthAuthorizationService {
@@ -28,6 +43,11 @@ public class AuthorizationManager {
             locale: configuration!.locale,
             additionalScopes: configuration!.additionalScopes
         )
+    }
+    
+    public func updateAuthState(authState: OIDAuthState) {
+        self.tokenManager?.setAuthState(authState: authState)
+        AuthorizationManager.instance.fusionAuthState().update(authState: authState)
     }
 
 }

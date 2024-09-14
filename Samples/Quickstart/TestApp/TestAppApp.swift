@@ -13,7 +13,7 @@ struct TestAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(AuthorizationManager.fusionAuthState)
+                .environmentObject(AuthorizationManager.shared.fusionAuthState())
                 .onOpenURL(perform: { url in
                     OAuthAuthorization.resume(with: url)
                 })

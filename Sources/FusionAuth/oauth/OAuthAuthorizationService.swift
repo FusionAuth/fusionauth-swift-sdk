@@ -90,7 +90,7 @@ public class OAuthAuthorizationService {
         OAuthAuthorizationService.appAuthState = authState
 
         DispatchQueue.main.async {
-            AuthorizationManager.fusionAuthState.update(authState: authState)
+            AuthorizationManager.instance.updateAuthState(authState: authState)
         }
 
         AuthorizationManager.log?.trace("Finishing OAuth authorization...")
@@ -185,7 +185,7 @@ public class OAuthAuthorizationService {
         OAuthAuthorizationService.appAuthState = nil
 
         DispatchQueue.main.async {
-            AuthorizationManager.fusionAuthState.clear()
+            AuthorizationManager.instance.fusionAuthState().clear()
         }
     }
 
