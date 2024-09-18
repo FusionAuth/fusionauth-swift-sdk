@@ -3,7 +3,7 @@ import Security
 
 public class KeyChainStorage: Storage {
     public init() {}
-    
+
     public func get(key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

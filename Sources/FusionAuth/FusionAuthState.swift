@@ -21,7 +21,7 @@ public class FusionAuthState: ObservableObject {
         }
         return Date() < expiration
     }
-    
+
     public func update(authState: FusionAuthStateData) {
         self.refreshToken = authState.refreshToken
         self.accessToken = authState.accessToken

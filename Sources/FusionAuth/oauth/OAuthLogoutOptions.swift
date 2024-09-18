@@ -13,7 +13,7 @@ public struct OAuthLogoutOptions {
     let state: String?
 
     public init(
-        postLogoutRedirectUri: String = "\(Bundle.main.bundleIdentifier):/oauth2redirect/ios-provider",
+        postLogoutRedirectUri: String = "\(String(describing: Bundle.main.bundleIdentifier ?? "")):/oauth2redirect/ios-provider",
         state: String? = nil
     ) {
         self.postLogoutRedirectUri = postLogoutRedirectUri

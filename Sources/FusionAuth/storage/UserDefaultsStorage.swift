@@ -3,7 +3,7 @@ import Foundation
 /// Storage that saves data to UserDefaults
 public class UserDefaultsStorage: Storage {
     public init() {}
-    
+
     public func get(key: String) -> String? {
         UserDefaults.standard.string(forKey: key)
     }

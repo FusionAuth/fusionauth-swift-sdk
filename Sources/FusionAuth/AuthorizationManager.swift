@@ -21,16 +21,16 @@ public class AuthorizationManager {
     public func initialize(configuration: AuthorizationConfiguration, storage: Storage?) {
         self.configuration = configuration
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
-        
+
         if let authState = tokenManager?.getAuthState() {
             AuthorizationManager.instance.fusionAuthState().update(authState: authState)
         }
     }
-    
+
     public func fusionAuthState() -> FusionAuthState {
         return AuthorizationManager.fusionAuthState
     }
-    
+
     public func getTokenManager() -> TokenManager {
         return tokenManager!
     }
@@ -44,7 +44,7 @@ public class AuthorizationManager {
             additionalScopes: configuration!.additionalScopes
         )
     }
-    
+
     public func updateAuthState(authState: OIDAuthState) {
         self.tokenManager?.setAuthState(authState: authState)
         AuthorizationManager.instance.fusionAuthState().update(authState: authState)
