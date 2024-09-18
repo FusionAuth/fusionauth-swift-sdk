@@ -1,5 +1,5 @@
 {
-  "originHash" : "173fd7fb07de5b8fd8af261e216e2c1f97655e8005dd14e374e85641ac82ac69",
+  "originHash" : "d3edd3448901c1e178a91398eee28e86c90cbd882d94f9678342e111c5a96363",
   "pins" : [
     {
       "identity" : "appauth-ios",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-docc-plugin",
       "state" : {
-        "revision" : "2eb22993b3dfd0c0d32729b357c8dabb6cd44680",
-        "version" : "1.4.2"
+        "revision" : "85e4bb4e1cd62cec64a4b8e769dcefdf0c5b9d64",
+        "version" : "1.4.3"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/SwiftLint.git",
       "state" : {
-        "revision" : "a24488f26e60247d8fff7bbb03d51910af3dc91c",
-        "version" : "0.56.2"
+        "revision" : "168fb98ed1f3e343d703ecceaf518b6cf565207b",
+        "version" : "0.57.0"
       }
     },
     {
