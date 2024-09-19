@@ -6,9 +6,12 @@ import Foundation
 /// for more information.
 public struct OAuthAuthorizeOptions {
     /// The Bundle Identifier used for the redirect URI
-    let bundleId: String
+    private let bundleId: String
+    /// The redirect URI suffix for comprising the redirect URI
+    private let redirectUriSuffix: String
     /// The redirect URI to be used for the OAuth authorize request.
     /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
+    /// Which is a combination of bundleId and postLogoutRedirectUriSuffix
     let redirectUri: String
     /// The identity provider hint to be used for the OAuth authorize request.
     let idpHint: String?
@@ -31,7 +34,7 @@ public struct OAuthAuthorizeOptions {
 
     public init(
         bundleId: String = Bundle.main.bundleIdentifier ?? "",
-        redirectUri: String = ":/oauth2redirect/ios-provider",
+        redirectUriSuffix: String = ":/oauth2redirect/ios-provider",
         idpHint: String? = nil,
         codeChallenge: String? = nil,
         codeChallengeMethod: OAuthCodeChallengeMethod? = nil,
@@ -41,8 +44,9 @@ public struct OAuthAuthorizeOptions {
         state: String? = nil,
         userCode: String? = nil
     ) {
+        self.redirectUriSuffix = redirectUriSuffix
         self.bundleId = bundleId
-        self.redirectUri = redirectUri
+        self.redirectUri = bundleId + redirectUriSuffix
         self.idpHint = idpHint
         self.codeChallenge = codeChallenge
         self.codeChallengeMethod = codeChallengeMethod

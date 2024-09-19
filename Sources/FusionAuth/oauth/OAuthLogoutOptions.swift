@@ -5,10 +5,13 @@ import Foundation
 /// See [FusionAuth OAuth 2.0 Authorization Endpoint](https://fusionauth.io/docs/lifecycle/authenticate-users/oauth/endpoints#logout)
 /// for more information.
 public struct OAuthLogoutOptions {
-    /// The Bundle Identifier used for the redirect URI
-    let bundleId: String
+    /// The Bundle Identifier used for comprising the redirect URI
+    private let bundleId: String
+    /// The post logout redirect URI suffix for comprising the redirect URI
+    private let postLogoutRedirectUriSuffix: String
     /// The post logout redirect URI to be used for the OAuth logout request.
     /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
+    /// Which is a combination of bundleId and postLogoutRedirectUriSuffix
     let postLogoutRedirectUri: String
     /// An opaque value used by the client to maintain state between the request and callback.
     /// The authorization server includes this value when redirecting the user-agent back to the client.
@@ -16,11 +19,12 @@ public struct OAuthLogoutOptions {
 
     public init(
         bundleId: String = Bundle.main.bundleIdentifier ?? "",
-        postLogoutRedirectUri: String = ":/oauth2redirect/ios-provider",
+        postLogoutRedirectUriSuffix: String = ":/oauth2redirect/ios-provider",
         state: String? = nil
     ) {
         self.bundleId = bundleId
-        self.postLogoutRedirectUri = postLogoutRedirectUri
+        self.postLogoutRedirectUriSuffix = postLogoutRedirectUriSuffix
+        self.postLogoutRedirectUri = bundleId + postLogoutRedirectUriSuffix
         self.state = state
     }
 }
