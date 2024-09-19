@@ -5,6 +5,8 @@ import Foundation
 /// See [FusionAuth OAuth 2.0 Authorization Endpoint](https://fusionauth.io/docs/lifecycle/authenticate-users/oauth/endpoints#authorize)
 /// for more information.
 public struct OAuthAuthorizeOptions {
+    /// The Bundle Identifier used for the redirect URI
+    let bundleId: String
     /// The redirect URI to be used for the OAuth authorize request.
     /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
     let redirectUri: String
@@ -28,7 +30,8 @@ public struct OAuthAuthorizeOptions {
     let userCode: String?
 
     public init(
-        redirectUri: String = "\(String(describing: Bundle.main.bundleIdentifier ?? "")):/oauth2redirect/ios-provider",
+        bundleId: String = Bundle.main.bundleIdentifier ?? "",
+        redirectUri: String = ":/oauth2redirect/ios-provider",
         idpHint: String? = nil,
         codeChallenge: String? = nil,
         codeChallengeMethod: OAuthCodeChallengeMethod? = nil,
@@ -38,6 +41,7 @@ public struct OAuthAuthorizeOptions {
         state: String? = nil,
         userCode: String? = nil
     ) {
+        self.bundleId = bundleId
         self.redirectUri = redirectUri
         self.idpHint = idpHint
         self.codeChallenge = codeChallenge

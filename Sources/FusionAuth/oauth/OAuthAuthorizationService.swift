@@ -63,7 +63,7 @@ public class OAuthAuthorizationService {
         let request = OIDAuthorizationRequest(configuration: configuration,
                                               clientId: clientId,
                                               scopes: [OIDScopeOpenID, "offline_access"] + self.additionalScopes,
-                                              redirectURL: URL(string: options.redirectUri)!,
+                                              redirectURL: URL(string: options.bundleId + options.redirectUri)!,
                                               responseType: OIDResponseTypeCode,
                                               additionalParameters: getParametersFromOptions(options))
 
@@ -158,7 +158,7 @@ public class OAuthAuthorizationService {
         if options.state == nil || options.state!.isEmpty {
             request = OIDEndSessionRequest(configuration: configuration,
                                            idTokenHint: idToken,
-                                           postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
+                                           postLogoutRedirectURL: URL(string: options.bundleId + options.postLogoutRedirectUri)!,
                                            additionalParameters: nil)
         } else {
             request = OIDEndSessionRequest(configuration: configuration,
