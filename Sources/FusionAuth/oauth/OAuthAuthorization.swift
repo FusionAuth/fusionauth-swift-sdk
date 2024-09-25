@@ -1,5 +1,7 @@
 import Foundation
 
+/// TODO
+/// OAuthAuthorization is a utility struct that provides methods to resume and cancel the OAuth authorization flow.
 public struct OAuthAuthorization {
 
     private init() {}

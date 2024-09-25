@@ -1,4 +1,6 @@
+/// TODO
 /// Storage that keeps the data in memory
+/// This storage is not persistent and the data is lost when the app is closed
 public class MemoryStorage: Storage {
     public init() {}
 
