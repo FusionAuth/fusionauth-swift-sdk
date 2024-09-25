@@ -44,7 +44,7 @@ jobs:
         swift: ["5.10.1"]
         os: [macos-latest]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: ["16.0"]
+        xcode: ["15.4"]
         language: [swift]
         build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
