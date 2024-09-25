@@ -23,7 +23,6 @@ public class MemoryStorage: Storage {
     /// - Parameters:
     ///   - key: The key for which to set the value.
     ///   - content: The value to be set for the key.
-    /// - Returns: Void
     public func set(key: String, content: Any) {
         self.storageDictionary[key] = content
     }
@@ -31,7 +30,6 @@ public class MemoryStorage: Storage {
     /// Removes the value associated with the given key from the storage.
     /// - Parameters:
     ///   - key: The key for which to remove the value.
-    /// - Returns: Void
     public func remove(key: String) {
         storageDictionary.removeValue(forKey: key)
     }

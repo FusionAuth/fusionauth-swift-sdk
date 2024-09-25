@@ -16,7 +16,6 @@ public struct OAuthAuthorization {
     }
 
     /// Cancel the authorization flow
-    /// - Returns: Void
     public static func cancel() {
         OAuthAuthorizationStore.shared.cancel()
     }
