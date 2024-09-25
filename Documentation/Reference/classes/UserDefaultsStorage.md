@@ -43,7 +43,6 @@ Sets the value associated with the given key in UserDefaults.
 - Parameters:
   - key: The key for which to set the value.
   - content: The value to be set for the key.
-- Returns: Void
 
 #### Parameters
 
@@ -61,7 +60,6 @@ public func remove(key: String)
 Removes the value associated with the given key from UserDefaults.
 - Parameters:
   - key: The key for which to remove the value.
-- Returns: Void
 
 #### Parameters
 
