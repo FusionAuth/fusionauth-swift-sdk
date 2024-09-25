@@ -19,6 +19,9 @@ public class FusionAuthState: ObservableObject {
     @Published public var idToken: String?
     @Published public var refreshToken: String?
 
+    /// Check if the user is authenticated
+    /// - Returns: A boolean indicating if the user is authenticated
+    /// - Note: This method checks if the access token is not nil and the access token expiration time is in the future.
     public func isLoggedIn() -> Bool {
         guard self.accessToken != nil, let expiration = self.accessTokenExpirationTime else {
             return false
@@ -26,6 +29,10 @@ public class FusionAuthState: ObservableObject {
         return Date() < expiration
     }
 
+    /// Update the auth state with the given data
+    /// - Parameter authState: The auth state data
+    /// - Returns: Void
+    /// - Note: This method updates the FusionAuthStateData access token, refresh token, ID token, and access token expiration time.
     public func update(authState: FusionAuthStateData) {
         self.refreshToken = authState.refreshToken
         self.accessToken = authState.accessToken
@@ -33,6 +40,10 @@ public class FusionAuthState: ObservableObject {
         self.idToken = authState.idToken
     }
 
+    /// Update the auth state with the given OIDAuthState
+    /// - Parameter authState: The OIDAuthState object
+    /// - Returns: Void
+    /// - Note: This method updates the OIDAuthState access token, refresh token, ID token, and access token expiration time.
     public func update(authState: OIDAuthState) {
         self.refreshToken = authState.refreshToken
         self.accessToken = authState.lastTokenResponse?.accessToken
@@ -40,6 +51,9 @@ public class FusionAuthState: ObservableObject {
         self.idToken = authState.lastTokenResponse?.idToken
     }
 
+    /// Clear the auth state
+    /// - Returns: Void
+    /// - Note: This method clears the access token, refresh token, ID token, and access token expiration time.
     public func clear() {
         self.refreshToken = nil
         self.accessToken = nil

@@ -46,6 +46,7 @@ public class TokenManager {
     }
 }
 
+/// FusionAuthStateData represents the authorization state data.
 public struct FusionAuthStateData: Codable {
     var accessToken: String
     var accessTokenExpirationTime: Date

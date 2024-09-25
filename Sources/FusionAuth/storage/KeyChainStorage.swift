@@ -8,6 +8,11 @@ import Security
 public class KeyChainStorage: Storage {
     public init() {}
 
+    /// Retrieves the value associated with the given key from the KeyChain.
+    /// - Parameters:
+    ///   - key: The key for which to retrieve the value.
+    /// - Returns: The value associated with the key, or null if the key is not found in the KeyChain.
+    /// - Note: This method retrieves the value associated with the given key from the KeyChain and returns it as a string.
     public func get(key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -28,6 +33,11 @@ public class KeyChainStorage: Storage {
         return nil
     }
 
+    /// Sets the value associated with the given key in the KeyChain.
+    /// - Parameters:
+    ///   - key: The key for which to set the value.
+    ///   - content: The value to be set for the key.
+    /// - Returns: Void
     public func set(key: String, content: Any) {
         if get(key: key) != nil {
             remove(key: key)
@@ -43,6 +53,10 @@ public class KeyChainStorage: Storage {
         SecItemAdd(query as CFDictionary, nil)
     }
 
+    /// Removes the value associated with the given key from the KeyChain.
+    /// - Parameters:
+    ///   - key: The key for which to remove the value.
+    /// - Returns: Void
     public func remove(key: String) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
