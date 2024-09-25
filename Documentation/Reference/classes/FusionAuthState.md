@@ -41,6 +41,12 @@ public func isLoggedIn() -> Bool
 ### `update(authState:)`
 
 ```swift
+public func update(authState: FusionAuthStateData)
+```
+
+### `update(authState:)`
+
+```swift
 public func update(authState: OIDAuthState)
 ```
 

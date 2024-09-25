@@ -12,11 +12,12 @@ See [FusionAuth OAuth 2.0 Authorization Endpoint](https://fusionauth.io/docs/lif
 for more information.
 
 ## Methods
-### `init(postLogoutRedirectUri:state:)`
+### `init(bundleId:postLogoutRedirectUriSuffix:state:)`
 
 ```swift
 public init(
-    postLogoutRedirectUri: String = "\(Bundle.main.bundleIdentifier ?? ""):/oauth2redirect/ios-provider",
+    bundleId: String = Bundle.main.bundleIdentifier ?? "",
+    postLogoutRedirectUriSuffix: String = ":/oauth2redirect/ios-provider",
     state: String? = nil
 )
 ```

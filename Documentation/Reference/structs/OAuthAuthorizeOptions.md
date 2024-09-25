@@ -12,11 +12,12 @@ See [FusionAuth OAuth 2.0 Authorization Endpoint](https://fusionauth.io/docs/lif
 for more information.
 
 ## Methods
-### `init(redirectUri:idpHint:codeChallenge:codeChallengeMethod:loginHint:deviceDescription:nonce:state:userCode:)`
+### `init(bundleId:redirectUriSuffix:idpHint:codeChallenge:codeChallengeMethod:loginHint:deviceDescription:nonce:state:userCode:)`
 
 ```swift
 public init(
-    redirectUri: String = "\(Bundle.main.bundleIdentifier ?? ""):/oauth2redirect/ios-provider",
+    bundleId: String = Bundle.main.bundleIdentifier ?? "",
+    redirectUriSuffix: String = ":/oauth2redirect/ios-provider",
     idpHint: String? = nil,
     codeChallenge: String? = nil,
     codeChallengeMethod: OAuthCodeChallengeMethod? = nil,

@@ -14,12 +14,6 @@ AuthorizationManager uses a TokenManager to manage the access tokens and a Stora
 to store the authorization state.
 
 ## Properties
-### `fusionAuthState`
-
-```swift
-public static let fusionAuthState = FusionAuthState()
-```
-
 ### `instance`
 
 ```swift
@@ -30,11 +24,29 @@ public static let instance = AuthorizationManager()
 ### `initialize(configuration:storage:)`
 
 ```swift
-public func initialize(configuration: AuthorizationConfiguration, storage: String?)
+public func initialize(configuration: AuthorizationConfiguration, storage: Storage?)
+```
+
+### `fusionAuthState()`
+
+```swift
+public func fusionAuthState() -> FusionAuthState
+```
+
+### `getTokenManager()`
+
+```swift
+public func getTokenManager() -> TokenManager
 ```
 
 ### `oauth()`
 
 ```swift
 public func oauth() -> OAuthAuthorizationService
+```
+
+### `updateAuthState(authState:)`
+
+```swift
+public func updateAuthState(authState: OIDAuthState)
 ```
