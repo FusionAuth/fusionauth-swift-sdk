@@ -40,9 +40,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift: ["5.10.1"]
+        # https://github.com/swiftlang/swift/releases
+        swift: ["6.0.0"]
         os: [macos-latest]
-        xcode: ["15.4"]
+        # https://developer.apple.com/documentation/xcode-release-notes
+        xcode: ["16.0"]
         language: [swift]
         build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
