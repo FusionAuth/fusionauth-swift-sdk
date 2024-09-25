@@ -40,10 +40,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # https://github.com/swiftlang/swift/releases
         swift: ["5.10.1"]
         os: [macos-latest]
+        # https://developer.apple.com/documentation/xcode-release-notes
         xcode: ["15.4"]
-        language:  [swift]
+        language: [swift]
         build-mode: [manual]
         destination:
           - "platform=iOS Simulator,OS=17.5,name=iPhone 15 Pro"
