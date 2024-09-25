@@ -6,6 +6,9 @@
 public struct OAuthAuthorization
 ```
 
+TODO
+OAuthAuthorization is a utility struct that provides methods to resume and cancel the OAuth authorization flow.
+
 ## Methods
 ### `resume(with:)`
 
