@@ -2,7 +2,6 @@
 [![Dependabot](https://badgen.net/github/dependabot/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/network/updates)
 [![Open PRs](https://badgen.net/github/open-prs/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/pulls)
 
-
 An SDK for using FusionAuth in iOS Apps.
 
 # Table of Contents
@@ -18,6 +17,8 @@ An SDK for using FusionAuth in iOS Apps.
 - [Quickstart](#quickstart)
 
 - [Documentation](#documentation)
+
+- [Contributing](#contributing)
 
 - [Upgrade Policy](#upgrade-policy)
 
@@ -54,9 +55,32 @@ end::forDocSiteOverview[]
 <!--
 tag::forDocSiteGettingStarted[]
 -->
-To use the FusionAuth iOS SDK, add the following dependency 
+TODO:
 
-TBD
+To use the FusionAuth iOS SDK, add this repository as dependency.
+
+Initialize the AuthorizationManager with the AuthorizationConfiguration.
+
+```
+extension AuthorizationManager {
+
+    public static let shared: AuthorizationManager = {
+        let instance = AuthorizationManager.instance
+        instance.initialize(configuration: AuthorizationConfiguration(
+            clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
+            fusionAuthUrl: "http://localhost:9011",
+            additionalScopes: ["email", "profile"]
+        ), storage: KeyChainStorage())
+        return instance
+    }()
+
+}
+```
+
+This will initialize the AuthorizationManager with the provided AuthorizationConfiguration. The configuration includes the client id, FusionAuth URL, additional scopes and storage mechanism. The AuthorizationManager is a singleton and can be accessed from anywhere in the app. The example configuration uses your local FusionAuth instance. If you are running the FusionAuth server on a different machine, you will need to replace the fusionAuthUrl with the correct URL.
+
+By default, the SDK uses the KeyChainStorage for storing tokens. You can use one of the other available mechanisms or implement your own storage mechanism by implementing the Storage protocol.
+
 <!--
 end::forDocSiteGettingStarted[]
 -->
@@ -66,7 +90,20 @@ end::forDocSiteGettingStarted[]
 <!--
 tag::forDocSiteUsage[]
 -->
-TBD
+TODO: 
+
+To start the OAuth 2.0 Authorization Code Grant, you can use the following code snippet:
+
+```
+try await AuthorizationManager.shared
+    .oauth()
+    .authorize(options: OAuthAuthorizeOptions())
+    } catch {
+        print("Error occured")
+    }
+```
+
+The authorize method will open the Safari browser and redirect to the FusionAuth login page. After successful login, the user will be redirected back to the app with the authorization code. The SDK will exchange the authorization code for an access token and refresh token.
 <!--
 end::forDocSiteUsage[]
 -->
@@ -137,7 +174,22 @@ Once you have found an issue you want to work on, we suggest to:
 ### Development Tooling
 
 During development of new features and fixes, we suggest using the following code quality tools which are preconfigured for this project:
-* TBD
+
+#### SourceDocs
+
+To generate documentation for the project.
+
+Installation: `brew install sourcedocs`
+
+Generate Documentation: `sourcedocs generate -- -scheme FusionAuth`
+
+#### SwiftLint
+
+To enforce Swift style and conventions.
+
+Installation: `brew install swiftlint`
+
+Run SwiftLint: `swiftlint`
 
 ### Submitting a Pull Request
 
