@@ -17,7 +17,6 @@ public class UserDefaultsStorage: Storage {
     /// - Parameters:
     ///   - key: The key for which to set the value.
     ///   - content: The value to be set for the key.
-    /// - Returns: Void
     public func set(key: String, content: Any) {
         UserDefaults.standard.setValue(content, forKey: key)
     }
@@ -25,7 +24,6 @@ public class UserDefaultsStorage: Storage {
     /// Removes the value associated with the given key from UserDefaults.
     /// - Parameters:
     ///   - key: The key for which to remove the value.
-    /// - Returns: Void
     public func remove(key: String) {
         UserDefaults.standard.removeObject(forKey: key)
     }

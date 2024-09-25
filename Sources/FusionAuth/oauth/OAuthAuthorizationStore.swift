@@ -23,20 +23,17 @@ public class OAuthAuthorizationStore {
 
     /// Store the current authorization flow
     /// - Parameter flow: The current authorization flow
-    /// - Returns: Void
     func store(_ flow: OIDExternalUserAgentSession) {
         self.currentAuthorizationFlow = flow
     }
 
     /// Cancel the current authorization flow
-    /// - Returns: Void
     func cancel() {
         self.currentAuthorizationFlow?.cancel()
         self.currentAuthorizationFlow = nil
     }
 
     /// Clear the current authorization flow
-    /// - Returns: Void
     func clear() {
         self.currentAuthorizationFlow = nil
     }

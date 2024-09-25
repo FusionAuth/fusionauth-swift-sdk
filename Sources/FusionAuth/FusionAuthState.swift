@@ -31,7 +31,6 @@ public class FusionAuthState: ObservableObject {
 
     /// Update the auth state with the given data
     /// - Parameter authState: The auth state data
-    /// - Returns: Void
     /// - Note: This method updates the FusionAuthStateData access token, refresh token, ID token, and access token expiration time.
     public func update(authState: FusionAuthStateData) {
         self.refreshToken = authState.refreshToken
@@ -42,7 +41,6 @@ public class FusionAuthState: ObservableObject {
 
     /// Update the auth state with the given OIDAuthState
     /// - Parameter authState: The OIDAuthState object
-    /// - Returns: Void
     /// - Note: This method updates the OIDAuthState access token, refresh token, ID token, and access token expiration time.
     public func update(authState: OIDAuthState) {
         self.refreshToken = authState.refreshToken
@@ -52,7 +50,6 @@ public class FusionAuthState: ObservableObject {
     }
 
     /// Clear the auth state
-    /// - Returns: Void
     /// - Note: This method clears the access token, refresh token, ID token, and access token expiration time.
     public func clear() {
         self.refreshToken = nil
