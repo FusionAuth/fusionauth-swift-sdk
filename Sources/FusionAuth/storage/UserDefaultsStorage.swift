@@ -1,6 +1,6 @@
 import Foundation
 
-/// Storage that saves data to UserDefaults
+/// Storage that saves data to UserDefaults.
 public class UserDefaultsStorage: Storage {
     public init() {}
 

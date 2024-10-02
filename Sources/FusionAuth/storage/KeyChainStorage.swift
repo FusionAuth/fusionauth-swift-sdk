@@ -2,9 +2,9 @@ import Foundation
 import Security
 
 /// TODO
-/// Storage that saves data to the KeyChain
-/// This storage is secure and the data is encrypted
-/// The data is persisted even when the app is closed
+/// Storage that saves data to the KeyChain.
+/// This storage is secure and the data is encrypted.
+/// The data is persisted even when the app is closed.
 public class KeyChainStorage: Storage {
     public init() {}
 

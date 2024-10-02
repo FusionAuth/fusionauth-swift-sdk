@@ -19,7 +19,7 @@ public class FusionAuthState: ObservableObject {
     @Published public var idToken: String?
     @Published public var refreshToken: String?
 
-    /// Check if the user is authenticated
+    /// Check if the user is authenticated.
     /// - Returns: A boolean indicating if the user is authenticated
     /// - Note: This method checks if the access token is not nil and the access token expiration time is in the future.
     public func isLoggedIn() -> Bool {
@@ -29,7 +29,7 @@ public class FusionAuthState: ObservableObject {
         return Date() < expiration
     }
 
-    /// Update the auth state with the given data
+    /// Update the auth state with the given data.
     /// - Parameter authState: The auth state data
     /// - Note: This method updates the FusionAuthStateData access token, refresh token, ID token, and access token expiration time.
     public func update(authState: FusionAuthStateData) {
@@ -39,7 +39,7 @@ public class FusionAuthState: ObservableObject {
         self.idToken = authState.idToken
     }
 
-    /// Update the auth state with the given OIDAuthState
+    /// Update the auth state with the given OIDAuthState.
     /// - Parameter authState: The OIDAuthState object
     /// - Note: This method updates the OIDAuthState access token, refresh token, ID token, and access token expiration time.
     public func update(authState: OIDAuthState) {
@@ -49,7 +49,7 @@ public class FusionAuthState: ObservableObject {
         self.idToken = authState.lastTokenResponse?.idToken
     }
 
-    /// Clear the auth state
+    /// Clear the auth state.
     /// - Note: This method clears the access token, refresh token, ID token, and access token expiration time.
     public func clear() {
         self.refreshToken = nil
