@@ -12,9 +12,8 @@ class AuthorizationManagerUserDefaultsStorageTest: XCTestCase {
     override func setUp() {
         super.setUp()
         userDefaultsStorage = UserDefaultsStorage()
-        authorizationManager = AuthorizationManager(storage: userDefaultsStorage)
-        tokenManager = TokenManager(storage: userDefaultsStorage)
-        userInfo = UserInfo(storage: userDefaultsStorage)
+        tokenManager = TokenManager()
+        userInfo = UserInfo()
     }
 
     override func tearDown() {

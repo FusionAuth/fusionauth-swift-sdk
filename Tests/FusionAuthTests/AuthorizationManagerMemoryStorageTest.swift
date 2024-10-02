@@ -12,9 +12,8 @@ class AuthorizationManagerMemoryStorageTest: XCTestCase {
     override func setUp() {
         super.setUp()
         memoryStorage = MemoryStorage()
-        authorizationManager = AuthorizationManager(storage: memoryStorage)
-        tokenManager = TokenManager(storage: memoryStorage)
-        userInfo = UserInfo(storage: memoryStorage)
+        tokenManager = TokenManager()
+        userInfo = UserInfo()
     }
 
     override func tearDown() {

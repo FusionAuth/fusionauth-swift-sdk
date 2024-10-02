@@ -12,9 +12,8 @@ class AuthorizationManagerKeyChainStorageTest: XCTestCase {
     override func setUp() {
         super.setUp()
         keyChainStorage = KeyChainStorage()
-        authorizationManager = AuthorizationManager(storage: keyChainStorage)
-        tokenManager = TokenManager(storage: keyChainStorage)
-        userInfo = UserInfo(storage: keyChainStorage)
+        tokenManager = TokenManager()
+        userInfo = UserInfo()
     }
 
     override func tearDown() {
