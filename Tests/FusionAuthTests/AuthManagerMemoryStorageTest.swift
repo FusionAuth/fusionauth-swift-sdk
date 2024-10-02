@@ -1,24 +1,24 @@
-// AuthorizationManager swift test case with KeyChainStorage
+// AuthorizationManager swift test case with MemoryStorage
 
 import XCTest
 @testable import FusionAuth
 
-class AuthorizationManagerKeyChainStorageTest: XCTestCase {
+class AuthManagerMemoryStorageTest: XCTestCase {
     var authorizationManager: AuthorizationManager!
-    var keyChainStorage: KeyChainStorage!
+    var memoryStorage: MemoryStorage!
     var tokenManager: TokenManager!
     var userInfo: UserInfo!
 
     override func setUp() {
         super.setUp()
-        keyChainStorage = KeyChainStorage()
+        memoryStorage = MemoryStorage()
         tokenManager = TokenManager()
         userInfo = UserInfo()
     }
 
     override func tearDown() {
         super.tearDown()
-        keyChainStorage = nil
+        memoryStorage = nil
         authorizationManager = nil
         tokenManager = nil
         userInfo = nil

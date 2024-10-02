@@ -3,7 +3,7 @@
 import XCTest
 @testable import FusionAuth
 
-class AuthorizationManagerUserDefaultsStorageTest: XCTestCase {
+class AuthManagerUserDefaultsStorageTest: XCTestCase {
     var authorizationManager: AuthorizationManager!
     var userDefaultsStorage: UserDefaultsStorage!
     var tokenManager: TokenManager!
