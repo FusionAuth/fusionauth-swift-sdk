@@ -53,32 +53,28 @@ end::forDocSiteOverview[]
 <!--
 tag::forDocSiteGettingStarted[]
 -->
-TODO:
-
-To use the FusionAuth iOS SDK, add this repository as dependency.
+To use the FusionAuth iOS SDK, add this repository as a dependency.
 
 Initialize the AuthorizationManager with the AuthorizationConfiguration.
 
-```
+```swift
 extension AuthorizationManager {
-
+    
     public static let shared: AuthorizationManager = {
         let instance = AuthorizationManager.instance
         instance.initialize(configuration: AuthorizationConfiguration(
             clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
             fusionAuthUrl: "http://localhost:9011",
-            additionalScopes: ["email", "profile"]
-        ), storage: KeyChainStorage())
+            additionalScopes: ["email", "profile"]))
         return instance
     }()
-
+    
 }
 ```
 
 This will initialize the AuthorizationManager with the provided AuthorizationConfiguration. The configuration includes the client id, FusionAuth URL, additional scopes and storage mechanism. The AuthorizationManager is a singleton and can be accessed from anywhere in the app. The example configuration uses your local FusionAuth instance. If you are running the FusionAuth server on a different machine, you will need to replace the fusionAuthUrl with the correct URL.
 
-By default, the SDK uses the TODO for storing tokens. You can use one of the other available mechanisms or implement your own storage mechanism by implementing the Storage protocol.
-
+By default, the SDK uses the `MemoryStorage for storing tokens. You can use one of the other available mechanisms `KeyChainStorage`or `UserDefaultsStorage` by e.g. adding `storage: KeyChainStorage` to `instance.initialize` or implement your own storage mechanism by implementing the Storage protocol.
 <!--
 end::forDocSiteGettingStarted[]
 -->
@@ -88,11 +84,10 @@ end::forDocSiteGettingStarted[]
 <!--
 tag::forDocSiteUsage[]
 -->
-TODO: 
+To start the OAuth 2.0 Authorization Code Grant, you can use the `oAuth()` function on the `AuthorizationManager` to
+retrieve the `OAuthAuthorizationService`:
 
-To start the OAuth 2.0 Authorization Code Grant, you can use the following code snippet:
-
-```
+```swift
 try await AuthorizationManager.shared
     .oauth()
     .authorize(options: OAuthAuthorizeOptions())
@@ -101,7 +96,53 @@ try await AuthorizationManager.shared
     }
 ```
 
-The authorize method will open the Safari browser and redirect to the FusionAuth login page. After successful login, the user will be redirected back to the app with the authorization code. The SDK will exchange the authorization code for an access token and refresh token.
+The `authorize` method will open the Safari browser and redirect to the FusionAuth login page. After successful login, the user will be redirected back to the app with the authorization code. The SDK will exchange the authorization code for an access token and refresh token.
+
+TODO
+
+The `authorize` function will start the OAuth 2.0 Authorization Code Grant flow and open the provided `Intent` when the
+flow is completed.
+The `OAuthAuthorizeOptions` allows you to specify additional options for the flow, such as the `cancelIntent` and
+the `state`.
+
+If the user completes the flow, the `TokenActivity` will be opened, and you are required to handle the redirect:
+
+```swift
+AuthorizationManager.oAuth(this@TokenActivity)
+    .handleRedirect(intent)
+```
+
+This will retrieve the authorization response, validates the `state` if it was provided, and exchanges the authorization
+code for an access token.
+The result of the exchange will be stored in the `TokenManager`.
+
+After the user is authorized, you can use `getUserInfo()` to retrieve the [User Info](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo):
+
+```swift
+AuthorizationManager.oAuth(this@TokenActivity).getUserInfo()
+```
+
+To call your API with an access token, you can use the `AuthorizationManager` to retrieve a valid access token:
+
+```swift
+val accessToken = AuthorizationManager.freshAccessToken(this@TokenActivity)
+```
+
+This will retrieve a fresh access token from the `TokenManager` and return it. If the access token is expired,
+the `TokenManager` will refresh it automatically.
+
+Finally, you can use the `AuthorizationManager` to sign out the user and remove the tokens from the `TokenManager`:
+
+```swift
+AuthorizationManager
+    .oAuth(this@TokenActivity)
+    .logout(
+        Intent(this@TokenActivity, LoginActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    )
+```
+
+If the user is signed out, the `LoginActivity` will be opened.
 <!--
 end::forDocSiteUsage[]
 -->
