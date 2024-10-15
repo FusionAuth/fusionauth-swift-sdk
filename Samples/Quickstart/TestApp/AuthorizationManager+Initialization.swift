@@ -15,8 +15,7 @@ extension AuthorizationManager {
         instance.initialize(configuration: AuthorizationConfiguration(
             clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
             fusionAuthUrl: "http://localhost:9011",
-            additionalScopes: ["email", "profile"]
-        ), storage: KeyChainStorage())
+            additionalScopes: ["email", "profile"]))
         return instance
     }()
     

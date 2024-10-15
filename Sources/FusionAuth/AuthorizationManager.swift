@@ -18,7 +18,7 @@ public class AuthorizationManager {
 
     private init() {}
 
-    public func initialize(configuration: AuthorizationConfiguration, storage: Storage?) {
+    public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil) {
         self.configuration = configuration
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
 
