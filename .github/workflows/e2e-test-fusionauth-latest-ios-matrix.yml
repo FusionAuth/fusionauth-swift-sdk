@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         destination: [ "platform=iOS Simulator,OS=18.1,name=iPhone 15" ]
-        xcode: [ "16.1" ]
+        xcode: [ "16.0" ]
         swift: ["6.0.0"]
         include:
           - destination: "platform=iOS Simulator,OS=17.5,name=iPhone 15"
@@ -84,11 +84,11 @@ jobs:
       # Create and start FusionAuth containers used by E2E test and sleeps for 30 seconds.
       # Despite its waiting until the container started with the status healthy,
       # it will run the kickstart after that, which takes a moment.
-      - name: Start FusionAuth
-        uses: fusionauth/fusionauth-github-action@v1
-        with:
-          FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
-          FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
+      #- name: Start FusionAuth
+      #  uses: fusionauth/fusionauth-github-action@v1
+      #  with:
+      #    FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
+      #    FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
 
       # Perform the build manually.
       - name: Manual Build
