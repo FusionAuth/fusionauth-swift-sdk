@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.5"),
-        .package(url: "https://github.com/realm/SwiftLint.git", exact: "0.57.0"),
+        .package(url: "https://github.com/realm/SwiftLint.git"),
         .package(url: "https://github.com/swiftlang/swift-docc-plugin.git", exact: "1.4.3")
     ],
     targets: [
