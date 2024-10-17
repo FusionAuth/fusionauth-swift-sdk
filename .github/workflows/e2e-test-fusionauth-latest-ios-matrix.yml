@@ -43,7 +43,7 @@ jobs:
             swift: "5.10.1"
           - destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14"
             xcode: "14.3.1"
-            swift: "5.10.1"
+            swift: "5.8.1"
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
