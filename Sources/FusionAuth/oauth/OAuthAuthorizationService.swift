@@ -16,6 +16,9 @@ enum OAuthError: Error {
     case accessTokenNil
     case userInfoEndpointNotFound
     case userInfoInvalid
+    case refreshTokenNil
+    case refreshTokenNoResponse
+    case unableToUpdateInternalState
 }
 
 /// OAuthAuthorizationService class is responsible for handling OAuth authorization and authorization process.
@@ -90,7 +93,11 @@ public class OAuthAuthorizationService {
         OAuthAuthorizationService.appAuthState = authState
 
         DispatchQueue.main.async {
-            AuthorizationManager.instance.updateAuthState(authState: authState)
+            do {
+                try AuthorizationManager.instance.updateAuthState(authState: authState)
+            } catch {
+                AuthorizationManager.log?.warning("Unable to update internal state after authorize")
+            }
         }
 
         AuthorizationManager.log?.trace("Finishing OAuth authorization...")
@@ -105,35 +112,11 @@ public class OAuthAuthorizationService {
             throw OAuthError.userInfoEndpointNotFound
         }
 
-        return try await withCheckedThrowingContinuation { continuation in
-            guard let authState = OAuthAuthorizationService.appAuthState else {
-                continuation.resume(throwing: OAuthError.accessTokenNil)
-                return
-            }
-
-            authState.performAction { (accessToken, _, error) in
-                if error != nil {
-                    continuation.resume(throwing: error!)
-                    return
-                }
-
-                guard let accessToken = accessToken else {
-                    continuation.resume(throwing: OAuthError.accessTokenNil)
-                    return
-                }
-
-                Task {
-                    do {
-                        let userInfo = try await self.getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
-                        continuation.resume(returning: userInfo)
-                        return
-                    } catch let error as NSError {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-                }
-            }
+        guard let accessToken = try await freshAccessToken() else {
+            throw OAuthError.accessTokenNil
         }
+
+        return try await getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
     }
 
     public func logout(options: OAuthLogoutOptions) async throws {
@@ -185,7 +168,75 @@ public class OAuthAuthorizationService {
         OAuthAuthorizationService.appAuthState = nil
 
         DispatchQueue.main.async {
-            AuthorizationManager.instance.fusionAuthState().clear()
+            do {
+                try AuthorizationManager.instance.clearState()
+            } catch {
+                AuthorizationManager.log?.warning("Unable to clear internal state after logout")
+            }
+        }
+    }
+
+    public func freshAccessToken() async throws -> String? {
+        AuthorizationManager.log?.trace("Retrieve fresh token from FusionAuth")
+
+        if let tokenTask {
+            return try await tokenTask.value
+        }
+
+        let task = Task {
+            return try await freshAccessTokenInternal()
+        }
+        self.tokenTask = task
+
+        return try await withTaskCancellationHandler {
+            try await task.value
+        } onCancel: {
+            task.cancel()
+        }
+    }
+
+    private func freshAccessTokenInternal() async throws -> String {
+        let configuration = try await getConfiguration()
+
+        return try await withCheckedThrowingContinuation { continuation in
+            guard let refreshToken = AuthorizationManager.instance.getTokenManager().getAuthState()?.refreshToken else {
+                continuation.resume(throwing: OAuthError.refreshTokenNil)
+                return
+            }
+
+            let request = OIDTokenRequest(configuration: configuration, grantType: OIDGrantTypeRefreshToken, authorizationCode: nil, redirectURL: nil, clientID: clientId, clientSecret: nil, scope: nil, refreshToken: refreshToken, codeVerifier: nil, additionalParameters: nil)
+
+            DispatchQueue.main.async {
+                OIDAuthorizationService.perform(request) { response, error in
+                    if error != nil {
+                        continuation.resume(throwing: error!)
+                        return
+                    }
+
+                    guard let response = response else {
+                        continuation.resume(throwing: OAuthError.refreshTokenNoResponse)
+                        return
+                    }
+
+                    guard let accessToken = response.accessToken else {
+                        continuation.resume(throwing: OAuthError.accessTokenNil)
+                        return
+                    }
+
+                    do {
+                        try AuthorizationManager.instance.updateAuthState(
+                            accessToken: accessToken,
+                            accessTokenExpirationTime: response.accessTokenExpirationDate!,
+                            idToken: response.idToken!,
+                            refreshToken: response.refreshToken!
+                        )
+                    } catch {
+                        continuation.resume(throwing: OAuthError.unableToUpdateInternalState)
+                    }
+
+                    continuation.resume(returning: response.accessToken!)
+                }
+            }
         }
     }
 

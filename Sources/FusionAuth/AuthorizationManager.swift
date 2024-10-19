@@ -45,9 +45,56 @@ public class AuthorizationManager {
         )
     }
 
-    public func updateAuthState(authState: OIDAuthState) {
-        self.tokenManager?.setAuthState(authState: authState)
-        AuthorizationManager.instance.fusionAuthState().update(authState: authState)
+    public func freshAccessToken(force: Bool = false) async throws -> String? {
+        if !force && !self.isAccessTokenExpired() {
+            return self.getAccessToken()
+        }
+
+        return try await oauth().freshAccessToken()
+    }
+
+    public func getAccessToken() -> String? {
+        return self.tokenManager?.getAuthState()?.accessToken
+    }
+
+    public func getAccessTokenExpirationTime() -> Date? {
+        return self.tokenManager?.getAuthState()?.accessTokenExpirationTime
+    }
+
+    public func isAccessTokenExpired() -> Bool {
+        guard let expiration = self.getAccessTokenExpirationTime() else {
+            return true
+        }
+
+        return expiration.timeIntervalSinceNow.sign == .minus
+    }
+
+    public func updateAuthState(authState: OIDAuthState) throws {
+        try updateAuthState(fusionAuthStateData: FusionAuthStateData(
+            accessToken: authState.lastTokenResponse?.accessToken ?? "",
+            accessTokenExpirationTime: authState.lastTokenResponse?.accessTokenExpirationDate ?? Date(),
+            idToken: authState.lastTokenResponse?.idToken ?? "",
+            refreshToken: authState.refreshToken ?? ""
+        ))
+    }
+
+    public func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws {
+        try updateAuthState(fusionAuthStateData: FusionAuthStateData(
+            accessToken: accessToken,
+            accessTokenExpirationTime: accessTokenExpirationTime,
+            idToken: idToken,
+            refreshToken: refreshToken
+        ))
+    }
+
+    private func updateAuthState(fusionAuthStateData: FusionAuthStateData) throws {
+        try self.tokenManager?.saveAuthState(fusionAuthStateData)
+        AuthorizationManager.instance.fusionAuthState().update(authState: fusionAuthStateData)
+    }
+
+    public func clearState() throws {
+        try self.tokenManager?.clearAuthState()
+        AuthorizationManager.instance.fusionAuthState().clear()
     }
 
 }

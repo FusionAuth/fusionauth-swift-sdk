@@ -28,6 +28,24 @@ struct HomeView: View {
                     .padding(.bottom, 20).font(.headline)
                 Text("Your balance is:")
                 Text("$0.00").font(.largeTitle)
+                Button("Refresh token") {
+                    Task {
+                        do {
+                            let accessToken = try await AuthorizationManager.shared
+                                .oauth()
+                                .freshAccessToken()
+                            
+                            guard let accessToken = accessToken else {
+                                print("Access token is not returned")
+                                return
+                            }
+                            
+                            print("Refreshed access token: \(accessToken)")
+                        } catch let error as NSError {
+                            print(error)
+                        }
+                    }
+                }
                 Button("Log out") {
                     Task {
                         do {
