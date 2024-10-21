@@ -24,8 +24,15 @@ struct HomeView: View {
             }
         } else {
             VStack {
-                Text("Welcome \(userInfo?.given_name ?? "") \(userInfo?.family_name ?? "")")
-                    .padding(.bottom, 20).font(.headline)
+                if userInfo?.given_name == nil || userInfo?.family_name == nil {
+                    if userInfo?.email == nil {
+                        Text("Welcome \(userInfo?.name ?? "") ").padding(.bottom, 20).font(.headline)
+                    } else {
+                        Text("Welcome \(userInfo?.email ?? "") ").padding(.bottom, 20).font(.headline)
+                    }
+                } else {
+                    Text("Welcome \(userInfo?.given_name ?? "") \(userInfo?.family_name ?? "")").padding(.bottom, 20).font(.headline)
+                }
                 Text("Your balance is:")
                 Text("$0.00").font(.largeTitle)
                 Button("Refresh token") {
