@@ -84,7 +84,7 @@ jobs:
 
       # Download simulator platform.
       - name: Download simulator platform
-        run: xcodebuild -downloadPlatform ${{ matrix.simulator-platform }} -exportPath ./SimulatorRuntimes/
+        run: xcodebuild -downloadPlatform ${{ matrix.simulator-platform }} -exportPath ./SimulatorRuntimes/ -exportArchive
 
       # Install simulator platform.
       - name: Install simulator runtime
