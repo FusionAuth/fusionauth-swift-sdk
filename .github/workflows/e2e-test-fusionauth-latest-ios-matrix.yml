@@ -99,7 +99,10 @@ jobs:
       # Install simulator platform.
       - name: Install Simulator
         shell: bash
-        run: sudo xcodes runtimes install --keep-archive '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
+        run: |
+          xcode runtimes
+          sudo xcodes runtimes
+          sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
