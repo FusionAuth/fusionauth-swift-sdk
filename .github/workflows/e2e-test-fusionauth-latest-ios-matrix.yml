@@ -36,23 +36,27 @@ jobs:
       matrix:
         destination: [ "platform=iOS Simulator,OS=18.1,name=iPhone 15" ]
         xcode: [ "15.4" ]
-        simulator: [ "iOS 18.1" ]
+        simulator-platform: [ "iOS" ]
+        simulator-version: [ "18.1" ]
         swift: ["5.10.1"]
         os: [ "macos-14" ]
         include:
           - destination: "platform=iOS Simulator,OS=17.5,name=iPhone 15"
             xcode: "15.4"
-            simulator: "iOS 17.5"
+            simulator-platform: "iOS"
+            simulator-version: "17.5"
             swift: "5.10.1"
             os: "macos-14"
           - destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14"
             xcode: "14.3.1"
-            simulator: "iOS 16.4"
+            simulator-platform: "iOS"
+            simulator-version: "16.4"
             swift: "5.8.1"
             os: "macos-13"
           - destination: "platform=iOS Simulator,OS=15.5,name=iPhone 14"
             xcode: "14.3.1"
-            simulator: "iOS 15.5"
+            simulator-platform: "iOS"
+            simulator-version: "15.5"
             swift: "5.8.1"
             os: "macos-13"
 
@@ -78,6 +82,14 @@ jobs:
       - name: Get Xcode version
         run: xcodebuild -version
 
+      # Download simulator platform.
+      - name: Download simulator platform
+        run: xcodebuild -downloadPlatform ${{ matrix.simulator-platform }} -buildVersion ${{ matrix.simulator-version }} -exportPath ./SimulatorRuntimes/
+
+      # Install simulator platform.
+      - name: Install simulator runtime
+        run: xcodebuild -importPlatform ./SimulatorRuntimes/*.dmg
+
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
         uses: swift-actions/setup-swift@v2.1.0
@@ -87,10 +99,6 @@ jobs:
       # Get the Swift version.
       - name: Get Swift version
         run: swift --version
-
-      # Install simulator runtime.
-      - name: Install simulator runtime
-        run: xcodes runtimes install "${{ matrix.simulator }}"
 
       # Checkout the repository.
       - name: Checkout repository
