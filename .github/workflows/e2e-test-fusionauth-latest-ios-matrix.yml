@@ -94,8 +94,7 @@ jobs:
         shell: bash
         run: |
           brew install aria2
-          brew tap robotsandpencils/made
-          brew install robotsandpencils/made/xcodes
+          brew install xcodes
 
       # Install simulator platform.
       - name: Install Simulator
