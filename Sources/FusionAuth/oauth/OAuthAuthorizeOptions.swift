@@ -10,7 +10,7 @@ public struct OAuthAuthorizeOptions {
     /// The redirect URI suffix for comprising the redirect URI
     private let redirectUriSuffix: String
     /// The redirect URI to be used for the OAuth authorize request.
-    /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
+    /// Default is Bundle.main.bundleIdentifier + ":/oauth2redirect/ios-provider".
     /// Which is a combination of bundleId and postLogoutRedirectUriSuffix
     let redirectUri: String
     /// The identity provider hint to be used for the OAuth authorize request.

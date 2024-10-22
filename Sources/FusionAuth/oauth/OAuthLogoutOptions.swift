@@ -10,7 +10,7 @@ public struct OAuthLogoutOptions {
     /// The post logout redirect URI suffix for comprising the redirect URI
     private let postLogoutRedirectUriSuffix: String
     /// The post logout redirect URI to be used for the OAuth logout request.
-    /// Default is "io.fusionauth.app:/oauth2redirect/ios-provider".
+    /// Default is Bundle.main.bundleIdentifier + ":/oauth2redirect/ios-provider".
     /// Which is a combination of bundleId and postLogoutRedirectUriSuffix
     let postLogoutRedirectUri: String
     /// An opaque value used by the client to maintain state between the request and callback.
