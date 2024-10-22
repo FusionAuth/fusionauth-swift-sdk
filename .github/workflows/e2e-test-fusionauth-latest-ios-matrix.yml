@@ -84,11 +84,11 @@ jobs:
 
       # Download simulator platform.
       - name: Download simulator platform
-        run: xcodebuild -downloadPlatform ${{ matrix.simulator-platform }} -exportPath ./SimulatorRuntimes/ -exportArchive
+        run: xcodebuild -downloadPlatform ${{ matrix.simulator-platform }}
 
       # Install simulator platform.
-      - name: Install simulator runtime
-        run: xcodebuild -importPlatform ./SimulatorRuntimes/*${{ matrix.simulator-version }}*.dmg
+      #- name: Install simulator runtime
+      #  run: xcodebuild -importPlatform ./SimulatorRuntimes/*${{ matrix.simulator-version }}*.dmg
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
