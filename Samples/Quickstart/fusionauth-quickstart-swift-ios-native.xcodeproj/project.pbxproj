@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E2795F92BD937B800738892 /* TestAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2795F82BD937B800738892 /* TestAppApp.swift */; };
+		0E2795F92BD937B800738892 /* QuickstartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2795F82BD937B800738892 /* QuickstartApp.swift */; };
 		0E2795FB2BD937B800738892 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2795FA2BD937B800738892 /* ContentView.swift */; };
 		0E2795FD2BD937BA00738892 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E2795FC2BD937BA00738892 /* Assets.xcassets */; };
 		0E2796002BD937BA00738892 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E2795FF2BD937BA00738892 /* Preview Assets.xcassets */; };
@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		0E2795F52BD937B800738892 /* fusionauth-quickstart-swift-ios-native.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fusionauth-quickstart-swift-ios-native.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E2795F82BD937B800738892 /* TestAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppApp.swift; sourceTree = "<group>"; };
+		0E2795F82BD937B800738892 /* QuickstartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartApp.swift; sourceTree = "<group>"; };
 		0E2795FA2BD937B800738892 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0E2795FC2BD937BA00738892 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E2795FF2BD937BA00738892 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		0E2795EC2BD937B800738892 = {
 			isa = PBXGroup;
 			children = (
-				0E2795F72BD937B800738892 /* TestApp */,
+				0E2795F72BD937B800738892 /* Quickstart */,
 				9326C2432C8067DA001C9CDB /* Packages */,
 				0E2795F62BD937B800738892 /* Products */,
 				0E8454C42BF50595007C5E0D /* Frameworks */,
@@ -66,10 +66,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0E2795F72BD937B800738892 /* TestApp */ = {
+		0E2795F72BD937B800738892 /* Quickstart */ = {
 			isa = PBXGroup;
 			children = (
-				0E2795F82BD937B800738892 /* TestAppApp.swift */,
+				0E2795F82BD937B800738892 /* QuickstartApp.swift */,
 				0E2795FA2BD937B800738892 /* ContentView.swift */,
 				0E2795FC2BD937BA00738892 /* Assets.xcassets */,
 				0E2795FE2BD937BA00738892 /* Preview Content */,
@@ -80,7 +80,7 @@
 				0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */,
 				0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */,
 			);
-			path = TestApp;
+			path = Quickstart;
 			sourceTree = "<group>";
 		};
 		0E2795FE2BD937BA00738892 /* Preview Content */ = {
@@ -125,7 +125,7 @@
 			packageProductDependencies = (
 				0E3A85552BD94071008D2419 /* FusionAuth */,
 			);
-			productName = TestApp;
+			productName = Quickstart;
 			productReference = 0E2795F52BD937B800738892 /* fusionauth-quickstart-swift-ios-native.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -187,7 +187,7 @@
 				0E2795FB2BD937B800738892 /* ContentView.swift in Sources */,
 				0EB018B82C830E8A00503908 /* AuthorizationManager+Initialization.swift in Sources */,
 				0E8454CC2BF50CE8007C5E0D /* HomeView.swift in Sources */,
-				0E2795F92BD937B800738892 /* TestAppApp.swift in Sources */,
+				0E2795F92BD937B800738892 /* QuickstartApp.swift in Sources */,
 				0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */,
 				0E8454C82BF50A3C007C5E0D /* Styles.swift in Sources */,
 			);
@@ -322,7 +322,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TestApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quickstart/Preview Content\"";
 				DEVELOPMENT_TEAM = UFXSK3CAAL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -336,7 +336,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.Quickstart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -355,7 +355,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TestApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Quickstart/Preview Content\"";
 				DEVELOPMENT_TEAM = UFXSK3CAAL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -369,7 +369,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.Quickstart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
