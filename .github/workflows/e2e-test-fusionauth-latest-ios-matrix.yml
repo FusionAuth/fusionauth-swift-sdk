@@ -100,7 +100,7 @@ jobs:
       - name: Install Simulator
         shell: bash
         run: |
-          xcode runtimes
+          xcodes runtimes
           sudo xcodes runtimes
           sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
 
