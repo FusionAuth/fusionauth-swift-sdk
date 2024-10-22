@@ -82,15 +82,25 @@ jobs:
       - name: Get Xcode version
         run: xcodebuild -version
 
-      # Download simulator platform.
-      - name: Download simulator platform
+      # Cache the downloads.
+      - name: Cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: "~/Downloads"
+          key: ${{ matrix.os }}-runtimes-downloads-${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}
+
+      # Install Xcodes.
+      - name: Install Xcodes
+        shell: bash
         run: |
-          xcodebuild -runFirstLaunch
-          xcodebuild -downloadPlatform ${{ matrix.simulator-platform }} -exportPath ./SimulatorRuntimes/
+          brew install aria2
+          brew tap robotsandpencils/made
+          brew install robotsandpencils/made/xcodes
 
       # Install simulator platform.
-      - name: Install simulator runtime
-        run: xcodebuild -importPlatform ./SimulatorRuntimes/*${{ matrix.simulator-version }}*.dmg
+      - name: Install Simulator
+        shell: bash
+        run: sudo xcodes runtimes install --keep-archive '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
