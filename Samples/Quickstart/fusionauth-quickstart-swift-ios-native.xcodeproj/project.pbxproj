@@ -19,6 +19,8 @@
 		0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */; };
 		0EB018B82C830E8A00503908 /* AuthorizationManager+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */; };
 		9326C2A12C80692B001C9CDB /* fusionauth-ios-mobilesdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */; };
+		939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
+		939AED1A2CC91492000E2D3F /* QuickstartTestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,11 +47,9 @@
 		0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChangeView.swift; sourceTree = "<group>"; };
 		0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthorizationManager+Initialization.swift"; sourceTree = "<group>"; };
 		9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-ios-mobilesdk"; path = ../../..; sourceTree = "<group>"; };
+		939AED162CC91492000E2D3F /* QuickstartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTests.swift; sourceTree = "<group>"; };
+		939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E232BE62CC7ABD100D944E5 /* QuickstartTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QuickstartTests; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0E232BE22CC7ABD100D944E5 /* Frameworks */ = {
@@ -75,7 +75,7 @@
 			children = (
 				0E2795F72BD937B800738892 /* Quickstart */,
 				9326C2432C8067DA001C9CDB /* Packages */,
-				0E232BE62CC7ABD100D944E5 /* QuickstartTests */,
+				939AED182CC91492000E2D3F /* QuickstartTests */,
 				0E2795F62BD937B800738892 /* Products */,
 				0E8454C42BF50595007C5E0D /* Frameworks */,
 			);
@@ -130,6 +130,15 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		939AED182CC91492000E2D3F /* QuickstartTests */ = {
+			isa = PBXGroup;
+			children = (
+				939AED162CC91492000E2D3F /* QuickstartTests.swift */,
+				939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */,
+			);
+			path = QuickstartTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,9 +154,6 @@
 			);
 			dependencies = (
 				0E232BEC2CC7ABD100D944E5 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				0E232BE62CC7ABD100D944E5 /* QuickstartTests */,
 			);
 			name = QuickstartTests;
 			packageProductDependencies = (
@@ -196,7 +202,7 @@
 				};
 			};
 			buildConfigurationList = 0E2795F02BD937B800738892 /* Build configuration list for PBXProject "fusionauth-quickstart-swift-ios-native" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -241,6 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */,
+				939AED1A2CC91492000E2D3F /* QuickstartTestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
