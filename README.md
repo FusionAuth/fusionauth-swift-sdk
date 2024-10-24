@@ -2,7 +2,6 @@
 [![Dependabot](https://badgen.net/github/dependabot/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/network/updates)
 [![Open PRs](https://badgen.net/github/open-prs/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/pulls)
 
-
 An SDK for using FusionAuth in iOS Apps.
 
 # Table of Contents
@@ -54,9 +53,28 @@ end::forDocSiteOverview[]
 <!--
 tag::forDocSiteGettingStarted[]
 -->
-To use the FusionAuth iOS SDK, add the following dependency 
+To use the FusionAuth iOS SDK, add this repository as a dependency.
 
-TBD
+Initialize the AuthorizationManager with the AuthorizationConfiguration.
+
+```swift
+extension AuthorizationManager {
+    
+    public static let shared: AuthorizationManager = {
+        let instance = AuthorizationManager.instance
+        instance.initialize(configuration: AuthorizationConfiguration(
+            clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
+            fusionAuthUrl: "http://localhost:9011",
+            additionalScopes: ["email", "profile"]))
+        return instance
+    }()
+    
+}
+```
+
+This will initialize the AuthorizationManager with the provided AuthorizationConfiguration. The configuration includes the client id, FusionAuth URL, additional scopes and storage mechanism. The AuthorizationManager is a singleton and can be accessed from anywhere in the app. The example configuration uses your local FusionAuth instance. If you are running the FusionAuth server on a different machine, you will need to replace the fusionAuthUrl with the correct URL.
+
+By default, the SDK uses the `MemoryStorage for storing tokens. You can use one of the other available mechanisms `KeyChainStorage`or `UserDefaultsStorage` by e.g. adding `storage: KeyChainStorage` to `instance.initialize` or implement your own storage mechanism by implementing the Storage protocol.
 <!--
 end::forDocSiteGettingStarted[]
 -->
@@ -66,7 +84,65 @@ end::forDocSiteGettingStarted[]
 <!--
 tag::forDocSiteUsage[]
 -->
-TBD
+To start the OAuth 2.0 Authorization Code Grant, you can use the `oAuth()` function on the `AuthorizationManager` to
+retrieve the `OAuthAuthorizationService`:
+
+```swift
+try await AuthorizationManager.shared
+    .oauth()
+    .authorize(options: OAuthAuthorizeOptions())
+    } catch {
+        print("Error occured")
+    }
+```
+
+The `authorize` method will open the Safari browser and redirect to the FusionAuth login page. After successful login, the user will be redirected back to the app with the authorization code. The SDK will exchange the authorization code for an access token and refresh token.
+
+TODO
+
+The `authorize` function will start the OAuth 2.0 Authorization Code Grant flow and open the provided `Intent` when the
+flow is completed.
+The `OAuthAuthorizeOptions` allows you to specify additional options for the flow, such as the `cancelIntent` and
+the `state`.
+
+If the user completes the flow, the `TokenActivity` will be opened, and you are required to handle the redirect:
+
+```swift
+AuthorizationManager.oAuth(this@TokenActivity)
+    .handleRedirect(intent)
+```
+
+This will retrieve the authorization response, validates the `state` if it was provided, and exchanges the authorization
+code for an access token.
+The result of the exchange will be stored in the `TokenManager`.
+
+After the user is authorized, you can use `getUserInfo()` to retrieve the [User Info](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo):
+
+```swift
+AuthorizationManager.oAuth(this@TokenActivity).getUserInfo()
+```
+
+To call your API with an access token, you can use the `AuthorizationManager` to retrieve a valid access token:
+
+```swift
+val accessToken = AuthorizationManager.freshAccessToken(this@TokenActivity)
+```
+
+This will retrieve a fresh access token from the `TokenManager` and return it. If the access token is expired,
+the `TokenManager` will refresh it automatically.
+
+Finally, you can use the `AuthorizationManager` to sign out the user and remove the tokens from the `TokenManager`:
+
+```swift
+AuthorizationManager
+    .oAuth(this@TokenActivity)
+    .logout(
+        Intent(this@TokenActivity, LoginActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    )
+```
+
+If the user is signed out, the `LoginActivity` will be opened.
 <!--
 end::forDocSiteUsage[]
 -->
@@ -96,58 +172,9 @@ end::forDocSiteQuickstart[]
 <!--
 tag::forDocSiteDocumentation[]
 -->
-See the latest [Full library documentation](https://github.com/FusionAuth/fusionauth-ios-sdk/blob/main/library/docs/index.md) for the complete documentation of the SDK.
+See the latest [Full library documentation](https://github.com/FusionAuth/fusionauth-ios-sdk/blob/main/Documentation/Reference/README.md) for the complete documentation of the SDK.
 <!--
 end::forDocSiteDocumentation[]
--->
-
-## Contributing
-<!--
-tag::forDocSiteContributing[]
--->
-We hope you love using FusionAuth iOS SDK, but in case you encounter a bug or an issue with the SDK, please do let us know.
-
-Please only report issues for the FusionAuth iOS SDK itself if you have an issue with documentation or a client library follow [these instructions.](https://github.com/FusionAuth/fusionauth-issues)
-
-### Community Guidelines
-
-As part of the FusionAuth community, please abide by [the Code of Conduct](https://fusionauth.io/community/forum/topic/1000/code-of-conduct).
-
-### Reporting an Issue
-
-Before reporting an issue, please search through the already open issues to see if you could contribute.
-
-To report an issue, please follow the instructions of the bug, feature and general issue templates.
-
-### Contributing Features and Fixes
-
-Before starting with contributing, you'll want to look at and choose an issue to work on. Here is a basic workflow you want to work from:
-
-1. Search the issue tracker for an issue that you want to work on. If your issue does not exist, please create a new one.
-2. Search GitHub for an open or closed Pull Request that relates to the issue you want to work on. You may find that someone else is already working on it, or that the issue is already resolved in a different branch.
-
-You can find all the open issues [here](https://github.com/FusionAuth/fusionauth-ios-sdk/issues).
-
-Once you have found an issue you want to work on, we suggest to:
-
-1. Fork the repository to your personal account.
-2. Create a new branch with the name fix/issue-id or feat/issue-id.
-3. And start working on that branch on the issue.
-
-### Development Tooling
-
-During development of new features and fixes, we suggest using the following code quality tools which are preconfigured for this project:
-* TBD
-
-### Submitting a Pull Request
-
-When you are ready to submit your pull request, visit the main repository on GitHub and click the "Compare & pull request" button. Here you can select the branch you have been working on and create a pull request.
-
-If you're creating a pull request for an issue, please include `Closes #XXX` in the message body where `#XXX` is the issue you're fixing. For example, `Closes #42` would close issue #42.
-
-After you have submitted your pull request, several checks will be run to ensure the changes meet the project's guidelines. If they do, the pull request will be reviewed by a maintainer and subsequently merged.
-<!--
-end::forDocSiteContributing[]
 -->
 
 ## Upgrade Policy
