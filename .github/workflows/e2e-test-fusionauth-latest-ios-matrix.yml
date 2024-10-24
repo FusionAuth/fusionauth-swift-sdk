@@ -82,6 +82,23 @@ jobs:
       - name: Get Xcode version
         run: xcodebuild -version
 
+      # Install Xcodes.
+      - name: Install Xcodes
+        if: runner.os == 'macos-13'
+        shell: bash
+        run: |
+          brew install aria2
+          brew install xcodes
+
+      # Install simulator platform.
+      - name: Install Simulator
+        if: runner.os == 'macos-13'
+        shell: bash
+        run: |
+          xcodes runtimes
+          sudo xcodes runtimes
+          sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
+
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
         uses: swift-actions/setup-swift@v2.1.0
