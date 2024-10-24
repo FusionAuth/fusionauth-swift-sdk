@@ -43,7 +43,7 @@ It also provides a method to check if the user is authenticated.
 public func isLoggedIn() -> Bool
 ```
 
-Check if the user is authenticated
+Check if the user is authenticated.
 - Returns: A boolean indicating if the user is authenticated
 - Note: This method checks if the access token is not nil and the access token expiration time is in the future.
 
@@ -53,7 +53,7 @@ Check if the user is authenticated
 public func update(authState: FusionAuthStateData)
 ```
 
-Update the auth state with the given data
+Update the auth state with the given data.
 - Parameter authState: The auth state data
 - Note: This method updates the FusionAuthStateData access token, refresh token, ID token, and access token expiration time.
 
@@ -69,7 +69,7 @@ Update the auth state with the given data
 public func update(authState: OIDAuthState)
 ```
 
-Update the auth state with the given OIDAuthState
+Update the auth state with the given OIDAuthState.
 - Parameter authState: The OIDAuthState object
 - Note: This method updates the OIDAuthState access token, refresh token, ID token, and access token expiration time.
 
@@ -85,5 +85,5 @@ Update the auth state with the given OIDAuthState
 public func clear()
 ```
 
-Clear the auth state
+Clear the auth state.
 - Note: This method clears the access token, refresh token, ID token, and access token expiration time.

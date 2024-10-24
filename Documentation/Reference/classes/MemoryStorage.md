@@ -7,8 +7,8 @@ public class MemoryStorage: Storage
 ```
 
 TODO
-Storage that keeps the data in memory
-This storage is not persistent and the data is lost when the app is closed
+Storage that keeps the data in memory.
+This storage is not persistent and the data is lost when the app is closed.
 
 ## Methods
 ### `init()`

@@ -24,7 +24,7 @@ public static let instance = AuthorizationManager()
 ### `initialize(configuration:storage:)`
 
 ```swift
-public func initialize(configuration: AuthorizationConfiguration, storage: Storage?)
+public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil)
 ```
 
 ### `fusionAuthState()`
@@ -45,8 +45,44 @@ public func getTokenManager() -> TokenManager
 public func oauth() -> OAuthAuthorizationService
 ```
 
+### `freshAccessToken(force:)`
+
+```swift
+public func freshAccessToken(force: Bool = false) async throws -> String?
+```
+
+### `getAccessToken()`
+
+```swift
+public func getAccessToken() -> String?
+```
+
+### `getAccessTokenExpirationTime()`
+
+```swift
+public func getAccessTokenExpirationTime() -> Date?
+```
+
+### `isAccessTokenExpired()`
+
+```swift
+public func isAccessTokenExpired() -> Bool
+```
+
 ### `updateAuthState(authState:)`
 
 ```swift
-public func updateAuthState(authState: OIDAuthState)
+public func updateAuthState(authState: OIDAuthState) throws
+```
+
+### `updateAuthState(accessToken:accessTokenExpirationTime:idToken:refreshToken:)`
+
+```swift
+public func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws
+```
+
+### `clearState()`
+
+```swift
+public func clearState() throws
 ```

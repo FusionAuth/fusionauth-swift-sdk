@@ -7,9 +7,9 @@ public class KeyChainStorage: Storage
 ```
 
 TODO
-Storage that saves data to the KeyChain
-This storage is secure and the data is encrypted
-The data is persisted even when the app is closed
+Storage that saves data to the KeyChain.
+This storage is secure and the data is encrypted.
+The data is persisted even when the app is closed.
 
 ## Methods
 ### `init()`

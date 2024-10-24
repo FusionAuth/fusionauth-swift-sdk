@@ -28,3 +28,9 @@ public func userInfo() async throws -> UserInfo
 ```swift
 public func logout(options: OAuthLogoutOptions) async throws
 ```
+
+### `freshAccessToken()`
+
+```swift
+public func freshAccessToken() async throws -> String?
+```

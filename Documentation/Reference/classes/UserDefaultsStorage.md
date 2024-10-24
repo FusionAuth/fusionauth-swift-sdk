@@ -6,7 +6,7 @@
 public class UserDefaultsStorage: Storage
 ```
 
-Storage that saves data to UserDefaults
+Storage that saves data to UserDefaults.
 
 ## Methods
 ### `init()`
