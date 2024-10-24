@@ -35,6 +35,12 @@ Once you have found an issue you want to work on, we suggest to:
 
 During development of new features and fixes, we suggest using the following code quality tools which are preconfigured for this project:
 
+### Xcode
+
+The minimum tested version of Xcode is 14 the project is specified for 13.
+
+It is important that these and other project minimum requirements are not accidentaly updated by the use of a newer Xcode version so earlier builds start failing. So before commiting changes please review the project file changes in detail e.g. for a version increas for objectVersion, IPHONEOS_DEPLOYMENT_TARGET, version and others.
+
 ### SourceDocs
 
 To generate documentation for the project.
@@ -51,7 +57,7 @@ Installation: `brew install swiftlint`
 
 Run SwiftLint: `swiftlint`
 
-## SwiftFormat
+### SwiftFormat
 
 To standardize formatting of swift code in the project.
 
