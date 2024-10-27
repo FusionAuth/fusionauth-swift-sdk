@@ -32,6 +32,14 @@ struct LoggedInView: View {
     }
 }
 
+#if swift(>=5.9)
 #Preview {
     LoggedInView()
 }
+#else
+struct LoggedInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoggedInView()
+    }
+}
+#endif
