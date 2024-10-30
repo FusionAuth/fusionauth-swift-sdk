@@ -26,7 +26,6 @@ public class TokenManager {
         }
 
         do {
-            print(jsonAuthState)
             return try JSONDecoder().decode(FusionAuthStateData.self, from: jsonAuthState.data(using: .utf8)!)
         } catch let error {
             print("Error decoding auth state: \(error)")
