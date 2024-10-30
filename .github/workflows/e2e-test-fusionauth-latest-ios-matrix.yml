@@ -109,6 +109,13 @@ jobs:
       - name: Get Swift version
         run: swift --version
 
+      # Install colima for Docker required by FusionAuth.
+      - name: Install colima
+        run: |
+          brew install colima
+          colima version
+          colima start
+
       # Create and start FusionAuth containers used by E2E test.
       - name: Start FusionAuth
         uses: fusionauth/fusionauth-github-action@v1
@@ -120,6 +127,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Perform the build manually.
-      - name: Manual Build
+      # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
+      - name: Perform end to end tests
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
