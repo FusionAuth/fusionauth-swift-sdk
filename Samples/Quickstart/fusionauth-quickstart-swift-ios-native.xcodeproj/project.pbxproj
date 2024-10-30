@@ -20,7 +20,6 @@
 		0EB018B82C830E8A00503908 /* AuthorizationManager+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */; };
 		9326C2A12C80692B001C9CDB /* fusionauth-ios-mobilesdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */; };
 		939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
-		939AED1A2CC91492000E2D3F /* QuickstartTestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthorizationManager+Initialization.swift"; sourceTree = "<group>"; };
 		9326C2A02C80692B001C9CDB /* fusionauth-ios-mobilesdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-ios-mobilesdk"; path = ../../..; sourceTree = "<group>"; };
 		939AED162CC91492000E2D3F /* QuickstartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTests.swift; sourceTree = "<group>"; };
-		939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				939AED162CC91492000E2D3F /* QuickstartTests.swift */,
-				939AED172CC91492000E2D3F /* QuickstartTestsLaunchTests.swift */,
 			);
 			path = QuickstartTests;
 			sourceTree = "<group>";
@@ -248,7 +245,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */,
-				939AED1A2CC91492000E2D3F /* QuickstartTestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
