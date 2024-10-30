@@ -109,19 +109,17 @@ jobs:
       - name: Get Swift version
         run: swift --version
 
+      # Create and start FusionAuth containers used by E2E test.
+      - name: Start FusionAuth
+        uses: fusionauth/fusionauth-github-action@v1
+        with:
+          FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
+          FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
+
       # Checkout the repository.
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Create and start FusionAuth containers used by E2E test and sleeps for 30 seconds.
-      # Despite its waiting until the container started with the status healthy,
-      # it will run the kickstart after that, which takes a moment.
-      #- name: Start FusionAuth
-      #  uses: fusionauth/fusionauth-github-action@v1
-      #  with:
-      #    FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
-      #    FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
-
       # Perform the build manually.
       - name: Manual Build
-        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
+        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
