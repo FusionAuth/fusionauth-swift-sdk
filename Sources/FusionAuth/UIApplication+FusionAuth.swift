@@ -9,7 +9,15 @@ extension UIApplication {
      - Returns: The top view controller in the application's view hierarchy, or `nil` if no view controller is found.
      */
     static var topViewController: UIViewController? {
-        return UIApplication.shared.topViewController
+        let viewController: UIViewController?
+        if Thread.current.isMainThread {
+            viewController = UIApplication.shared.topViewController!
+        } else {
+            viewController = DispatchQueue.main.sync {
+                UIApplication.shared.topViewController!
+            }
+        }
+        return viewController
     }
 
     /**

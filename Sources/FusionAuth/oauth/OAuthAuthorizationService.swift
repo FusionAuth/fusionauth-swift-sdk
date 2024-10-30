@@ -53,7 +53,7 @@ public class OAuthAuthorizationService {
     }
     #else
     private func getPresenting() -> UIViewController {
-        return UIApplication.shared.topViewController!
+        return UIApplication.topViewController!
     }
     #endif
 
