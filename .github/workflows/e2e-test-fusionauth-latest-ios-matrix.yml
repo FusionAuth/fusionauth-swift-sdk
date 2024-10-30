@@ -109,16 +109,27 @@ jobs:
       - name: Get Swift version
         run: swift --version
 
+      # Docker deployment is failing because the current macos runner has an M-series processor runner without nested virtualization support.
       # Setup Docker on macOS required by FusionAuth.
-      - name: Setup Docker on macOS
-        uses: douglascamata/setup-docker-macos-action@v1-alpha
+      #- name: Setup Docker on macOS
+      #  uses: douglascamata/setup-docker-macos-action@v1-alpha
 
       # Create and start FusionAuth containers used by E2E test.
-      - name: Start FusionAuth
-        uses: fusionauth/fusionauth-github-action@v1
-        with:
-          FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
-          FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
+      #- name: Start FusionAuth
+      #  uses: fusionauth/fusionauth-github-action@v1
+      #  with:
+      #    FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
+      #    FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
+
+      # Install FusionAuth with brew.
+      - name: Install FusionAuth
+        env:
+          FUSIONAUTH_APP_KICKSTART_FILE: "Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart/kickstart.json"
+        run: |
+          brew tap fusionauth/homebrew-fusionauth
+          brew install fusionauth-app fusionauth-search
+          brew services start fusionauth-search
+          brew services start fusionauth-app
 
       # Checkout the repository.
       - name: Checkout repository
