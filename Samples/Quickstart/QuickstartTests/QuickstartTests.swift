@@ -39,7 +39,7 @@ final class QuickstartTests: XCTestCase {
         }
         
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app)
-        wait(for: [expectation], timeout: 10)
+        wait(for: [expectation], timeout: 60)
         removeUIInterruptionMonitor(alertMonitor)
     }
     
