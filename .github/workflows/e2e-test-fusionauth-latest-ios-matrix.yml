@@ -112,6 +112,7 @@ jobs:
       # Install colima for Docker required by FusionAuth.
       - name: Install colima
         run: |
+          brew install docker
           brew install colima
           colima version
           colima start
