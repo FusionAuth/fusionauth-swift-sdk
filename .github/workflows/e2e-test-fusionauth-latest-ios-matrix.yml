@@ -109,13 +109,9 @@ jobs:
       - name: Get Swift version
         run: swift --version
 
-      # Install colima for Docker required by FusionAuth.
-      - name: Install colima
-        run: |
-          brew install docker
-          brew install colima
-          colima version
-          colima start
+      # Setup Docker on macOS required by FusionAuth.
+      - name: Setup Docker on macOS
+        uses: douglascamata/setup-docker-macos-action@v1-alpha
 
       # Create and start FusionAuth containers used by E2E test.
       - name: Start FusionAuth
