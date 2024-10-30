@@ -9,6 +9,8 @@ import SwiftUI
 import FusionAuth
 
 struct LoginView: View {
+    @State private var errorWhileLogin = false
+    @State private var error: String?
 
     var body: some View {
         VStack {
@@ -24,14 +26,24 @@ struct LoginView: View {
                         try await AuthorizationManager.shared
                             .oauth()
                             .authorize(options: OAuthAuthorizeOptions())
-                    } catch {
-                        print("Error occured")
+                    } catch let error as NSError {
+                        self.errorWhileLogin = true
+                        self.error = error.localizedDescription
                     }
                 }
             }.buttonStyle(PrimaryButtonStyle())
 
         }
         .padding()
+        .alert(
+            "Error occured while logging in",
+            isPresented: $errorWhileLogin,
+            presenting: error
+        ) { _ in 
+            Button("OK", role: .cancel) { errorWhileLogin = false }
+        } message: { error in
+            Text(error)
+        }
     }
 }
 
