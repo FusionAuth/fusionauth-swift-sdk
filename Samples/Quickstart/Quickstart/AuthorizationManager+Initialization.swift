@@ -9,7 +9,7 @@ import Foundation
 import FusionAuth
 
 extension AuthorizationManager {
-    
+
     public static let shared: AuthorizationManager = {
         let instance = AuthorizationManager.instance
         instance.initialize(configuration: AuthorizationConfiguration(
@@ -18,5 +18,5 @@ extension AuthorizationManager {
             additionalScopes: ["email", "profile"]))
         return instance
     }()
-    
+
 }

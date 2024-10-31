@@ -2,5 +2,7 @@ line_length:
     warning: 250
     ignores_comments: true
 included:
+ - Samples/Quickstart/Quickstart
+ - Samples/Quickstart/QuickstartTests
  - Sources
  - Tests

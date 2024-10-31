@@ -39,7 +39,7 @@ struct LoginView: View {
             "Error occured while logging in",
             isPresented: $errorWhileLogin,
             presenting: error
-        ) { _ in 
+        ) { _ in
             Button("OK", role: .cancel) { errorWhileLogin = false }
         } message: { error in
             Text(error)

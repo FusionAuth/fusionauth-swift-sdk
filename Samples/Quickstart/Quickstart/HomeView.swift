@@ -41,12 +41,12 @@ struct HomeView: View {
                             let accessToken = try await AuthorizationManager.shared
                                 .oauth()
                                 .freshAccessToken()
-                            
+
                             guard let accessToken = accessToken else {
                                 print("Access token is not returned")
                                 return
                             }
-                            
+
                             print("Refreshed access token: \(accessToken)")
                         } catch let error as NSError {
                             print(error)

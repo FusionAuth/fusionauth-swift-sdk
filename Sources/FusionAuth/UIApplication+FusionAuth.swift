@@ -31,7 +31,6 @@ extension UIApplication {
 
 extension UIViewController {
 
-    
     /// Returns the topmost view controller in the view controller hierarchy.
     ///
     /// This method recursively traverses the view controller hierarchy to find the topmost view controller.
