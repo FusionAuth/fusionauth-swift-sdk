@@ -14,9 +14,8 @@ public class MemoryStorage: Storage {
     public func get(key: String) -> String? {
         if let value = storageDictionary[key] {
             return String(describing: value)
-        } else {
-            return nil
         }
+        return nil
     }
 
     /// Sets the value associated with the given key in the storage.
@@ -33,5 +32,4 @@ public class MemoryStorage: Storage {
     public func remove(key: String) {
         storageDictionary.removeValue(forKey: key)
     }
-
 }

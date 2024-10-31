@@ -10,7 +10,6 @@ import FusionAuth
 import UIKit
 
 struct ContentView: View {
-
     @EnvironmentObject var authState: FusionAuthState
 
     var body: some View {

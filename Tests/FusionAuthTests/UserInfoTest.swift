@@ -3,8 +3,8 @@
 import XCTest
 @testable import FusionAuth
 
-class UserInfoTest: XCTestCase {
-    var userInfo: UserInfo!
+final class UserInfoTest: XCTestCase {
+    private var userInfo: UserInfo!
 
     override func setUp() {
         super.setUp()

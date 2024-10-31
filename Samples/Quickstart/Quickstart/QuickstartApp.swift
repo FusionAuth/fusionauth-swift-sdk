@@ -14,9 +14,9 @@ struct QuickstartApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(AuthorizationManager.shared.fusionAuthState())
-                .onOpenURL(perform: { url in
+                .onOpenURL { url in
                     OAuthAuthorization.resume(with: url)
-                })
+                }
         }
     }
 }

@@ -27,14 +27,14 @@ public class TokenManager {
 
         do {
             return try JSONDecoder().decode(FusionAuthStateData.self, from: jsonAuthState.data(using: .utf8)!)
-        } catch let error {
+        } catch {
             print("Error decoding auth state: \(error)")
             return nil
         }
     }
 
     func saveAuthState(_ authState: FusionAuthStateData) throws {
-        guard let storage = storage else {
+        guard let storage else {
             throw TokenManagerError.noStorage
         }
 
@@ -47,13 +47,13 @@ public class TokenManager {
 
         do {
             storage.set(key: "authState", content: try fusionAuthState.toJSON() ?? "")
-        } catch let error {
+        } catch {
             print("Error encoding auth state: \(error)")
         }
     }
 
     func clearAuthState() throws {
-        guard let storage = storage else {
+        guard let storage else {
             throw TokenManagerError.noStorage
         }
 

@@ -37,5 +37,4 @@ public class OAuthAuthorizationStore {
     func clear() {
         self.currentAuthorizationFlow = nil
     }
-
 }

@@ -3,11 +3,11 @@
 import XCTest
 @testable import FusionAuth
 
-class AuthManagerUserDefaultsStorageTest: XCTestCase {
-    var authorizationManager: AuthorizationManager!
-    var userDefaultsStorage: UserDefaultsStorage!
-    var tokenManager: TokenManager!
-    var userInfo: UserInfo!
+final class AuthManagerUserDefaultsStorageTest: XCTestCase {
+    private var authorizationManager: AuthorizationManager!
+    private var userDefaultsStorage: UserDefaultsStorage!
+    private var tokenManager: TokenManager!
+    private var userInfo: UserInfo!
 
     override func setUp() {
         super.setUp()

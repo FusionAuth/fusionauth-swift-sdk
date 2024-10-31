@@ -1,6 +1,5 @@
 /// This protocol represents a storage mechanism for storing and retrieving key-value pairs.
 public protocol Storage {
-
     /// Retrieves the value associated with the given key from the storage.
     /// - Parameters:
     ///   - key: The key for which to retrieve the value.
@@ -17,5 +16,4 @@ public protocol Storage {
     /// - Parameters:
     ///   - key: The key for which to remove the value.
     func remove(key: String)
-
 }

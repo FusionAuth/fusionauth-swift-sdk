@@ -42,7 +42,7 @@ struct HomeView: View {
                                 .oauth()
                                 .freshAccessToken()
 
-                            guard let accessToken = accessToken else {
+                            guard let accessToken else {
                                 print("Access token is not returned")
                                 return
                             }

@@ -90,7 +90,7 @@ public class OAuthAuthorizationService {
 
         OAuthAuthorizationStore.shared.clear()
 
-        OAuthAuthorizationService.appAuthState = authState
+        Self.appAuthState = authState
 
         DispatchQueue.main.async {
             do {
@@ -120,9 +120,9 @@ public class OAuthAuthorizationService {
     }
 
     public func logout(options: OAuthLogoutOptions) async throws {
-        let idToken = OAuthAuthorizationService.appAuthState?.lastTokenResponse?.idToken
+        let idToken = Self.appAuthState?.lastTokenResponse?.idToken
 
-        guard let idToken = idToken else {
+        guard let idToken else {
             throw OAuthError.accessTokenNil
         }
 
@@ -165,7 +165,7 @@ public class OAuthAuthorizationService {
         }
 
         self.logoutSession = nil
-        OAuthAuthorizationService.appAuthState = nil
+        Self.appAuthState = nil
 
         DispatchQueue.main.async {
             do {
@@ -213,7 +213,7 @@ public class OAuthAuthorizationService {
                         return
                     }
 
-                    guard let response = response else {
+                    guard let response else {
                         continuation.resume(throwing: OAuthError.refreshTokenNoResponse)
                         return
                     }
@@ -246,7 +246,7 @@ public class OAuthAuthorizationService {
             request.allHTTPHeaderFields = ["Authorization": "Bearer \(accessToken)"]
 
             URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
+                if let error {
                     continuation.resume(throwing: error)
                 }
                 guard error == nil else {
@@ -257,7 +257,7 @@ public class OAuthAuthorizationService {
                     continuation.resume(throwing: OAuthError.noAuthorizationCode)
                     return
                 }
-                guard let data = data else {
+                guard let data else {
                     print("HTTP response data is empty")
                     return
                 }
@@ -347,5 +347,4 @@ public class OAuthAuthorizationService {
 
         return additionalParameters
     }
-
 }

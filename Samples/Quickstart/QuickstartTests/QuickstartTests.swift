@@ -8,8 +8,7 @@
 import XCTest
 
 final class QuickstartTests: XCTestCase {
-
-    var app: XCUIApplication!
+    private var app: XCUIApplication!
 
     override func setUpWithError() throws {
         app = XCUIApplication()
@@ -23,16 +22,16 @@ final class QuickstartTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func confirmLoginAlert(_ app: XCUIApplication) {
+    private func confirmLoginAlert(_ app: XCUIApplication) {
         var alertPresent = false
 
-        let predicate = NSPredicate(block: { evaluatedObject, _ in
+        let predicate = NSPredicate { evaluatedObject, _ in
             let application = evaluatedObject as! XCUIApplication
             application.tap()
             return alertPresent
-        })
+        }
 
-        let alertMonitor = addUIInterruptionMonitor(withDescription: "Login Alert") { (alert) -> Bool in
+        let alertMonitor = addUIInterruptionMonitor(withDescription: "Login Alert") { alert -> Bool in
             alert.buttons["Continue"].tap()
             alertPresent = true
             return true

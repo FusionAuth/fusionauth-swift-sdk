@@ -2,7 +2,6 @@
 import UIKit
 
 extension UIApplication {
-
     /// A computed property that returns the top view controller in the application's view hierarchy.
     /// - Returns: The top view controller in the application's view hierarchy, or `nil` if no view controller is found.
     static var topViewController: UIViewController? {
@@ -30,7 +29,6 @@ extension UIApplication {
 }
 
 extension UIViewController {
-
     /// Returns the topmost view controller in the view controller hierarchy.
     ///
     /// This method recursively traverses the view controller hierarchy to find the topmost view controller.
@@ -49,7 +47,8 @@ extension UIViewController {
 
         if let navigationController = self.presentedViewController as? UINavigationController {
             return navigationController.topViewController()
-        } else if let tabBarController = presentedViewController as? UITabBarController {
+        }
+        if let tabBarController = presentedViewController as? UITabBarController {
             if let selectedTab = tabBarController.selectedViewController {
                 return selectedTab.topViewController()
             }
@@ -58,6 +57,5 @@ extension UIViewController {
 
         return self.presentedViewController!.topViewController()
     }
-
 }
 #endif

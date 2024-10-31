@@ -32,7 +32,6 @@ struct LoginView: View {
                     }
                 }
             }.buttonStyle(PrimaryButtonStyle())
-
         }
         .padding()
         .alert(

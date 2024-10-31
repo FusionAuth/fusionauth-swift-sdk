@@ -8,7 +8,6 @@ import AppAuth
 /// AuthorizationManager uses a TokenManager to manage the access tokens and a Storage implementation
 /// to store the authorization state.
 public class AuthorizationManager {
-
     private static let fusionAuthState = FusionAuthState()
 
     public static let instance = AuthorizationManager()
@@ -23,12 +22,12 @@ public class AuthorizationManager {
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
 
         if let authState = tokenManager?.getAuthState() {
-            AuthorizationManager.instance.fusionAuthState().update(authState: authState)
+            Self.instance.fusionAuthState().update(authState: authState)
         }
     }
 
     public func fusionAuthState() -> FusionAuthState {
-        return AuthorizationManager.fusionAuthState
+        return Self.fusionAuthState
     }
 
     public func getTokenManager() -> TokenManager {
@@ -89,22 +88,19 @@ public class AuthorizationManager {
 
     private func updateAuthState(fusionAuthStateData: FusionAuthStateData) throws {
         try self.tokenManager?.saveAuthState(fusionAuthStateData)
-        AuthorizationManager.instance.fusionAuthState().update(authState: fusionAuthStateData)
+        Self.instance.fusionAuthState().update(authState: fusionAuthStateData)
     }
 
     public func clearState() throws {
         try self.tokenManager?.clearAuthState()
-        AuthorizationManager.instance.fusionAuthState().clear()
+        Self.instance.fusionAuthState().clear()
     }
-
 }
 
 extension AuthorizationManager {
-
     public static var log: Logger?
 
     public static func setLogLevel(_ level: OSLogType) {
         self.log = Logger(subsystem: "io.fusionauth.mobilesdk", category: "AuthorizationManager")
     }
-
 }

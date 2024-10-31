@@ -13,7 +13,6 @@ import AppAuth
 /// It provides properties to store and retrieve access tokens, refresh tokens, and ID tokens.
 /// It also provides a method to check if the user is authenticated.
 public class FusionAuthState: ObservableObject {
-
     @Published public var accessToken: String?
     @Published public var accessTokenExpirationTime: Date?
     @Published public var idToken: String?
@@ -57,5 +56,4 @@ public class FusionAuthState: ObservableObject {
         self.accessTokenExpirationTime = nil
         self.idToken = nil
     }
-
 }
