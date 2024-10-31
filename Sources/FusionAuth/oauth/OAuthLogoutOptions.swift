@@ -17,6 +17,7 @@ public struct OAuthLogoutOptions {
     /// The authorization server includes this value when redirecting the user-agent back to the client.
     let state: String?
 
+    /// Creates a new instance of OAuthLogoutOptions.
     public init(
         bundleId: String = Bundle.main.bundleIdentifier ?? "",
         postLogoutRedirectUriSuffix: String = ":/oauth2redirect/ios-provider",

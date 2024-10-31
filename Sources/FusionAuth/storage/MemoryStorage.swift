@@ -1,6 +1,5 @@
-/// TODO
-/// Storage that keeps the data in memory.
-/// This storage is not persistent and the data is lost when the app is closed.
+/// Implementation of the Storage protocol that stores data in memory.
+/// - Note: This implementation is useful for testing and development purposes, as it does not persist data across app launches.
 public class MemoryStorage: Storage {
     public init() {}
 

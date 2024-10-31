@@ -32,6 +32,7 @@ public struct OAuthAuthorizeOptions {
     /// The end-user verification code.
     let userCode: String?
 
+    /// Creates a new instance of OAuthAuthorizeOptions.
     public init(
         bundleId: String = Bundle.main.bundleIdentifier ?? "",
         redirectUriSuffix: String = ":/oauth2redirect/ios-provider",

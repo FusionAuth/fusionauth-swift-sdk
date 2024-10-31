@@ -4,18 +4,22 @@ enum TokenManagerError: Error {
     case noStorage
 }
 
-/// TODO
-/// TokenManager is a singleton object that manages the access tokens.
-/// It provides methods to get and set the access, refresh and ID tokens.
-/// It uses one of the configured Storage implementations to store the access tokens.
+/// TokenManager is responsible for managing the authorization tokens.
+/// It provides methods to get, save, and clear the access, refresh, and ID tokens.
+/// The tokens are stored using a configured Storage implementation.
 public class TokenManager {
     private var storage: Storage?
 
+    /// Configures the TokenManager with a specific storage implementation.
+    /// - Parameter storage: The storage implementation to be used by the TokenManager.
+    /// - Returns: The TokenManager instance configured with the provided storage.
     func withStorage(storage: Storage) -> TokenManager {
         self.storage = storage
         return self
     }
 
+    /// Retrieves the current authorization state from the storage.
+    /// - Returns: The FusionAuthStateData object representing the current authorization state, or nil if not found.
     func getAuthState() -> FusionAuthStateData? {
         guard let authState = self.storage?.get(key: "authState") else {
             return nil
@@ -33,6 +37,9 @@ public class TokenManager {
         }
     }
 
+    /// Saves the provided authorization state to the storage.
+    /// - Parameter authState: The FusionAuthStateData object representing the authorization state to be saved.
+    /// - Throws: TokenManagerError.noStorage if no storage is configured.
     func saveAuthState(_ authState: FusionAuthStateData) throws {
         guard let storage else {
             throw TokenManagerError.noStorage
@@ -52,6 +59,8 @@ public class TokenManager {
         }
     }
 
+    /// Clears the current authorization state from the storage.
+    /// - Throws: TokenManagerError.noStorage if no storage is configured.
     func clearAuthState() throws {
         guard let storage else {
             throw TokenManagerError.noStorage

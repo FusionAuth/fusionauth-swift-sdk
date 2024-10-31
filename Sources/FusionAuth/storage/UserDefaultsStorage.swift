@@ -1,6 +1,7 @@
 import Foundation
 
-/// Storage that saves data to UserDefaults.
+/// Implemenation of the `Storage` protocol that uses UserDefaults to store and retrieve data.
+/// - Note: UserDefaults is a simple interface for storing key-value pairs persistently across app launches.
 public class UserDefaultsStorage: Storage {
     public init() {}
 

@@ -1,10 +1,8 @@
 import Foundation
 import Security
 
-/// TODO
-/// Storage that saves data to the KeyChain.
-/// This storage is secure and the data is encrypted.
-/// The data is persisted even when the app is closed.
+/// Implemenation of the `Storage` protocol that uses the iOS KeyChain to store and retrieve sensitive data.
+/// - Note: The KeyChain is a secure storage mechanism that is used to store sensitive data such as passwords, keys, and certificates.
 public class KeyChainStorage: Storage {
     public init() {}
 

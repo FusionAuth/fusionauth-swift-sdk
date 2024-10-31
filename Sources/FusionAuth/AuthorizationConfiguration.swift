@@ -11,6 +11,7 @@ public struct AuthorizationConfiguration {
     /// The locale to be used for authorization. (Optional)
     let locale: String?
 
+    /// Creates a new instance of AuthorizationConfiguration.
     public init(clientId: String, fusionAuthUrl: String, tenant: String? = nil, additionalScopes: [String] = [], locale: String? = nil) {
         self.clientId = clientId
         self.fusionAuthUrl = fusionAuthUrl

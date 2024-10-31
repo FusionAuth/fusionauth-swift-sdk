@@ -57,6 +57,10 @@ public class OAuthAuthorizationService {
     }
     #endif
 
+    /// Authorizes the user using OAuth authorization code flow.
+    ///
+    /// - Parameter options: The options to configure the OAuth logout request.
+    /// - Returns: The OAuth authorization state.
     @discardableResult
     public func authorize(options: OAuthAuthorizeOptions) async throws -> OIDAuthState {
         AuthorizationManager.log?.trace("Starting OAuth authorization...")
@@ -105,6 +109,10 @@ public class OAuthAuthorizationService {
         return authState
     }
 
+    /// Retrieves the user information for the authenticated user.
+    ///
+    /// - Returns: The user information
+    /// - Throws: An error if the user information is not found.
     public func userInfo() async throws -> UserInfo {
         let configuration = try await getConfiguration()
 
@@ -119,6 +127,9 @@ public class OAuthAuthorizationService {
         return try await getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
     }
 
+    /// Log out the user
+    ///
+    /// - Parameter options: The options to configure the OAuth logout request.
     public func logout(options: OAuthLogoutOptions) async throws {
         let idToken = Self.appAuthState?.lastTokenResponse?.idToken
 
@@ -176,6 +187,9 @@ public class OAuthAuthorizationService {
         }
     }
 
+    /// Retrieves a fresh access token.
+    ///
+    /// - Returns: The fresh access token or nil if an error occurs.
     public func freshAccessToken() async throws -> String? {
         AuthorizationManager.log?.trace("Retrieve fresh token from FusionAuth")
 
@@ -204,7 +218,16 @@ public class OAuthAuthorizationService {
                 return
             }
 
-            let request = OIDTokenRequest(configuration: configuration, grantType: OIDGrantTypeRefreshToken, authorizationCode: nil, redirectURL: nil, clientID: clientId, clientSecret: nil, scope: nil, refreshToken: refreshToken, codeVerifier: nil, additionalParameters: nil)
+            let request = OIDTokenRequest(configuration: configuration,
+                                          grantType: OIDGrantTypeRefreshToken,
+                                          authorizationCode: nil,
+                                          redirectURL: nil,
+                                          clientID: clientId,
+                                          clientSecret: nil,
+                                          scope: nil,
+                                          refreshToken: refreshToken,
+                                          codeVerifier: nil,
+                                          additionalParameters: nil)
 
             DispatchQueue.main.async {
                 OIDAuthorizationService.perform(request) { response, error in
@@ -263,7 +286,7 @@ public class OAuthAuthorizationService {
                 }
 
                 if response.statusCode != 200 {
-                    print("HTTP: \(response.statusCode), Response: \(String(decoding: data, as: UTF8.self))")
+                    print("HTTP: \(response.statusCode), Response: \(String(bytes: data, encoding: .utf8) ?? "")")
 
                     continuation.resume(throwing: OAuthError.accessTokenNil)
                     return
@@ -344,7 +367,6 @@ public class OAuthAuthorizationService {
         if options.userCode != nil {
             additionalParameters.updateValue(options.userCode!, forKey: "user_code")
         }
-
         return additionalParameters
     }
 }

@@ -8,10 +8,8 @@
 import Foundation
 import AppAuth
 
-/// TODO
-/// FusionAuthState is an observable object that represents the authorization state of the user.
-/// It provides properties to store and retrieve access tokens, refresh tokens, and ID tokens.
-/// It also provides a method to check if the user is authenticated.
+/// The data structure that represents the FusionAuth state.
+/// - Note: This data structure contains the access token, refresh token, ID token, and access token expiration time.
 public class FusionAuthState: ObservableObject {
     @Published public var accessToken: String?
     @Published public var accessTokenExpirationTime: Date?

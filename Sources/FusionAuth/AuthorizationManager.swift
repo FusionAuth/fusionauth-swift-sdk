@@ -10,6 +10,7 @@ import AppAuth
 public class AuthorizationManager {
     private static let fusionAuthState = FusionAuthState()
 
+    /// The shared instance of the AuthorizationManager
     public static let instance = AuthorizationManager()
 
     private var configuration: AuthorizationConfiguration?
@@ -17,6 +18,7 @@ public class AuthorizationManager {
 
     private init() {}
 
+    /// Initialize the AuthorizationManager with the given configuration
     public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil) {
         self.configuration = configuration
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
@@ -26,14 +28,17 @@ public class AuthorizationManager {
         }
     }
 
+    /// Returns the current FusionAuthState
     public func fusionAuthState() -> FusionAuthState {
         return Self.fusionAuthState
     }
 
+    /// Returns the current TokenManager
     public func getTokenManager() -> TokenManager {
         return tokenManager!
     }
 
+    /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
     public func oauth() -> OAuthAuthorizationService {
         return OAuthAuthorizationService(
             fusionAuthUrl: configuration!.fusionAuthUrl,
@@ -44,22 +49,30 @@ public class AuthorizationManager {
         )
     }
 
+    /// Returns a fresh access token
+    ///
+    /// If the access token is not expired, it will be returned immediately.
+    /// If the access token is expired or force is `true`, a new access token will be fetched using the refresh token.
     public func freshAccessToken(force: Bool = false) async throws -> String? {
         if !force && !self.isAccessTokenExpired() {
             return self.getAccessToken()
         }
 
+        // We always use oAuth to get a fresh access token
         return try await oauth().freshAccessToken()
     }
 
+    /// Retrieves the access token, if available
     public func getAccessToken() -> String? {
         return self.tokenManager?.getAuthState()?.accessToken
     }
 
+    /// Retrieves the access token expiration, if available
     public func getAccessTokenExpirationTime() -> Date? {
         return self.tokenManager?.getAuthState()?.accessTokenExpirationTime
     }
 
+    /// Checks if the stored access token is expired.
     public func isAccessTokenExpired() -> Bool {
         guard let expiration = self.getAccessTokenExpirationTime() else {
             return true
