@@ -68,7 +68,7 @@ public class AuthorizationManager {
         return expiration.timeIntervalSinceNow.sign == .minus
     }
 
-    public func updateAuthState(authState: OIDAuthState) throws {
+    internal func updateAuthState(authState: OIDAuthState) throws {
         try updateAuthState(fusionAuthStateData: FusionAuthStateData(
             accessToken: authState.lastTokenResponse?.accessToken ?? "",
             accessTokenExpirationTime: authState.lastTokenResponse?.accessTokenExpirationDate ?? Date(),
@@ -77,7 +77,7 @@ public class AuthorizationManager {
         ))
     }
 
-    public func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws {
+    internal func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws {
         try updateAuthState(fusionAuthStateData: FusionAuthStateData(
             accessToken: accessToken,
             accessTokenExpirationTime: accessTokenExpirationTime,
@@ -91,15 +91,17 @@ public class AuthorizationManager {
         Self.instance.fusionAuthState().update(authState: fusionAuthStateData)
     }
 
-    public func clearState() throws {
+    internal func clearState() throws {
         try self.tokenManager?.clearAuthState()
         Self.instance.fusionAuthState().clear()
     }
 }
 
 extension AuthorizationManager {
+    /// The logger for the FusionAuth Mobile SDK
     public static var log: Logger?
 
+    /// Set the log level for the AuthorizationManager
     public static func setLogLevel(_ level: OSLogType) {
         self.log = Logger(subsystem: "io.fusionauth.mobilesdk", category: "AuthorizationManager")
     }

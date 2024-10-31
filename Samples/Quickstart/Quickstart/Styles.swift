@@ -10,7 +10,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     var color = Color(red: 0.0353, green: 0.3882, blue: 0.1412)
     func makeBody(configuration: Configuration) -> some View {
         configuration.label.padding([
-            .trailing, .leading], 48)
+                                        .trailing, .leading], 48)
             .padding([.top, .bottom], 12).background(color)
             .foregroundColor(.white).clipShape(Capsule())
     }

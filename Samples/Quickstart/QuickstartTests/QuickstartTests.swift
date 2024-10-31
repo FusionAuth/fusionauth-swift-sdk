@@ -26,8 +26,8 @@ final class QuickstartTests: XCTestCase {
         var alertPresent = false
 
         let predicate = NSPredicate { evaluatedObject, _ in
-            let application = evaluatedObject as! XCUIApplication
-            application.tap()
+            let application = evaluatedObject as? XCUIApplication
+            application?.tap()
             return alertPresent
         }
 

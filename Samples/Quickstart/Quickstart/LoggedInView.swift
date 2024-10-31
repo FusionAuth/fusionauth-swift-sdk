@@ -13,7 +13,7 @@ struct LoggedInView: View {
             HStack {
                 Image("changebank")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
                     .frame(width: 150)
                     .padding()
                 Spacer()

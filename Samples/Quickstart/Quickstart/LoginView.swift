@@ -16,7 +16,7 @@ struct LoginView: View {
         VStack {
             Image("changebank")
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .scaledToFit()
 
             Text("Welcome to ChangeBank!")
 
