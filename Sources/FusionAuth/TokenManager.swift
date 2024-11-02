@@ -19,8 +19,8 @@ public class TokenManager {
     }
 
     /// Retrieves the current authorization state from the storage.
-    /// - Returns: The FusionAuthStateData object representing the current authorization state, or nil if not found.
-    func getAuthState() -> FusionAuthStateData? {
+    /// - Returns: The FusionAuthState object representing the current authorization state, or nil if not found.
+    func getAuthState() -> FusionAuthState? {
         guard let authState = self.storage?.get(key: "authState") else {
             return nil
         }
@@ -30,7 +30,7 @@ public class TokenManager {
         }
 
         do {
-            return try JSONDecoder().decode(FusionAuthStateData.self, from: jsonAuthState.data(using: .utf8)!)
+            return try JSONDecoder().decode(FusionAuthState.self, from: jsonAuthState.data(using: .utf8)!)
         } catch {
             print("Error decoding auth state: \(error)")
             return nil
@@ -38,14 +38,14 @@ public class TokenManager {
     }
 
     /// Saves the provided authorization state to the storage.
-    /// - Parameter authState: The FusionAuthStateData object representing the authorization state to be saved.
+    /// - Parameter authState: The FusionAuthState object representing the authorization state to be saved.
     /// - Throws: TokenManagerError.noStorage if no storage is configured.
-    func saveAuthState(_ authState: FusionAuthStateData) throws {
+    func saveAuthState(_ authState: FusionAuthState) throws {
         guard let storage else {
             throw TokenManagerError.noStorage
         }
 
-        let fusionAuthState = FusionAuthStateData(
+        let fusionAuthState = FusionAuthState(
             accessToken: authState.accessToken,
             accessTokenExpirationTime: authState.accessTokenExpirationTime,
             idToken: authState.idToken,
@@ -68,12 +68,4 @@ public class TokenManager {
 
         storage.remove(key: "authState")
     }
-}
-
-/// FusionAuthStateData represents the authorization state data.
-public struct FusionAuthStateData: Codable {
-    var accessToken: String
-    var accessTokenExpirationTime: Date
-    var idToken: String
-    var refreshToken: String
 }

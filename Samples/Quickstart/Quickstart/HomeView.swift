@@ -9,7 +9,6 @@ import SwiftUI
 import FusionAuth
 
 struct HomeView: View {
-    @EnvironmentObject private var userAuth: FusionAuthState
     @State var userInfo: UserInfo?
 
     var body: some View {

@@ -5,7 +5,6 @@
 //  Created by Colin Frick on 31.08.24.
 //
 
-import Foundation
 import FusionAuth
 
 extension AuthorizationManager {

@@ -10,10 +10,12 @@ import FusionAuth
 
 @main
 struct QuickstartApp: App {
+    let fusionAuthState = FusionAuthStateObject()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(AuthorizationManager.shared.fusionAuthState())
+                .environmentObject(fusionAuthState)
                 .onOpenURL { url in
                     OAuthAuthorization.resume(with: url)
                 }

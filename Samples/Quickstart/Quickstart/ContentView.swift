@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import FusionAuth
-import UIKit
 
 struct ContentView: View {
-    @EnvironmentObject private var authState: FusionAuthState
+    @EnvironmentObject private var authState: FusionAuthStateObject
 
     var body: some View {
         VStack {

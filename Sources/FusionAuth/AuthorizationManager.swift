@@ -1,5 +1,6 @@
 import os
 import AppAuth
+import Combine
 
 /// AuthorizationManager is a singleton object that manages the authorization state of the user.
 /// It provides methods to initialize the authorization manager, check if the user is authenticated,
@@ -8,8 +9,6 @@ import AppAuth
 /// AuthorizationManager uses a TokenManager to manage the access tokens and a Storage implementation
 /// to store the authorization state.
 public class AuthorizationManager {
-    private static let fusionAuthState = FusionAuthState()
-
     /// The shared instance of the AuthorizationManager
     public static let instance = AuthorizationManager()
 
@@ -24,13 +23,8 @@ public class AuthorizationManager {
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
 
         if let authState = tokenManager?.getAuthState() {
-            Self.instance.fusionAuthState().update(authState: authState)
+            triggerEvent(authState)
         }
-    }
-
-    /// Returns the current FusionAuthState
-    public func fusionAuthState() -> FusionAuthState {
-        return Self.fusionAuthState
     }
 
     /// Returns the current TokenManager
@@ -82,7 +76,7 @@ public class AuthorizationManager {
     }
 
     internal func updateAuthState(authState: OIDAuthState) throws {
-        try updateAuthState(fusionAuthStateData: FusionAuthStateData(
+        try updateAuthState(fusionAuthState: FusionAuthState(
             accessToken: authState.lastTokenResponse?.accessToken ?? "",
             accessTokenExpirationTime: authState.lastTokenResponse?.accessTokenExpirationDate ?? Date(),
             idToken: authState.lastTokenResponse?.idToken ?? "",
@@ -91,7 +85,7 @@ public class AuthorizationManager {
     }
 
     internal func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws {
-        try updateAuthState(fusionAuthStateData: FusionAuthStateData(
+        try updateAuthState(fusionAuthState: FusionAuthState(
             accessToken: accessToken,
             accessTokenExpirationTime: accessTokenExpirationTime,
             idToken: idToken,
@@ -99,17 +93,29 @@ public class AuthorizationManager {
         ))
     }
 
-    private func updateAuthState(fusionAuthStateData: FusionAuthStateData) throws {
-        try self.tokenManager?.saveAuthState(fusionAuthStateData)
-        Self.instance.fusionAuthState().update(authState: fusionAuthStateData)
+    private func updateAuthState(fusionAuthState: FusionAuthState) throws {
+        try self.tokenManager?.saveAuthState(fusionAuthState)
+        triggerEvent(fusionAuthState)
     }
 
     internal func clearState() throws {
         try self.tokenManager?.clearAuthState()
-        Self.instance.fusionAuthState().clear()
+        triggerEvent(nil)
+    }
+
+    private let eventSubject = PassthroughSubject<FusionAuthState?, Never>()
+
+    /// A publisher that emits the current FusionAuthState whenever it changes
+    public var eventPublisher: AnyPublisher<FusionAuthState?, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+
+    internal func triggerEvent(_ event: FusionAuthState?) {
+        eventSubject.send(event)
     }
 }
 
+// MARK: - Logger
 extension AuthorizationManager {
     /// The logger for the FusionAuth Mobile SDK
     public static var log: Logger?
