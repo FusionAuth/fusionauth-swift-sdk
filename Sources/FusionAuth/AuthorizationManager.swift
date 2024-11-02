@@ -15,6 +15,8 @@ public class AuthorizationManager {
     private var configuration: AuthorizationConfiguration?
     private var tokenManager: TokenManager?
 
+    private let eventSubject = PassthroughSubject<FusionAuthState?, Never>()
+
     private init() {}
 
     /// Initialize the AuthorizationManager with the given configuration
@@ -30,17 +32,6 @@ public class AuthorizationManager {
     /// Returns the current TokenManager
     public func getTokenManager() -> TokenManager {
         return tokenManager!
-    }
-
-    /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
-    public func oauth() -> OAuthAuthorizationService {
-        return OAuthAuthorizationService(
-            fusionAuthUrl: configuration!.fusionAuthUrl,
-            clientId: configuration!.clientId,
-            tenantId: configuration!.tenant,
-            locale: configuration!.locale,
-            additionalScopes: configuration!.additionalScopes
-        )
     }
 
     /// Returns a fresh access token
@@ -102,9 +93,26 @@ public class AuthorizationManager {
         try self.tokenManager?.clearAuthState()
         triggerEvent(nil)
     }
+}
 
-    private let eventSubject = PassthroughSubject<FusionAuthState?, Never>()
+// MARK: - OAuth
 
+extension AuthorizationManager {
+    /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
+    public func oauth() -> OAuthAuthorizationService {
+        return OAuthAuthorizationService(
+            fusionAuthUrl: configuration!.fusionAuthUrl,
+            clientId: configuration!.clientId,
+            tenantId: configuration!.tenant,
+            locale: configuration!.locale,
+            additionalScopes: configuration!.additionalScopes
+        )
+    }
+}
+
+// MARK: - Event Handling
+
+extension AuthorizationManager {
     /// A publisher that emits the current FusionAuthState whenever it changes
     public var eventPublisher: AnyPublisher<FusionAuthState?, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -116,6 +124,7 @@ public class AuthorizationManager {
 }
 
 // MARK: - Logger
+
 extension AuthorizationManager {
     /// The logger for the FusionAuth Mobile SDK
     public static var log: Logger?

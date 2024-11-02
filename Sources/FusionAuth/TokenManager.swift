@@ -1,5 +1,7 @@
 import AppAuth
 
+let tokenKey = "authState"
+
 enum TokenManagerError: Error {
     case noStorage
 }
@@ -21,7 +23,7 @@ public class TokenManager {
     /// Retrieves the current authorization state from the storage.
     /// - Returns: The FusionAuthState object representing the current authorization state, or nil if not found.
     func getAuthState() -> FusionAuthState? {
-        guard let authState = self.storage?.get(key: "authState") else {
+        guard let authState = self.storage?.get(key: tokenKey) else {
             return nil
         }
 
@@ -53,7 +55,7 @@ public class TokenManager {
         )
 
         do {
-            storage.set(key: "authState", content: try fusionAuthState.toJSON() ?? "")
+            storage.set(key: tokenKey, content: try fusionAuthState.toJSON() ?? "")
         } catch {
             print("Error encoding auth state: \(error)")
         }
@@ -66,6 +68,6 @@ public class TokenManager {
             throw TokenManagerError.noStorage
         }
 
-        storage.remove(key: "authState")
+        storage.remove(key: tokenKey)
     }
 }

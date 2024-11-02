@@ -3,24 +3,6 @@ import AppAuth
 import SwiftUI
 import AuthenticationServices
 
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
-
-enum OAuthError: Error {
-    case oIDConfigurationNil
-    case authStateNil
-    case noAuthorizationCode
-    case accessTokenNil
-    case userInfoEndpointNotFound
-    case userInfoInvalid
-    case refreshTokenNil
-    case refreshTokenNoResponse
-    case unableToUpdateInternalState
-}
-
 /// OAuthAuthorizationService class is responsible for handling OAuth authorization and authorization process.
 /// It provides methods to authorize the user, handle the redirect intent, fetch user information,
 /// perform logout, retrieve fresh access token, and get the authorization service.
@@ -47,16 +29,85 @@ public class OAuthAuthorizationService {
         self.additionalScopes = additionalScopes
     }
 
-    #if os(macOS)
-    private func getPresenting() -> NSWindow {
-        return ASPresentationAnchor()
+    /// Builds additional parameters for the OAuth authorize request.
+    private func getParametersFromOptions(_ options: OAuthAuthorizeOptions) -> [String: String] {
+        var additionalParameters: [String: String] = [:]
+        if tenantId != nil {
+            additionalParameters.updateValue(tenantId!, forKey: "tenantId")
+        }
+        if locale != nil {
+            additionalParameters.updateValue(locale!, forKey: "locale")
+        }
+        if options.codeChallenge != nil {
+            additionalParameters.updateValue(options.codeChallenge!, forKey: "code_challenge")
+        }
+        if options.codeChallengeMethod != nil {
+            additionalParameters.updateValue(options.codeChallengeMethod!.rawValue, forKey: "code_challenge_method")
+        }
+        if options.idpHint != nil {
+            additionalParameters.updateValue(options.idpHint!, forKey: "idp_hint")
+        }
+        if options.deviceDescription != nil {
+            additionalParameters.updateValue(options.deviceDescription!, forKey: "metaData.device.description")
+        }
+        if options.userCode != nil {
+            additionalParameters.updateValue(options.userCode!, forKey: "user_code")
+        }
+        return additionalParameters
     }
-    #else
-    private func getPresenting() -> UIViewController {
-        return UIApplication.topViewController!
-    }
-    #endif
+}
 
+// MARK: - Configuration
+
+extension OAuthAuthorizationService {
+    /// Retrieves the OIDServiceConfiguration from FusionAuth.
+    ///
+    /// Starts a task to fetch the configuration if it is not already started.
+    private func getConfiguration(force: Bool = false) async throws -> OIDServiceConfiguration {
+        AuthorizationManager.log?.trace("Retrieving configuration from FusionAuth")
+
+        if !force {
+            if let configurationTask {
+                return try await configurationTask.value
+            }
+        }
+
+        let task = Task {
+            return try await fetchConfiguration()
+        }
+        self.configurationTask = task
+
+        return try await withTaskCancellationHandler {
+            try await task.value
+        } onCancel: {
+            task.cancel()
+        }
+    }
+
+    /// Fetches the OIDServiceConfiguration from FusionAuth using AppAuth
+    private func fetchConfiguration() async throws -> OIDServiceConfiguration {
+        try await withCheckedThrowingContinuation { continuation in
+            let issuer = URL(string: self.fusionAuthUrl)
+            OIDAuthorizationService.discoverConfiguration(forIssuer: issuer!) { configuration, error in
+                if error != nil {
+                    continuation.resume(throwing: error!)
+                    return
+                }
+
+                guard let config = configuration else {
+                    continuation.resume(throwing: OAuthError.oIDConfigurationNil)
+                    return
+                }
+
+                continuation.resume(returning: config)
+            }
+        }
+    }
+}
+
+// MARK: - Authorization
+
+extension OAuthAuthorizationService {
     /// Authorizes the user using OAuth authorization code flow.
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
@@ -108,25 +159,11 @@ public class OAuthAuthorizationService {
 
         return authState
     }
+}
 
-    /// Retrieves the user information for the authenticated user.
-    ///
-    /// - Returns: The user information
-    /// - Throws: An error if the user information is not found.
-    public func userInfo() async throws -> UserInfo {
-        let configuration = try await getConfiguration()
+// MARK: - Logout
 
-        guard let userinfoEndpoint = configuration.discoveryDocument?.userinfoEndpoint else {
-            throw OAuthError.userInfoEndpointNotFound
-        }
-
-        guard let accessToken = try await freshAccessToken() else {
-            throw OAuthError.accessTokenNil
-        }
-
-        return try await getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
-    }
-
+extension OAuthAuthorizationService {
     /// Log out the user
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
@@ -186,7 +223,73 @@ public class OAuthAuthorizationService {
             }
         }
     }
+}
 
+// MARK: - User Info
+
+extension OAuthAuthorizationService {
+    /// Retrieves the user information for the authenticated user.
+    ///
+    /// - Returns: The user information
+    /// - Throws: An error if the user information is not found.
+    public func userInfo() async throws -> UserInfo {
+        let configuration = try await getConfiguration()
+
+        guard let userinfoEndpoint = configuration.discoveryDocument?.userinfoEndpoint else {
+            throw OAuthError.userInfoEndpointNotFound
+        }
+
+        guard let accessToken = try await freshAccessToken() else {
+            throw OAuthError.accessTokenNil
+        }
+
+        return try await getUserInfo(userinfoEndpoint: userinfoEndpoint, accessToken: accessToken)
+    }
+
+    private func getUserInfo(userinfoEndpoint: URL, accessToken: String) async throws -> UserInfo {
+        try await withCheckedThrowingContinuation { continuation in
+            var request = URLRequest(url: userinfoEndpoint)
+            request.allHTTPHeaderFields = ["Authorization": "Bearer \(accessToken)"]
+
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                }
+                guard error == nil else {
+                    continuation.resume(throwing: error!)
+                    return
+                }
+                guard let response = response as? HTTPURLResponse else {
+                    continuation.resume(throwing: OAuthError.noAuthorizationCode)
+                    return
+                }
+                guard let data else {
+                    print("HTTP response data is empty")
+                    return
+                }
+
+                if response.statusCode != 200 {
+                    print("HTTP: \(response.statusCode), Response: \(String(bytes: data, encoding: .utf8) ?? "")")
+
+                    continuation.resume(throwing: OAuthError.accessTokenNil)
+                    return
+                }
+
+                do {
+                    let userInfo = try JSONDecoder().decode(UserInfo.self, from: data)
+                    continuation.resume(returning: userInfo)
+                } catch let jsonError as NSError {
+                    print(jsonError)
+                    continuation.resume(throwing: jsonError)
+                }
+            }.resume()
+        }
+    }
+}
+
+// MARK: - Access Token
+
+extension OAuthAuthorizationService {
     /// Retrieves a fresh access token.
     ///
     /// - Returns: The fresh access token or nil if an error occurs.
@@ -261,112 +364,5 @@ public class OAuthAuthorizationService {
                 }
             }
         }
-    }
-
-    private func getUserInfo(userinfoEndpoint: URL, accessToken: String) async throws -> UserInfo {
-        try await withCheckedThrowingContinuation { continuation in
-            var request = URLRequest(url: userinfoEndpoint)
-            request.allHTTPHeaderFields = ["Authorization": "Bearer \(accessToken)"]
-
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error {
-                    continuation.resume(throwing: error)
-                }
-                guard error == nil else {
-                    continuation.resume(throwing: error!)
-                    return
-                }
-                guard let response = response as? HTTPURLResponse else {
-                    continuation.resume(throwing: OAuthError.noAuthorizationCode)
-                    return
-                }
-                guard let data else {
-                    print("HTTP response data is empty")
-                    return
-                }
-
-                if response.statusCode != 200 {
-                    print("HTTP: \(response.statusCode), Response: \(String(bytes: data, encoding: .utf8) ?? "")")
-
-                    continuation.resume(throwing: OAuthError.accessTokenNil)
-                    return
-                }
-
-                do {
-                    let userInfo = try JSONDecoder().decode(UserInfo.self, from: data)
-                    continuation.resume(returning: userInfo)
-                } catch let jsonError as NSError {
-                    print(jsonError)
-                    continuation.resume(throwing: jsonError)
-                }
-            }.resume()
-        }
-    }
-
-    private func getConfiguration(force: Bool = false) async throws -> OIDServiceConfiguration {
-        AuthorizationManager.log?.trace("Retrieving configuration from FusionAuth")
-
-        if !force {
-            if let configurationTask {
-                return try await configurationTask.value
-            }
-        }
-
-        let task = Task {
-            return try await fetchConfiguration()
-        }
-        self.configurationTask = task
-
-        return try await withTaskCancellationHandler {
-            try await task.value
-        } onCancel: {
-            task.cancel()
-        }
-    }
-
-    private func fetchConfiguration() async throws -> OIDServiceConfiguration {
-        try await withCheckedThrowingContinuation { continuation in
-            let issuer = URL(string: self.fusionAuthUrl)
-            OIDAuthorizationService.discoverConfiguration(forIssuer: issuer!) { configuration, error in
-                if error != nil {
-                    continuation.resume(throwing: error!)
-                    return
-                }
-
-                guard let config = configuration else {
-                    continuation.resume(throwing: OAuthError.oIDConfigurationNil)
-                    return
-                }
-
-                continuation.resume(returning: config)
-            }
-        }
-    }
-
-    /// Builds additional parameters for the OAuth authorize request.
-    private func getParametersFromOptions(_ options: OAuthAuthorizeOptions) -> [String: String] {
-        var additionalParameters: [String: String] = [:]
-        if tenantId != nil {
-            additionalParameters.updateValue(tenantId!, forKey: "tenantId")
-        }
-        if locale != nil {
-            additionalParameters.updateValue(locale!, forKey: "locale")
-        }
-        if options.codeChallenge != nil {
-            additionalParameters.updateValue(options.codeChallenge!, forKey: "code_challenge")
-        }
-        if options.codeChallengeMethod != nil {
-            additionalParameters.updateValue(options.codeChallengeMethod!.rawValue, forKey: "code_challenge_method")
-        }
-        if options.idpHint != nil {
-            additionalParameters.updateValue(options.idpHint!, forKey: "idp_hint")
-        }
-        if options.deviceDescription != nil {
-            additionalParameters.updateValue(options.deviceDescription!, forKey: "metaData.device.description")
-        }
-        if options.userCode != nil {
-            additionalParameters.updateValue(options.userCode!, forKey: "user_code")
-        }
-        return additionalParameters
     }
 }
