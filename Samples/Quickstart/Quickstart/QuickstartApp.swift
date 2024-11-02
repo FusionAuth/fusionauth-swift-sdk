@@ -1,10 +1,3 @@
-//
-//  QuickstartApp.swift
-//  Quickstart
-//
-//  Created by Colin Frick on 24.04.24.
-//
-
 import SwiftUI
 import FusionAuth
 

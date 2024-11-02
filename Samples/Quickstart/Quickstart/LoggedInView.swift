@@ -1,10 +1,3 @@
-//
-//  LoggedInView.swift
-//  Quickstart
-//
-//  Created by Colin Frick on 15.05.24.
-//
-
 import SwiftUI
 
 struct LoggedInView: View {

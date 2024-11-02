@@ -1,10 +1,3 @@
-//
-//  AuthorizationManager+Initialization.swift
-//  fusionauth-quickstart-swift-ios-native
-//
-//  Created by Colin Frick on 31.08.24.
-//
-
 import FusionAuth
 
 extension AuthorizationManager {

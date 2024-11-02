@@ -1,10 +1,3 @@
-//
-//  QuickstartTests.swift
-//  QuickstartTests
-//
-//  Created by Colin Frick on 22.10.24.
-//
-
 import XCTest
 
 final class QuickstartTests: XCTestCase {
