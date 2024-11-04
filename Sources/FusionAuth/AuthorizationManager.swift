@@ -2,6 +2,10 @@ import os
 import AppAuth
 import Combine
 
+enum AuthorizationManagerError: Error {
+    case notInitialized
+}
+
 /// AuthorizationManager is a singleton object that manages the authorization state of the user.
 /// It provides methods to initialize the authorization manager, check if the user is authenticated,
 /// retrieve access tokens, refresh access tokens, and clear the authorization state.
@@ -20,8 +24,14 @@ public class AuthorizationManager {
     private init() {}
 
     /// Initialize the AuthorizationManager with the given configuration
-    public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil) {
+    @discardableResult public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil) -> Self {
         self.configuration = configuration
+        self.initTokenManager(storage)
+        return self
+    }
+
+    /// Initialize the TokenManager with the given storage
+    internal func initTokenManager(_ storage: Storage? = nil) {
         self.tokenManager = TokenManager().withStorage(storage: storage ?? MemoryStorage())
 
         if let authState = tokenManager?.getAuthState() {
@@ -95,17 +105,41 @@ public class AuthorizationManager {
     }
 }
 
+// MARK: - PList Configuration
+
+extension AuthorizationManager {
+    /// Initialize the AuthorizationManager with the given bundle
+    @discardableResult public func initialize(bundle: Bundle = Bundle.main, storage: Storage? = nil) -> Self {
+        guard let configuration = AuthorizationConfiguration.fromPlist(bundle) else {
+            return self
+        }
+
+        self.configuration = configuration
+        self.initTokenManager(storage ?? AuthorizationConfiguration.getStorageFromPlist(bundle))
+        return self
+    }
+}
+
 // MARK: - OAuth
 
 extension AuthorizationManager {
     /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
-    public func oauth() -> OAuthAuthorizationService {
+    public func oauth() throws -> OAuthAuthorizationService {
+        // Fallback to configuration in PList
+        if self.configuration == nil {
+            self.initialize()
+        }
+
+        guard let configuration = self.configuration else {
+            throw AuthorizationManagerError.notInitialized
+        }
+
         return OAuthAuthorizationService(
-            fusionAuthUrl: configuration!.fusionAuthUrl,
-            clientId: configuration!.clientId,
-            tenantId: configuration!.tenant,
-            locale: configuration!.locale,
-            additionalScopes: configuration!.additionalScopes
+            fusionAuthUrl: configuration.fusionAuthUrl,
+            clientId: configuration.clientId,
+            tenantId: configuration.tenant,
+            locale: configuration.locale,
+            additionalScopes: configuration.additionalScopes
         )
     }
 }

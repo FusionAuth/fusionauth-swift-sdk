@@ -10,7 +10,7 @@ public class FusionAuthStateObject: ObservableObject {
 
     /// Initializes a new instance of FusionAuthStateObject.
     public init() {
-        AuthorizationManager.shared.eventPublisher
+        AuthorizationManager.instance.eventPublisher
             .sink { [weak self] authState in
                 self?.authState = authState
             }

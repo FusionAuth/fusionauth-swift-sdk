@@ -18,7 +18,7 @@
 		0E8454CA2BF50C62007C5E0D /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C92BF50C62007C5E0D /* LoggedInView.swift */; };
 		0E8454CC2BF50CE8007C5E0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CB2BF50CE8007C5E0D /* HomeView.swift */; };
 		0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */; };
-		0EB018B82C830E8A00503908 /* AuthorizationManager+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */; };
+		0EB100102CD90699007AB813 /* FusionAuth.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EB1000F2CD90699007AB813 /* FusionAuth.plist */; };
 		939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,7 +45,7 @@
 		0E8454C92BF50C62007C5E0D /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		0E8454CB2BF50CE8007C5E0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChangeView.swift; sourceTree = "<group>"; };
-		0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthorizationManager+Initialization.swift"; sourceTree = "<group>"; };
+		0EB1000F2CD90699007AB813 /* FusionAuth.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FusionAuth.plist; sourceTree = "<group>"; };
 		939AED162CC91492000E2D3F /* QuickstartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,7 +100,7 @@
 				0E8454C92BF50C62007C5E0D /* LoggedInView.swift */,
 				0E8454CB2BF50CE8007C5E0D /* HomeView.swift */,
 				0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */,
-				0EB018B72C830E8A00503908 /* AuthorizationManager+Initialization.swift */,
+				0EB1000F2CD90699007AB813 /* FusionAuth.plist */,
 			);
 			path = Quickstart;
 			sourceTree = "<group>";
@@ -224,6 +224,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EB100102CD90699007AB813 /* FusionAuth.plist in Resources */,
 				0E2796002BD937BA00738892 /* Preview Assets.xcassets in Resources */,
 				0E2795FD2BD937BA00738892 /* Assets.xcassets in Resources */,
 			);
@@ -248,7 +249,6 @@
 				0E8454CA2BF50C62007C5E0D /* LoggedInView.swift in Sources */,
 				0E8454C62BF509C6007C5E0D /* LoginView.swift in Sources */,
 				0E2795FB2BD937B800738892 /* ContentView.swift in Sources */,
-				0EB018B82C830E8A00503908 /* AuthorizationManager+Initialization.swift in Sources */,
 				0E8454CC2BF50CE8007C5E0D /* HomeView.swift in Sources */,
 				0E2795F92BD937B800738892 /* QuickstartApp.swift in Sources */,
 				0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */,
