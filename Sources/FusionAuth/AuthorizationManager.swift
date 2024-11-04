@@ -76,6 +76,11 @@ public class AuthorizationManager {
         return expiration.timeIntervalSinceNow.sign == .minus
     }
 
+    /// Retrieves the ID token, if available
+    public func getIdToken() -> String? {
+        return self.tokenManager?.getAuthState()?.idToken
+    }
+
     internal func updateAuthState(authState: OIDAuthState) throws {
         try updateAuthState(fusionAuthState: FusionAuthState(
             accessToken: authState.lastTokenResponse?.accessToken ?? "",
@@ -126,7 +131,7 @@ extension AuthorizationManager {
     public static func oauth() throws -> OAuthAuthorizationService {
         return try AuthorizationManager.instance.oauth()
     }
-    
+
     /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
     public func oauth() throws -> OAuthAuthorizationService {
         // Fallback to configuration in PList

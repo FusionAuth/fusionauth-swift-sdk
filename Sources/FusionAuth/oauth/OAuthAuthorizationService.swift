@@ -7,8 +7,6 @@ import AuthenticationServices
 /// It provides methods to authorize the user, handle the redirect intent, fetch user information,
 /// perform logout, retrieve fresh access token, and get the authorization service.
 public class OAuthAuthorizationService {
-    private static var appAuthState: OIDAuthState?
-
     private let fusionAuthUrl: String
     private let clientId: String
     private let tenantId: String?
@@ -145,8 +143,6 @@ extension OAuthAuthorizationService {
 
         OAuthAuthorizationStore.shared.clear()
 
-        Self.appAuthState = authState
-
         DispatchQueue.main.async {
             do {
                 try AuthorizationManager.instance.updateAuthState(authState: authState)
@@ -168,7 +164,7 @@ extension OAuthAuthorizationService {
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
     public func logout(options: OAuthLogoutOptions) async throws {
-        let idToken = Self.appAuthState?.lastTokenResponse?.idToken
+        let idToken = AuthorizationManager.instance.getIdToken()
 
         guard let idToken else {
             throw OAuthError.accessTokenNil
@@ -213,7 +209,6 @@ extension OAuthAuthorizationService {
         }
 
         self.logoutSession = nil
-        Self.appAuthState = nil
 
         DispatchQueue.main.async {
             do {
