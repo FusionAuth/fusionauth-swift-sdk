@@ -5,6 +5,10 @@ import FusionAuth
 struct QuickstartApp: App {
     let fusionAuthState = FusionAuthStateObject()
 
+    init() {
+        AuthorizationManager.instance.initialize()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -19,7 +19,7 @@ public class AuthorizationManager {
     private var configuration: AuthorizationConfiguration?
     private var tokenManager: TokenManager?
 
-    private let eventSubject = PassthroughSubject<FusionAuthState?, Never>()
+    private let eventSubject = CurrentValueSubject<FusionAuthState?, Never>(nil)
 
     private init() {}
 
