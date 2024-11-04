@@ -30,7 +30,7 @@ struct HomeView: View {
                 Button("Refresh token") {
                     Task {
                         do {
-                            let accessToken = try await AuthorizationManager.instance
+                            let accessToken = try await AuthorizationManager
                                 .oauth()
                                 .freshAccessToken()
 
@@ -48,7 +48,7 @@ struct HomeView: View {
                 Button("Log out") {
                     Task {
                         do {
-                            try await AuthorizationManager.instance
+                            try await AuthorizationManager
                                 .oauth()
                                 .logout(options: OAuthLogoutOptions())
                         } catch let error as NSError {
@@ -63,7 +63,7 @@ struct HomeView: View {
     func getUserInfo() {
         Task {
             do {
-                self.userInfo = try await AuthorizationManager.instance
+                self.userInfo = try await AuthorizationManager
                     .oauth()
                     .userInfo()
             } catch let error as NSError {

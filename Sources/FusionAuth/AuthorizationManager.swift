@@ -123,6 +123,10 @@ extension AuthorizationManager {
 // MARK: - OAuth
 
 extension AuthorizationManager {
+    public static func oauth() throws -> OAuthAuthorizationService {
+        return try AuthorizationManager.instance.oauth()
+    }
+    
     /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
     public func oauth() throws -> OAuthAuthorizationService {
         // Fallback to configuration in PList

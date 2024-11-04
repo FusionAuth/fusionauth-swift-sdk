@@ -16,7 +16,7 @@ struct LoginView: View {
             Button("Login") {
                 Task {
                     do {
-                        try await AuthorizationManager.instance
+                        try await AuthorizationManager
                             .oauth()
                             .authorize(options: OAuthAuthorizeOptions())
                     } catch let error as NSError {
