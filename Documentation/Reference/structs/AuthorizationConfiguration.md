@@ -14,3 +14,5 @@ AuthorizationConfiguration is a struct that represents the configuration for aut
 ```swift
 public init(clientId: String, fusionAuthUrl: String, tenant: String? = nil, additionalScopes: [String] = [], locale: String? = nil)
 ```
+
+Creates a new instance of AuthorizationConfiguration.

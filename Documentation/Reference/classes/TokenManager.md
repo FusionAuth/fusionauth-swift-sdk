@@ -6,7 +6,6 @@
 public class TokenManager
 ```
 
-TODO
-TokenManager is a singleton object that manages the access tokens.
-It provides methods to get and set the access, refresh and ID tokens.
-It uses one of the configured Storage implementations to store the access tokens.
+TokenManager is responsible for managing the authorization tokens.
+It provides methods to get, save, and clear the access, refresh, and ID tokens.
+The tokens are stored using a configured Storage implementation.

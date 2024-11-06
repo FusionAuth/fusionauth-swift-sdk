@@ -6,8 +6,23 @@
 public struct OAuthAuthorization
 ```
 
-TODO
 OAuthAuthorization is a utility struct that provides methods to resume and cancel the OAuth authorization flow.
+
+`resume` should be used in the `onOpenURL` modifier of the base `ContentView` of your app.
+
+```
+@main
+struct QuickstartApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .onOpenURL { url in
+                    OAuthAuthorization.resume(with: url)
+                }
+        }
+    }
+}
+```
 
 ## Methods
 ### `resume(with:)`
@@ -33,4 +48,4 @@ Resume the authorization flow with the URL
 public static func cancel()
 ```
 
-Cancel the authorization flow
+Cancel the current authorization flow

@@ -20,18 +20,16 @@ to store the authorization state.
 public static let instance = AuthorizationManager()
 ```
 
+The shared instance of the AuthorizationManager
+
 ## Methods
 ### `initialize(configuration:storage:)`
 
 ```swift
-public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil)
+@discardableResult public func initialize(configuration: AuthorizationConfiguration, storage: Storage? = nil) -> Self
 ```
 
-### `fusionAuthState()`
-
-```swift
-public func fusionAuthState() -> FusionAuthState
-```
+Initialize the AuthorizationManager with the given configuration
 
 ### `getTokenManager()`
 
@@ -39,11 +37,7 @@ public func fusionAuthState() -> FusionAuthState
 public func getTokenManager() -> TokenManager
 ```
 
-### `oauth()`
-
-```swift
-public func oauth() -> OAuthAuthorizationService
-```
+Returns the current TokenManager
 
 ### `freshAccessToken(force:)`
 
@@ -51,11 +45,18 @@ public func oauth() -> OAuthAuthorizationService
 public func freshAccessToken(force: Bool = false) async throws -> String?
 ```
 
+Returns a fresh access token
+
+If the access token is not expired, it will be returned immediately.
+If the access token is expired or force is `true`, a new access token will be fetched using the refresh token.
+
 ### `getAccessToken()`
 
 ```swift
 public func getAccessToken() -> String?
 ```
+
+Retrieves the access token, if available
 
 ### `getAccessTokenExpirationTime()`
 
@@ -63,26 +64,20 @@ public func getAccessToken() -> String?
 public func getAccessTokenExpirationTime() -> Date?
 ```
 
+Retrieves the access token expiration, if available
+
 ### `isAccessTokenExpired()`
 
 ```swift
 public func isAccessTokenExpired() -> Bool
 ```
 
-### `updateAuthState(authState:)`
+Checks if the stored access token is expired.
+
+### `getIdToken()`
 
 ```swift
-public func updateAuthState(authState: OIDAuthState) throws
+public func getIdToken() -> String?
 ```
 
-### `updateAuthState(accessToken:accessTokenExpirationTime:idToken:refreshToken:)`
-
-```swift
-public func updateAuthState(accessToken: String, accessTokenExpirationTime: Date, idToken: String, refreshToken: String) throws
-```
-
-### `clearState()`
-
-```swift
-public func clearState() throws
-```
+Retrieves the ID token, if available

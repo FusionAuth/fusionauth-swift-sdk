@@ -21,3 +21,5 @@ public init(
     state: String? = nil
 )
 ```
+
+Creates a new instance of OAuthLogoutOptions.

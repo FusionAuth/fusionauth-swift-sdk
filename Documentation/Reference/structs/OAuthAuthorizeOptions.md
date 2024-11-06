@@ -28,3 +28,5 @@ public init(
     userCode: String? = nil
 )
 ```
+
+Creates a new instance of OAuthAuthorizeOptions.
