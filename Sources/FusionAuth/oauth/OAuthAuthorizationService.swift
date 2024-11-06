@@ -1,7 +1,6 @@
 import Foundation
 import AppAuth
 import SwiftUI
-import AuthenticationServices
 
 /// OAuthAuthorizationService class is responsible for handling OAuth authorization and authorization process.
 /// It provides methods to authorize the user, handle the redirect intent, fetch user information,
@@ -172,13 +171,7 @@ extension OAuthAuthorizationService {
 
         let configuration = try await getConfiguration()
 
-        #if os(macOS)
-        let userAgent = OIDExternalUserAgentMac(presenting: getPresenting())
-        #else
-        guard let userAgent = OIDExternalUserAgentIOS(presenting: getPresenting()) else {
-            return
-        }
-        #endif
+        let userAgent = try self.getUserAgent()
 
         let request: OIDEndSessionRequest
 

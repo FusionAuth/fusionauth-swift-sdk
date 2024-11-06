@@ -7,15 +7,14 @@ import Foundation
 /// ```
 /// @main
 /// struct QuickstartApp: App {
-///    var body: some Scene {
-///        WindowGroup {
-///            ContentView()
-///                .environmentObject(AuthorizationManager.shared.fusionAuthState())
-///                .onOpenURL { url in
-///                    OAuthAuthorization.resume(with: url)
-///                }
-///        }
-///    }
+///     var body: some Scene {
+///         WindowGroup {
+///             ContentView()
+///                 .onOpenURL { url in
+///                     OAuthAuthorization.resume(with: url)
+///                 }
+///         }
+///     }
 /// }
 /// ```
 public struct OAuthAuthorization {

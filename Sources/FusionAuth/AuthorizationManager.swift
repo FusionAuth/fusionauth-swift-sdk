@@ -128,6 +128,7 @@ extension AuthorizationManager {
 // MARK: - OAuth
 
 extension AuthorizationManager {
+    /// Returns an instance of the OAuthAuthorizationService, configured with the current configuration
     public static func oauth() throws -> OAuthAuthorizationService {
         return try AuthorizationManager.instance.oauth()
     }
