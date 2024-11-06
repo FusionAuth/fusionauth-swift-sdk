@@ -57,14 +57,6 @@ Installation: `brew install swiftlint`
 
 Run SwiftLint: `swiftlint`
 
-### SwiftFormat
-
-To standardize formatting of swift code in the project.
-
-Installation: `brew install swiftformat`
-
-Run SwiftLint: `swiftformat`
-
 ## Submitting a Pull Request
 
 When you are ready to submit your pull request, visit the main repository on GitHub and click the "Compare & pull request" button. Here you can select the branch you have been working on and create a pull request.
