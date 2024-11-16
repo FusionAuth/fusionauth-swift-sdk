@@ -113,6 +113,10 @@ jobs:
       - name: Get Swift version
         run: swift --version
 
+      # Checkout the repository.
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
       # Docker deployment is failing because the current macos runner has an M-series processor runner without nested virtualization support.
       # Setup Docker on macOS required by FusionAuth.
       #- name: Setup Docker on macOS
@@ -226,10 +230,6 @@ jobs:
       # Connect to FusionAuth App.
       - name: Connect to FusionAuth App
         run: curl http://localhost:9011/api/status
-
-      # Checkout the repository.
-      - name: Checkout repository
-        uses: actions/checkout@v4.2.2
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
