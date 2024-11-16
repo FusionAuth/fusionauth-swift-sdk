@@ -1,7 +1,8 @@
 # This workflow performs a full End 2 End test of the App
-# It runs the test on the last 5 iOS releases.
+# It includes all FusionAuth versions of the past 6 months.
+# And uses the latest iOS Target API level requirements.
 
-name: E2E Test with latest FusionAuth
+name: E2E Test with FusionAuth supported versions
 
 on:
   # Triggers the workflow on pull request events but only for default and protected branches
