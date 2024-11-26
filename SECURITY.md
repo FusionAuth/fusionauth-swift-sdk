@@ -5,12 +5,9 @@ For Responsible Disclosure Program, Discovering Security Vulnerabilities
 
 ## Supported Versions
 
-| SDK Version   | Tested FusionAuth Version | Tested Android API Level | Supported          |
-|---------------|---------------------------|--------------------------|--------------------|
-| \>= 0.1.6     | 1.47 - 1.51               | 29 - 34                  | :white_check_mark: |
-| 0.1.4 - 0.1.5 | 1.47 - 1.50               | 29 - 34                  | :x:                |
-| 0.1.1         | 1.46 - 1.49               | 29 - 34                  | :x:                |
-| \<= 0.1.0     | \<= 1.49                  | 29 - 34                  | :x:                |
+| SDK Version | Tested FusionAuth | Tested Simulator | Tested xcode  | Tested swift   | Supported          |
+|-------------|-------------------|------------------|---------------|----------------|--------------------|
+| \>= 0.1.0   | 1.47 - 1.54       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :white_check_mark: |
 
 ## Versioning Guidelines
 

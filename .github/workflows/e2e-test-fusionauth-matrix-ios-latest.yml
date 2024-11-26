@@ -1,7 +1,8 @@
 # This workflow performs a full End 2 End test of the App
-# It runs the test on the last 5 iOS releases.
+# It includes all FusionAuth versions of the past 6 months.
+# And uses the latest iOS Target API level requirements.
 
-name: E2E Test with latest FusionAuth
+name: E2E Test with FusionAuth supported versions
 
 on:
   # Triggers the workflow on pull request events but only for default and protected branches
@@ -9,9 +10,6 @@ on:
     branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-env:
-  fusionauth-docker-image-version: "1.54.0"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -41,28 +39,8 @@ jobs:
         swift: [ "5.10.1" ]
         os: [ "macos-14" ]
         postgresql-version: [ "16" ]
-        include:
-          - destination: "platform=iOS Simulator,OS=17.5,name=iPhone 15"
-            xcode: "15.4"
-            simulator-platform: "iOS"
-            simulator-version: "17.5"
-            swift: "5.10.1"
-            os: "macos-14"
-            postgresql-version: "16"
-          - destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14"
-            xcode: "14.3.1"
-            simulator-platform: "iOS"
-            simulator-version: "16.4"
-            swift: "5.8.1"
-            os: "macos-13"
-            postgresql-version: "16"
-          - destination: "platform=iOS Simulator,OS=15.5,name=iPhone 13"
-            xcode: "14.3.1"
-            simulator-platform: "iOS"
-            simulator-version: "15.5"
-            swift: "5.8.1"
-            os: "macos-13"
-            postgresql-version: "16"
+        fusionauth-docker-image-version: [ "1.47.1", "1.48.3", "1.49.2", "1.50.1", "1.51.2", "1.52.1", "1.53.3", "1.54.0" ]
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -117,29 +95,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Docker deployment is failing because the current macos runner has an M-series processor runner without nested virtualization support.
-      # Setup Docker on macOS required by FusionAuth.
-      #- name: Setup Docker on macOS
-      #  uses: douglascamata/setup-docker-macos-action@v1-alpha
-
-      # Create and start FusionAuth containers used by E2E test.
-      #- name: Start FusionAuth
-      #  uses: fusionauth/fusionauth-github-action@v1
-      #  with:
-      #    FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
-      #    FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
-
-      # FusionAuth deployment fails https://github.com/FusionAuth/homebrew-fusionauth/issues/9
-      # Install FusionAuth with brew.
-      #- name: Install FusionAuth
-      #  env:
-      #    FUSIONAUTH_APP_KICKSTART_FILE: "Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart/kickstart.json"
-      #  run: |
-      #    brew tap fusionauth/homebrew-fusionauth
-      #    brew install fusionauth-app fusionauth-search
-      #    brew services start fusionauth-search
-      #    brew services start fusionauth-app
-
       # Install FusionAuth with brew.
       - name: Install PostgreSQL
         run: brew install postgresql@${{ matrix.postgresql-version }} -v
@@ -176,7 +131,7 @@ jobs:
       - name: Configure FusionAuth App
         run: |
           echo "" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
-          echo "fusionauth-app.kickstart.file=$(echo $GITHUB_WORKSPACE)/Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart/kickstart.json" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
+          echo "fusionauth-app.kickstart.file=$(echo $GITHUB_WORKSPACE)/Samples/Quickstart/fusionauth/${{ matrix.fusionauth-docker-image-version }}/kickstart/kickstart.json" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
           echo "fusionauth-app.silent-mode=true" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
           cat $(brew --prefix)/etc/fusionauth/fusionauth.properties
 
