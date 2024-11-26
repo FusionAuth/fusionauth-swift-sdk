@@ -17,7 +17,7 @@ let package = Package(
             targets: ["FusionAuth"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.5"),
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.6"),
         .package(url: "https://github.com/realm/SwiftLint.git", from: "0.57.1")
     ],
     targets: [
