@@ -112,7 +112,7 @@ jobs:
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
-        uses: SwiftyLab/setup-swift@v1.9.0
+        uses: swift-actions/setup-swift@v2.1.0
         with:
           swift-version: ${{ matrix.swift }}
 
