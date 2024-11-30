@@ -41,9 +41,9 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: ["5.10.1"]
+        swift: ["6.0.2"]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: ["15.4"]
+        xcode: ["16.1"]
         language: [swift]
         build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
@@ -70,7 +70,7 @@ jobs:
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
-        uses: swift-actions/setup-swift@v2.1.0
+        uses: SwiftyLab/setup-swift@v1.9.0
         with:
           swift-version: ${{ matrix.swift }}
 
