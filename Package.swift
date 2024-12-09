@@ -50,7 +50,7 @@ let package = Package(
             targets: ["FusionAuth"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.5")
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.6")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
