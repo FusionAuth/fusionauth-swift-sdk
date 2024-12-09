@@ -27,12 +27,12 @@ let package = Package(
             name: "FusionAuth",
             dependencies: [
                 .product(name: "AppAuth", package: "AppAuth-iOS")
-            ],
-            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")]
+            ]
         ),
         .testTarget(
             name: "FusionAuthTests",
-            dependencies: ["FusionAuth"]
+            dependencies: ["FusionAuth"],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")]
         ),
     ]
 )
