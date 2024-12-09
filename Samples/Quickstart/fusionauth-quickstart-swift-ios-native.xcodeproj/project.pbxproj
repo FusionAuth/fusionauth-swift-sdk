@@ -47,7 +47,7 @@
 		0E8454CB2BF50CE8007C5E0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChangeView.swift; sourceTree = "<group>"; };
 		0EB1000F2CD90699007AB813 /* FusionAuth.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FusionAuth.plist; sourceTree = "<group>"; };
-		9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-swift-sdk"; path = ../../..; sourceTree = "<group>"; };
+		9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-swift-sdk"; path = ../..; sourceTree = "<group>"; };
 		939AED162CC91492000E2D3F /* QuickstartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
