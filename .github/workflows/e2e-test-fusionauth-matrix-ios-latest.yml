@@ -120,10 +120,6 @@ jobs:
       - name: Tap FusionAuth Homebrew formulae
         run: brew tap sonderformat-llc/fusionauth
 
-      # Install FusionAuth Search with brew.
-      - name: Install FusionAuth Search
-        run: brew install fusionauth-search -v
-
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
         run: brew install fusionauth-app -v
@@ -135,10 +131,6 @@ jobs:
           echo "fusionauth-app.kickstart.file=$(echo $GITHUB_WORKSPACE)/Samples/Quickstart/fusionauth/${{ matrix.fusionauth-docker-image-version }}/kickstart/kickstart.json" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
           echo "fusionauth-app.silent-mode=true" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
           cat $(brew --prefix)/etc/fusionauth/fusionauth.properties
-
-      # Start FusionAuth Search.
-      - name: Start FusionAuth Search
-        run: brew services start fusionauth-search -v
 
       # Start FusionAuth App.
       - name: Start FusionAuth App
