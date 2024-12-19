@@ -90,6 +90,12 @@ extension OAuthAuthorizationService {
                     return
                 }
 
+                let scheme = config.issuer?.scheme
+                if scheme != "http" && scheme != "https" {
+                    continuation.resume(throwing: OAuthError.invalidIssuer)
+                    return
+                }
+
                 continuation.resume(returning: config)
             }
         }
