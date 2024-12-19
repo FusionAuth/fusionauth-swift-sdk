@@ -35,12 +35,6 @@ public class OAuthAuthorizationService {
         if locale != nil {
             additionalParameters.updateValue(locale!, forKey: "locale")
         }
-        if options.codeChallenge != nil {
-            additionalParameters.updateValue(options.codeChallenge!, forKey: "code_challenge")
-        }
-        if options.codeChallengeMethod != nil {
-            additionalParameters.updateValue(options.codeChallengeMethod!.rawValue, forKey: "code_challenge_method")
-        }
         if options.idpHint != nil {
             additionalParameters.updateValue(options.idpHint!, forKey: "idp_hint")
         }
