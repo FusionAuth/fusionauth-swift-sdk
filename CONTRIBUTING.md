@@ -31,17 +31,45 @@ Once you have found an issue you want to work on, we suggest to:
 2. Create a new branch with the name fix/issue-id or feat/issue-id.
 3. And start working on that branch on the issue.
 
-## Development Tooling
+## Development
+
+This SDK was developed with [Xcode](https://developer.apple.com/xcode/).
+
+Checking out this repository will provide you with the full development environment including a fully functional example application with a FusionAuth runtime.
+
+To open the project in Xcode, navigate to the [FusionAuthSDK.xcworkspace](FusionAuthSDK.xcworkspace) workspace and open it.
+
+### Library
+
+The SDK is located in [Sources/](Sources) the docs in [Documentation/](Documentation) and tests in [Tests/](Tests) as well as [Samples/Quickstart/QuickstartTests/](Samples/Quickstart/QuickstartTests).
+
+### App
+
+To use the functionality of the SDK in [Sources/](Sources) we load it in to the [Samples/Quickstart/](Samples/Quickstart) which you can start within Xcode by running the fusionauth-quickstart-swift-ios-native scheme as long you have the [FusionAuthSDK.xcworkspace](FusionAuthSDK.xcworkspace) workspace loaded.
+
+To run the App we suggest to use the latest simulator as a run destination or the defined simulator in the [automated end to end tests](.github/workflows).
+
+### FusionAuth
+
+The [Samples/Quickstart/](Samples/Quickstart) is using FusionAuth for the different use cases (e.g. login, logout) and is preconfigured to work with the [Samples/Quickstart/fusionauth/](Samples/Quickstart/fusionauth) located versions.
+
+We suggest to use the following commands to switch between the different versions.
+
+* Create: `docker compose up -d` to start fusionauth in the background.
+* Logs: `docker compose logs app` it will take a moment until the kickstart is initialized.
+* Destroy: `docker compose down -v` we destroy the volumes because we always want a fresh install.
+
+### Development Tooling
 
 During development of new features and fixes, we suggest using the following code quality tools which are preconfigured for this project:
 
-### Xcode
+#### Xcode
 
 The minimum tested version of Xcode is 14 the project is specified for 13.
 
 It is important that these and other project minimum requirements are not accidentaly updated by the use of a newer Xcode version so earlier builds start failing. So before commiting changes please review the project file changes in detail e.g. for a version increas for objectVersion, IPHONEOS_DEPLOYMENT_TARGET, version and others.
 
-### SourceDocs
+#### SourceDocs
 
 To generate documentation for the project.
 
@@ -49,13 +77,17 @@ Installation: `brew install sourcedocs`
 
 Generate Documentation: `sourcedocs generate -- -scheme FusionAuth`
 
-### SwiftLint
+#### SwiftLint
 
 To enforce Swift style and conventions.
 
 Installation: `brew install swiftlint`
 
 Run SwiftLint: `swiftlint`
+
+#### Testing
+
+See [FusionAuth Swift SDK Quickstart Testing](https://github.com/sonderformat-llc/fusionauth-quickstart-swift-ios-native/blob/main/TESTING.md) for a full tutorial on Android Test.
 
 ## Submitting a Pull Request
 
@@ -66,4 +98,32 @@ If you're creating a pull request for an issue, please include `Closes #XXX` in 
 After you have submitted your pull request, several checks will be run to ensure the changes meet the project's guidelines. If they do, the pull request will be reviewed by a maintainer and subsequently merged.
 <!--
 end::forDocSiteContributing[]
+-->
+
+# Release
+<!--
+tag::forDocSiteRelease[]
+-->
+The release proceeds through three sequential steps: [Pre-Release Process](#pre-release-process), [Release Process](#release-process) and [Quickstart Release Process](#quickstart-release-process). Where [Pre-Release Process](#pre-release-process) gets repeated untill a stable release is possible.
+
+## Pre-Release Process
+
+The pre-release process is as follows:
+- TODO
+
+The `pre-release.yml` workflow will automatically create a GitHub release, build the library, and add the artifact to GitHub.
+
+## Release Process
+
+The release process is as follows:
+- TODO
+
+The `release.yml` workflow will automatically create a GitHub release, build the library, and publish it to Maven Central.
+
+### Quickstart Release Process
+
+After the release is published, update the version in the [FusionAuth Swift iOS Quickstart Repository](https://github.com/sonderformat-llc/fusionauth-quickstart-swift-ios-native/):
+- TODO
+<!--
+end::forDocSiteRelease[]
 -->
