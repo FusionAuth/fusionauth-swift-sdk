@@ -72,7 +72,7 @@ jobs:
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
-        uses: swift-actions/setup-swift@v2.1.0
+        uses: swift-actions/setup-swift@v2.2.0
         with:
           swift-version: ${{ matrix.swift }}
 
@@ -86,7 +86,7 @@ jobs:
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -117,7 +117,7 @@ jobs:
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
