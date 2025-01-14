@@ -15,10 +15,6 @@ public struct OAuthAuthorizeOptions {
     let redirectUri: String
     /// The identity provider hint to be used for the OAuth authorize request.
     let idpHint: String?
-    /// The code challenge to be used for the OAuth authorize request.
-    let codeChallenge: String?
-    /// The code challenge method to be used for the OAuth authorize request.
-    let codeChallengeMethod: OAuthCodeChallengeMethod?
     /// An optional email address or top level domain that can allow you to bypass the FusionAuth login
     /// page when using managed domains.
     let loginHint: String?
@@ -37,8 +33,6 @@ public struct OAuthAuthorizeOptions {
         bundleId: String = Bundle.main.bundleIdentifier ?? "",
         redirectUriSuffix: String = ":/oauth2redirect/ios-provider",
         idpHint: String? = nil,
-        codeChallenge: String? = nil,
-        codeChallengeMethod: OAuthCodeChallengeMethod? = nil,
         loginHint: String? = nil,
         deviceDescription: String? = nil,
         nonce: String? = nil,
@@ -49,8 +43,6 @@ public struct OAuthAuthorizeOptions {
         self.bundleId = bundleId
         self.redirectUri = bundleId + redirectUriSuffix
         self.idpHint = idpHint
-        self.codeChallenge = codeChallenge
-        self.codeChallengeMethod = codeChallengeMethod
         self.loginHint = loginHint
         self.deviceDescription = deviceDescription
         self.nonce = nonce

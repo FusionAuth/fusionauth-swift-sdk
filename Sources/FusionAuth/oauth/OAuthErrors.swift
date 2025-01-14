@@ -9,4 +9,5 @@ enum OAuthError: Error {
     case refreshTokenNoResponse
     case unableToUpdateInternalState
     case invalidUserAgent
+    case invalidIssuer
 }

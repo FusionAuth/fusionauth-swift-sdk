@@ -18,6 +18,8 @@ An SDK for using FusionAuth in iOS Apps.
 
 - [Documentation](#documentation)
 
+- [Contributing](#contributing)
+
 - [Upgrade Policy](#upgrade-policy)
 
 <!--
@@ -26,7 +28,7 @@ this and following tags, and the corresponding end tag, are used to delineate wh
 Please also use ``` instead of indenting for code blocks. The backticks are translated correctly to adoc format.
 -->
 
-## Overview
+# Overview
 <!--
 tag::forDocSiteOverview[]
 -->
@@ -48,7 +50,7 @@ The SDK is written in Swift and compatible with Object-C.
 end::forDocSiteOverview[]
 -->
 
-## Getting Started
+# Getting Started
 
 <!--
 tag::forDocSiteGettingStarted[]
@@ -126,7 +128,7 @@ struct QuickstartApp: App {
 end::forDocSiteGettingStarted[]
 -->
 
-## Usage
+# Usage
 
 <!--
 tag::forDocSiteUsage[]
@@ -188,7 +190,7 @@ If the user is signed out, the auth state will be cleared.
 end::forDocSiteUsage[]
 -->
 
-## Example App
+# Example App
 
 <!--
 tag::forDocSiteExampleApp[]
@@ -198,7 +200,7 @@ See the [FusionAuth iOS SDK Example](https://github.com/FusionAuth/fusionauth-qu
 end::forDocSiteExampleApp[]
 -->
 
-## Quickstart
+# Quickstart
 
 <!--
 tag::forDocSiteQuickstart[]
@@ -208,7 +210,7 @@ See the [FusionAuth iOS Quickstart](https://fusionauth.io/docs/quickstarts/quick
 end::forDocSiteQuickstart[]
 -->
 
-## Documentation
+# Documentation
 
 <!--
 tag::forDocSiteDocumentation[]
@@ -218,7 +220,18 @@ See the latest [Full library documentation](https://github.com/FusionAuth/fusion
 end::forDocSiteDocumentation[]
 -->
 
-## Upgrade Policy
+# Contributing
+<!--
+tag::forDocSiteContributing[]
+-->
+We hope you love using FusionAuth Swift SDK, but in case you encounter a bug or an issue with the SDK, please do let us know.
+
+Please follow the detailed [Contributing](CONTRIBUTING.md) documentation.
+<!--
+end::forDocSiteContributing[]
+-->
+
+# Upgrade Policy
 
 This library may periodically receive updates with bug fixes, security patches, tests, code samples, or documentation changes.
 

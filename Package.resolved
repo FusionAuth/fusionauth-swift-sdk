@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
       "state" : {
-        "revision" : "678d442c6f7828def400a70ae15968aef67ef52d",
-        "version" : "1.8.3"
+        "revision" : "729e01bc9b9dab466ac85f21fb9ee2bc1c61b258",
+        "version" : "1.8.4"
       }
     },
     {
@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "swift-filename-matcher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ileitch/swift-filename-matcher",
+      "state" : {
+        "revision" : "516ff95f6a06c7a9eff8e944e989c7af076c5cdb",
+        "version" : "2.0.0"
+      }
+    },
+    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax.git",
@@ -59,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/SwiftLint.git",
       "state" : {
-        "revision" : "25f2776977e663305bee71309ea1e34d435065f1",
-        "version" : "0.57.1"
+        "revision" : "fcd4374431159a645d27d549ac3879f3e0ee1fa6",
+        "version" : "0.58.0"
       }
     },
     {

@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  fusionauth-docker-image-version: "1.54.0"
+  fusionauth-docker-image-version: "1.55.1"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -112,8 +112,7 @@ jobs:
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
-        if: matrix.swift != '6.0.2'
-        uses: swift-actions/setup-swift@v2.1.0
+        uses: swift-actions/setup-swift@v2.2.0
         with:
           swift-version: ${{ matrix.swift }}
 
@@ -238,7 +237,7 @@ jobs:
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
 
       - name: Upload recording
-        uses: actions/upload-artifact@v4.4.3
+        uses: actions/upload-artifact@v4.6.0
         if: ${{ failure() }}
         with:
           name: FusionAuth-${{ matrix.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_swift-${{ matrix.swift }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
