@@ -32,8 +32,8 @@ jobs:
           manifest-file: ".github/prerelease-manifest.json"
 
   prerelease-e2e-test:
-    name: Run Prerelease Tests
-    if: ${{ needs.prerelease-prep.outputs.releases_created == 'false' }}
+    name: Run Prerelease E2E Tests
+    if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
     needs: prerelease-prep
     uses: ./.github/workflows/e2e-test-fusionauth-matrix-ios-latest.yml
 
@@ -41,7 +41,7 @@ jobs:
     name: Create Prerelease and Release Pull Request
     runs-on: ubuntu-latest
     if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
-    needs: prerelease-prep
+    needs: [ prerelease-prep, prerelease-e2e-test ]
     steps:
       - name: Pre Release Step
         run: |
