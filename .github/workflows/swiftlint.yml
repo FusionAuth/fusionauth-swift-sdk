@@ -1,15 +1,14 @@
 name: "Code-Quality scan with SwiftLint"
 
 on:
-  # Triggers the workflow on push or pull request events but only for default and protected branches
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:
     - cron: '33 6 * * 1'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # Triggers the workflow on push request events but only for tag versions
+  workflow_call:
 
 jobs:
   scan-app:

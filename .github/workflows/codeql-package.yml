@@ -1,14 +1,14 @@
 name: "Security and Code-Quality scan with CodeQL - Package"
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:
     - cron: '39 6 * * 1'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # Triggers the workflow on push request events but only for tag versions
+  workflow_call:
 
 jobs:
   analyze:
@@ -21,7 +21,7 @@ jobs:
 
     #runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     #runs-on: [ self-hosted, macos ]
-    runs-on: ['macos-14']
+    runs-on: [ 'macos-14' ]
 
     #timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     timeout-minutes: 120
@@ -41,11 +41,11 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: ["5.10.1"]
+        swift: [ "5.10.1" ]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: ["15.4"]
-        language: [swift]
-        build-mode: [manual]
+        xcode: [ "15.4" ]
+        language: [ swift ]
+        build-mode: [ manual ]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
