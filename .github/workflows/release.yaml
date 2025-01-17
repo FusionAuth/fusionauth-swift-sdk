@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  # Triggers the workflow on push events but only for default and protected branches
   push:
     branches:
       - main
@@ -19,26 +20,32 @@ concurrency:
   group: release
 
 jobs:
+  # This job runs a simple E2E test with the latest FusionAuth and iOS version as a prerequisite for the prerelease-prep
   initial-e2e-test:
     name: Run Prerelease E2E Tests
     uses: ./.github/workflows/e2e-test-fusionauth-latest-ios-latest.yml
 
+  # This job runs a MobSF scan as a prerequisite for the prerelease-prep
   mobsf:
     name: Run Prerelease MobSF Scan
     uses: ./.github/workflows/mobsf.yml
 
+  # This job runs a SwiftLint scan as a prerequisite for the prerelease-prep
   swiftlint:
     name: Run Prerelease Swiftlint
     uses: ./.github/workflows/swiftlint.yml
 
+  # This job runs a CodeQL package scan as a prerequisite for the prerelease-prep
   codeql-package:
     name: Run Prerelease CodeQL Package Scan
     uses: ./.github/workflows/codeql-package.yml
 
+  # This job runs a CodeQL samples quickstart scan as a prerequisite for the prerelease-prep
   codeql-samples-quickstart:
     name: Run Prerelease CodeQL Samples Quickstart Scan
     uses: ./.github/workflows/codeql-samples-quickstart.yml
 
+  # This job creates or finalizes a prerelease pull request and provides the necessary outputs for the subsequent jobs
   prerelease-prep:
     name: Create Prerelease Pull Request
     runs-on: ubuntu-latest
@@ -54,18 +61,21 @@ jobs:
           config-file: ".github/prerelease-config.json"
           manifest-file: ".github/prerelease-manifest.json"
 
+  # This job runs the E2E tests with FusionAuth Matrix as a prerequisite for the prerelease job
   prerelease-e2e-test-fusionauth-matrix:
     name: Run Prerelease E2E Tests with FusionAuth Matrix
     if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
     needs: prerelease-prep
     uses: ./.github/workflows/e2e-test-fusionauth-matrix-ios-latest.yml
 
+  # This job runs the E2E tests with iOS Matrix as a prerequisite for the prerelease job
   prerelease-e2e-test-ios-matrix:
     name: Run Prerelease E2E Tests with iOS Matrix
     if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
     needs: prerelease-prep
     uses: ./.github/workflows/e2e-test-fusionauth-latest-ios-matrix.yml
 
+  # This job runs creates the Prerelease and creates a subsequent Release Pull Request
   prerelease:
     name: Create Prerelease and Release Pull Request
     runs-on: ubuntu-latest
@@ -82,6 +92,7 @@ jobs:
           config-file: ".github/release-config.json"
           manifest-file: ".github/release-manifest.json"
 
+  # This job creates the final release and Syncs the prerelease manifest
   release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -111,6 +122,7 @@ jobs:
           git commit -m "chore: sync release manifests"
           git push
 
+  # This job runs post-release steps
   post-release:
     name: Post Release Steps
     runs-on: ubuntu-latest

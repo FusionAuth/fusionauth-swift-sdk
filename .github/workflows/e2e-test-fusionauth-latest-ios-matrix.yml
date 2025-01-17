@@ -119,29 +119,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Docker deployment is failing because the current macos runner has an M-series processor runner without nested virtualization support.
-      # Setup Docker on macOS required by FusionAuth.
-      #- name: Setup Docker on macOS
-      #  uses: douglascamata/setup-docker-macos-action@v1-alpha
-
-      # Create and start FusionAuth containers used by E2E test.
-      #- name: Start FusionAuth
-      #  uses: fusionauth/fusionauth-github-action@v1
-      #  with:
-      #    FUSIONAUTH_VERSION: ${{ env.fusionauth-docker-image-version }}
-      #    FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart
-
-      # FusionAuth deployment fails https://github.com/FusionAuth/homebrew-fusionauth/issues/9
-      # Install FusionAuth with brew.
-      #- name: Install FusionAuth
-      #  env:
-      #    FUSIONAUTH_APP_KICKSTART_FILE: "Samples/Quickstart/fusionauth/${{ env.fusionauth-docker-image-version }}/kickstart/kickstart.json"
-      #  run: |
-      #    brew tap fusionauth/homebrew-fusionauth
-      #    brew install fusionauth-app fusionauth-search
-      #    brew services start fusionauth-search
-      #    brew services start fusionauth-app
-
       # Install FusionAuth with brew.
       - name: Install PostgreSQL
         run: brew install postgresql@${{ matrix.postgresql-version }} -v
