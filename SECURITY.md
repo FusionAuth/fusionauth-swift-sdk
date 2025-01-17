@@ -7,7 +7,8 @@ For Responsible Disclosure Program, Discovering Security Vulnerabilities
 
 | SDK Version | Tested FusionAuth | Tested Simulator | Tested xcode  | Tested swift   | Supported          |
 |-------------|-------------------|------------------|---------------|----------------|--------------------|
-| \>= 0.1.0   | 1.47 - 1.54       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :white_check_mark: |
+| \>= 0.1.1   | 1.47 - 1.55       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :white_check_mark: |
+| \>= 0.1.0   | 1.47 - 1.54       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :x: |
 
 ## Versioning Guidelines
 
