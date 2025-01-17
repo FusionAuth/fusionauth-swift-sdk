@@ -1,14 +1,14 @@
 name: "Security and Code-Quality scan with CodeQL - Package"
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:
     - cron: '39 6 * * 1'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # Triggers the workflow on push request events but only for tag versions
+  workflow_call:
 
 jobs:
   analyze:
@@ -21,7 +21,7 @@ jobs:
 
     #runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     #runs-on: [ self-hosted, macos ]
-    runs-on: ['macos-14']
+    runs-on: [ 'macos-14' ]
 
     #timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     timeout-minutes: 120

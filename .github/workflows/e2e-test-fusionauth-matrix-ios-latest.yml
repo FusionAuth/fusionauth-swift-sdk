@@ -5,11 +5,10 @@
 name: E2E Test with FusionAuth supported versions
 
 on:
-  # Triggers the workflow on pull request events but only for default and protected branches
-  pull_request:
-    branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # Triggers the workflow on push request events but only for tag versions
+  workflow_call:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -39,7 +38,7 @@ jobs:
         swift: [ "6.0.2" ]
         os: [ "macos-14" ]
         postgresql-version: [ "16" ]
-        fusionauth-docker-image-version: [ "1.47.1", "1.48.3", "1.49.2", "1.50.1", "1.51.2", "1.52.1", "1.53.3", "1.54.0", "1.55.1" ]
+        fusionauth-docker-image-version: [ "1.51.2", "1.52.1", "1.53.3", "1.54.0", "1.55.1" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
