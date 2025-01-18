@@ -40,7 +40,7 @@ jobs:
         xcode: [ "16.2" ]
         simulator-platform: [ "iOS" ]
         simulator-version: [ "18.1" ]
-        swift: [ "6.0.3" ]
+        swift: [ "6.0.2" ]
         os: [ "macos-14" ]
         postgresql-version: [ "16" ]
         include:
