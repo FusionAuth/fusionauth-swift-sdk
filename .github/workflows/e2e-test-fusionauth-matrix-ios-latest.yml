@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=18.2,name=iPhone 15" ]
+        destination: [ "platform=iOS Simulator,OS=18.2,name=iPhone 16" ]
         xcode: [ "16.2" ]
         simulator-platform: [ "iOS" ]
         simulator-version: [ "18.2" ]
