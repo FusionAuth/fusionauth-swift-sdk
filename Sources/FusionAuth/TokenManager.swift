@@ -34,7 +34,7 @@ public class TokenManager {
         do {
             return try JSONDecoder().decode(FusionAuthState.self, from: jsonAuthState.data(using: .utf8)!)
         } catch {
-            print("Error decoding auth state: \(error)")
+            AuthorizationManager.log?.warning("Error decoding auth state: \(error)")
             return nil
         }
     }
@@ -57,7 +57,7 @@ public class TokenManager {
         do {
             storage.set(key: tokenKey, content: try fusionAuthState.toJSON() ?? "")
         } catch {
-            print("Error encoding auth state: \(error)")
+            AuthorizationManager.log?.warning("Error encoding auth state: \(error)")
         }
     }
 
