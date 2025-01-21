@@ -21,7 +21,7 @@ jobs:
 
     #runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     #runs-on: [ self-hosted, macos ]
-    runs-on: [ 'macos-14' ]
+    runs-on: [ 'macos-15' ]
 
     #timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     timeout-minutes: 120
