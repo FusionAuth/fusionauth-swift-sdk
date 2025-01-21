@@ -252,12 +252,12 @@ extension OAuthAuthorizationService {
                     return
                 }
                 guard let data else {
-                    print("HTTP response data is empty")
+                    AuthorizationManager.log?.warning("HTTP response data is empty")
                     return
                 }
 
                 if response.statusCode != 200 {
-                    print("HTTP: \(response.statusCode), Response: \(String(bytes: data, encoding: .utf8) ?? "")")
+                    AuthorizationManager.log?.warning("HTTP: \(response.statusCode), Response: \(String(bytes: data, encoding: .utf8) ?? "")")
 
                     continuation.resume(throwing: OAuthError.accessTokenNil)
                     return
@@ -267,7 +267,7 @@ extension OAuthAuthorizationService {
                     let userInfo = try JSONDecoder().decode(UserInfo.self, from: data)
                     continuation.resume(returning: userInfo)
                 } catch let jsonError as NSError {
-                    print(jsonError)
+                    AuthorizationManager.log?.warning("JSON decode failed: \(jsonError.localizedDescription)")
                     continuation.resume(throwing: jsonError)
                 }
             }.resume()
