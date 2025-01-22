@@ -2,7 +2,9 @@ name: Release
 
 on:
   workflow_run:
-    workflows: ["Vulnerability Scan with MobSF", "Security and Code-Quality scan with CodeQL - Package", "Security and Code-Quality scan with CodeQL - Quickstart Sample", "Code-Quality scan with SwiftLint"]
+    workflows: [ "Vulnerability Scan with MobSF", "Security and Code-Quality scan with CodeQL - Package", "Security and Code-Quality scan with CodeQL - Quickstart Sample", "Code-Quality scan with SwiftLint" ]
+    types: [ completed ]
+    branches: [ main ]
   # Triggers the workflow on push events but only for default and protected branches
   push:
     branches:
