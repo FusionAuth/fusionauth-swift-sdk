@@ -49,7 +49,7 @@ jobs:
   prerelease-prep:
     name: Create Prerelease Pull Request
     runs-on: ubuntu-latest
-    needs: [ initial-e2e-test ]
+    needs: [ initial-e2e-test, mobsf, swiftlint, codeql-package, codeql-samples-quickstart ]
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
