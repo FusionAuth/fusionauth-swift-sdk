@@ -1,6 +1,8 @@
 name: "Security and Code-Quality scan with CodeQL - Quickstart Sample"
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:

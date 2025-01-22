@@ -1,6 +1,8 @@
 name: "Code-Quality scan with SwiftLint"
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   schedule:
