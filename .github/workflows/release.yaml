@@ -1,6 +1,8 @@
 name: Release
 
 on:
+  workflow_run:
+    workflows: ["Vulnerability Scan with MobSF", "Security and Code-Quality scan with CodeQL - Package", "Security and Code-Quality scan with CodeQL - Quickstart Sample", "Code-Quality scan with SwiftLint"]
   # Triggers the workflow on push events but only for default and protected branches
   push:
     branches:
@@ -25,31 +27,11 @@ jobs:
     name: Run Prerelease E2E Tests
     uses: ./.github/workflows/e2e-test-fusionauth-latest-ios-latest.yml
 
-  # This job runs a MobSF scan as a prerequisite for the prerelease-prep
-  mobsf:
-    name: Run Prerelease MobSF Scan
-    uses: ./.github/workflows/mobsf.yml
-
-  # This job runs a SwiftLint scan as a prerequisite for the prerelease-prep
-  swiftlint:
-    name: Run Prerelease Swiftlint
-    uses: ./.github/workflows/swiftlint.yml
-
-  # This job runs a CodeQL package scan as a prerequisite for the prerelease-prep
-  codeql-package:
-    name: Run Prerelease CodeQL Package Scan
-    uses: ./.github/workflows/codeql-package.yml
-
-  # This job runs a CodeQL samples quickstart scan as a prerequisite for the prerelease-prep
-  codeql-samples-quickstart:
-    name: Run Prerelease CodeQL Samples Quickstart Scan
-    uses: ./.github/workflows/codeql-samples-quickstart.yml
-
   # This job creates or finalizes a prerelease pull request and provides the necessary outputs for the subsequent jobs
   prerelease-prep:
     name: Create Prerelease Pull Request
     runs-on: ubuntu-latest
-    needs: [ initial-e2e-test, mobsf, swiftlint, codeql-package, codeql-samples-quickstart ]
+    needs: [ initial-e2e-test ]
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
