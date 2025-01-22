@@ -27,6 +27,7 @@ jobs:
   # This job runs a simple E2E test with the latest FusionAuth and iOS version as a prerequisite for the prerelease-prep
   initial-e2e-test:
     name: Run Prerelease E2E Tests
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     uses: ./.github/workflows/e2e-test-fusionauth-latest-ios-latest.yml
 
   # This job creates or finalizes a prerelease pull request and provides the necessary outputs for the subsequent jobs
