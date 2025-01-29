@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # Triggers the workflow on push request events but only for tag versions
+  # Triggers the workflow when it is called from another workflow
   workflow_call:
 
 env:
