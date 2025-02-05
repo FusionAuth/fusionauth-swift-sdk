@@ -56,7 +56,7 @@ final class QuickstartTests: XCTestCase {
 
         passwordField.tap()
         passwordField.typeText("password")
-        
+
         passwordField.typeText("\n")
 
         // Check that Welcome message is displayed
