@@ -115,7 +115,7 @@ jobs:
 
       # Tap FusionAuth Homebrew formulae.
       - name: Tap FusionAuth Homebrew formulae
-        run: brew tap sonderformat-llc/fusionauth
+        run: brew tap fusionauth/fusionauth
 
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
