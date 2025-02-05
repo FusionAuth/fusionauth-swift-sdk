@@ -212,7 +212,7 @@
 			mainGroup = 0E2795EC2BD937B800738892;
 			packageReferences = (
 				0E5184912CD6279C004E2416 /* XCLocalSwiftPackageReference "../../../fusionauth-swift-sdk" */,
-			);
+      );
 			productRefGroup = 0E2795F62BD937B800738892 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

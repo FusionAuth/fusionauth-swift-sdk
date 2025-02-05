@@ -36,12 +36,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=18.1,name=iPhone 15" ]
-        xcode: [ "15.4" ]
+        destination: [ "platform=iOS Simulator,OS=18.2,name=iPhone 16" ]
+        xcode: [ "16.2" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "18.1" ]
-        swift: [ "5.10.1" ]
-        os: [ "macos-14" ]
+        simulator-version: [ "18.2" ]
+        swift: [ "6.0.2" ]
+        os: [ "macos-15" ]
         postgresql-version: [ "16" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -184,7 +184,7 @@ jobs:
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
-        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
+        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
         uses: actions/upload-artifact@v4.6.0

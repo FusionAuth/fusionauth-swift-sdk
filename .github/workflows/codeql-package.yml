@@ -23,7 +23,7 @@ jobs:
 
     #runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     #runs-on: [ self-hosted, macos ]
-    runs-on: [ 'macos-14' ]
+    runs-on: [ 'macos-15' ]
 
     #timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     timeout-minutes: 120
@@ -43,11 +43,11 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: [ "5.10.1" ]
+        swift: ["6.0.2"]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: [ "15.4" ]
-        language: [ swift ]
-        build-mode: [ manual ]
+        xcode: ["16.2"]
+        language: [swift]
+        build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
