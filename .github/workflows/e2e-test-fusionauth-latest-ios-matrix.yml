@@ -213,7 +213,7 @@ jobs:
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
-        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
+        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
         uses: actions/upload-artifact@v4.6.0

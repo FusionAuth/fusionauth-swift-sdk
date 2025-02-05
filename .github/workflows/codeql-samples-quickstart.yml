@@ -113,7 +113,7 @@ jobs:
 
       # Perform the build manually.
       - name: Manual Build
-        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation
+        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
