@@ -5,11 +5,11 @@ For Responsible Disclosure Program, Discovering Security Vulnerabilities
 
 ## Supported Versions
 
-| SDK Version | Tested FusionAuth | Tested Simulator | Tested xcode  | Tested swift   | Supported          |
-|-------------|-------------------|------------------|---------------|----------------|--------------------|
-| \>= 0.3.0   | 1.51 - 1.55       | iOS 15.5 - 18.2  | 14.3.1 - 16.2 | 5.8.1 - 6.0.2  | :white_check_mark: |
-| \>= 0.1.1   | 1.47 - 1.55       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :x:                |
-| \>= 0.1.0   | 1.47 - 1.54       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :x:                |
+| SDK Version  | Tested FusionAuth | Tested Simulator | Tested xcode  | Tested swift   | Supported          |
+|--------------|-------------------|------------------|---------------|----------------|--------------------|
+| \>= 0.3.0-rc | 1.51 - 1.55       | iOS 15.5 - 18.2  | 14.3.1 - 16.2 | 5.8.1 - 6.0.2  | :white_check_mark: |
+| \>= 0.1.1    | 1.47 - 1.55       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :x:                |
+| \>= 0.1.0    | 1.47 - 1.54       | iOS 15.5 - 18.1  | 14.3.1 - 15.4 | 5.8.1 - 5.10.1 | :x:                |
 
 ## Versioning Guidelines
 
