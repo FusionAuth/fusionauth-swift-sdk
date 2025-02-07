@@ -119,11 +119,11 @@ jobs:
 
       # Tap FusionAuth Homebrew formulae.
       - name: Tap FusionAuth Homebrew formulae
-        run: brew tap fusionauth/fusionauth@${{ env.fusionauth-docker-image-version }}
+        run: brew tap fusionauth/fusionauth
 
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
-        run: brew install fusionauth-app@${{ env.fusionauth-docker-image-version }} -v
+        run: brew install fusionauth-app -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App
