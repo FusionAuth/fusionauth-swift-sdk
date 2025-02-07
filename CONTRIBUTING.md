@@ -109,21 +109,34 @@ The release proceeds through three sequential steps: [Pre-Release Process](#pre-
 ## Pre-Release Process
 
 The pre-release process is as follows:
-- TODO
-
-The `pre-release.yml` workflow will automatically create a GitHub release, build the library, and add the artifact to GitHub.
+- Check if the latest FusionAuth version is used in the different jobs and configurations.
+- Review, test and merge any open [Dependency Pull Requests](https://github.com/sonderformat-llc/fusionauth-swift-sdk/pulls).
+- Update the documentation with `sourcedocs generate -- -scheme FusionAuth`.
+- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and prerelease PR.
+- Approve and merge the prerelease PR with the rc tag (release candidate) once all actions run successfully.
+- Make sure all Prerelease-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
 
 ## Release Process
 
 The release process is as follows:
-- TODO
-
-The `release.yml` workflow will automatically create a GitHub release, build the library, and publish it to Maven Central.
+- Check if a prerelease run successfully, if not start with the pre-release process.
+- Update the release version in the `library/build.gradle.kts` file, derived from the pre-release version according to the [Semantic Versioning](https://semver.org/) guidelines.
+- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and release PR.
+- Approve and merge the release PR once all actions run successfully.
+- Make sure all Release-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
 
 ### Quickstart Release Process
 
 After the release is published, update the version in the [FusionAuth Swift iOS Quickstart Repository](https://github.com/sonderformat-llc/fusionauth-quickstart-swift-ios-native/):
-- TODO
+
+The example App is a copy from https://github.com/sonderformat-llc/fusionauth-swift-sdk/tree/main/Samples/Quickstart by:
+
+1. Copy the Samples/Quickstart folder in to the complete-application folder.
+2. edit the complete-application/fusionauth-quickstart-swift-ios-native.xcodeproj/project.pbxproj file, removing the Packages and sdk references.
+3. open the project and add the sdk dependency by adding the latest release from https://github.com/sonderformat-llc/fusionauth-swift-sdk/.
+5. update the docker-compose.yml file to use the latest version used by the sdk.
 <!--
 end::forDocSiteRelease[]
 -->
