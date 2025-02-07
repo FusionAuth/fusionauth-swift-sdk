@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0-rc.1](https://github.com/sonderformat-llc/fusionauth-swift-sdk/compare/v0.3.0-rc...v0.3.0-rc.1) (2025-02-07)
+
+
+### Bug Fixes
+
+* **e2e-test:** use main for fusionauth-docker-image-version ([bd4bf06](https://github.com/sonderformat-llc/fusionauth-swift-sdk/commit/bd4bf06479d62fb010977f67ca793936df4d99c5))
+* **e2e-test:** use main for fusionauth-docker-image-version ([9732d7a](https://github.com/sonderformat-llc/fusionauth-swift-sdk/commit/9732d7af7b8b3744ebe5f91095fe0a14c504ec93))
+
 ## [0.3.0-rc](https://github.com/sonderformat-llc/fusionauth-swift-sdk/compare/v0.2.0...v0.3.0-rc) (2025-02-07)
 
 
