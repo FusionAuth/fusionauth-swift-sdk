@@ -124,7 +124,7 @@ jobs:
   prerelease:
     name: Create Prerelease and Release Pull Request
     runs-on: ubuntu-latest
-    needs: [ prerelease-prep, prerelease-e2e-test-fusionauth-matrix, prerelease-e2e-test-ios-matrix ]
+    needs: [ prerelease-prep ]
     # This job runs only if a release was created and the tag name contains 'rc'
     if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
     steps:
