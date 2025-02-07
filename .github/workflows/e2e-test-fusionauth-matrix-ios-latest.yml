@@ -38,7 +38,7 @@ jobs:
         swift: [ "6.0.2" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
-        fusionauth-docker-image-version: [ "1.51.2", "1.52.1", "1.53.3", "1.54.0", "1.55.1" ]
+        fusionauth-docker-image-version: [ "main" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -115,11 +115,11 @@ jobs:
 
       # Tap FusionAuth Homebrew formulae.
       - name: Tap FusionAuth Homebrew formulae
-        run: brew tap fusionauth/fusionauth
+        run: brew tap fusionauth/fusionauth@${{ matrix.fusionauth-docker-image-version }}
 
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
-        run: brew install fusionauth-app -v
+        run: brew install fusionauth-app@${{ matrix.fusionauth-docker-image-version }} -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App

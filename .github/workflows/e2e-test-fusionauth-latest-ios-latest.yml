@@ -13,7 +13,7 @@ on:
   workflow_call:
 
 env:
-  fusionauth-docker-image-version: "1.55.1"
+  fusionauth-docker-image-version: "main"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -107,7 +107,7 @@ jobs:
 
       # Add PostgreSQL to the PATH.
       - name: Add PostgreSQL to the PATH
-        run: echo "$(brew --prefix postgresql@${{matrix.postgresql-version }})/bin" >> $GITHUB_PATH
+        run: echo "$(brew --prefix postgresql@${{ matrix.postgresql-version }})/bin" >> $GITHUB_PATH
 
       # Add PostgreSQL fusionauth user with default password.
       - name: Add PostgreSQL fusionauth user
@@ -119,11 +119,11 @@ jobs:
 
       # Tap FusionAuth Homebrew formulae.
       - name: Tap FusionAuth Homebrew formulae
-        run: brew tap fusionauth/fusionauth
+        run: brew tap fusionauth/fusionauth@${{ env.fusionauth-docker-image-version }}
 
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
-        run: brew install fusionauth-app -v
+        run: brew install fusionauth-app@${{ env.fusionauth-docker-image-version }} -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App
