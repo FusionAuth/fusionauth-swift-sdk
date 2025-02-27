@@ -195,7 +195,7 @@ end::forDocSiteUsage[]
 <!--
 tag::forDocSiteExampleApp[]
 -->
-See the [FusionAuth iOS SDK Example](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-fusionauth-sdk) for a functional example of an iOS client that uses the SDK.
+See the [FusionAuth iOS SDK Example](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-native) for a functional example of an iOS client that uses the SDK.
 <!--
 end::forDocSiteExampleApp[]
 -->
@@ -205,7 +205,7 @@ end::forDocSiteExampleApp[]
 <!--
 tag::forDocSiteQuickstart[]
 -->
-See the [FusionAuth iOS Quickstart](https://fusionauth.io/docs/quickstarts/quickstart-ios-swift-native-fusionauth-sdk/) for a full tutorial on using FusionAuth and iOS.
+See the [FusionAuth iOS Quickstart](https://fusionauth.io/docs/quickstarts/quickstart-swift-ios-native/) for a full tutorial on using FusionAuth and iOS.
 <!--
 end::forDocSiteQuickstart[]
 -->
