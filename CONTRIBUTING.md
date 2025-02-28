@@ -87,7 +87,7 @@ Run SwiftLint: `swiftlint`
 
 #### Testing
 
-See [FusionAuth Swift SDK Quickstart Testing](https://github.com/sonderformat-llc/fusionauth-quickstart-swift-ios-native/blob/main/TESTING.md) for a full tutorial on Android Test.
+See [FusionAuth Swift SDK Quickstart Testing](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-native/blob/main/TESTING.md) for a full tutorial on Android Test.
 
 ## Submitting a Pull Request
 
@@ -110,7 +110,7 @@ The release proceeds through three sequential steps: [Pre-Release Process](#pre-
 
 The pre-release process is as follows:
 - Check if the latest FusionAuth version is used in the different jobs and configurations.
-- Review, test and merge any open [Dependency Pull Requests](https://github.com/sonderformat-llc/fusionauth-swift-sdk/pulls).
+- Review, test and merge any open [Dependency Pull Requests](https://github.com/FusionAuth/fusionauth-swift-sdk/pulls).
 - Update the documentation with `sourcedocs generate -- -scheme FusionAuth`.
 - Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and prerelease PR.
@@ -129,13 +129,13 @@ The release process is as follows:
 
 ### Quickstart Release Process
 
-After the release is published, update the version in the [FusionAuth Swift iOS Quickstart Repository](https://github.com/sonderformat-llc/fusionauth-quickstart-swift-ios-native/):
+After the release is published, update the version in the [FusionAuth Swift iOS Quickstart Repository](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-native/):
 
-The example App is a copy from https://github.com/sonderformat-llc/fusionauth-swift-sdk/tree/main/Samples/Quickstart by:
+The example App is a copy from https://github.com/FusionAuth/fusionauth-swift-sdk/tree/main/Samples/Quickstart by:
 
 1. Copy the Samples/Quickstart folder in to the complete-application folder.
 2. edit the complete-application/fusionauth-quickstart-swift-ios-native.xcodeproj/project.pbxproj file, removing the Packages and sdk references.
-3. open the project and add the sdk dependency by adding the latest release from https://github.com/sonderformat-llc/fusionauth-swift-sdk/.
+3. open the project and add the sdk dependency by adding the latest release from https://github.com/FusionAuth/fusionauth-swift-sdk/.
 5. update the docker-compose.yml file to use the latest version used by the sdk.
 <!--
 end::forDocSiteRelease[]
