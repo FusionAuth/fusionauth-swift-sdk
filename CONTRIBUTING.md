@@ -23,7 +23,7 @@ Before starting with contributing, you'll want to look at and choose an issue to
 1. Search the issue tracker for an issue that you want to work on. If your issue does not exist, please create a new one.
 2. Search GitHub for an open or closed Pull Request that relates to the issue you want to work on. You may find that someone else is already working on it, or that the issue is already resolved in a different branch.
 
-You can find all the open issues [here](https://github.com/FusionAuth/fusionauth-ios-sdk/issues).
+You can find all the open issues [here](https://github.com/FusionAuth/fusionauth-swift-sdk/issues).
 
 Once you have found an issue you want to work on, we suggest to:
 
