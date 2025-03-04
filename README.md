@@ -1,6 +1,6 @@
-[![Latest Release Tag](https://badgen.net/github/tag/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/tags)
-[![Dependabot](https://badgen.net/github/dependabot/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/network/updates)
-[![Open PRs](https://badgen.net/github/open-prs/fusionauth/fusionauth-ios-sdk)](https://github.com/FusionAuth/fusionauth-ios-sdk/pulls)
+[![Latest Release Tag](https://badgen.net/github/tag/fusionauth/fusionauth-swift-sdk)](https://github.com/FusionAuth/fusionauth-swift-sdk/tags)
+[![Dependabot](https://badgen.net/github/dependabot/fusionauth/fusionauth-swift-sdk)](https://github.com/FusionAuth/fusionauth-swift-sdk/network/updates)
+[![Open PRs](https://badgen.net/github/open-prs/fusionauth/fusionauth-swift-sdk)](https://github.com/FusionAuth/fusionauth-swift-sdk/pulls)
 
 An SDK for using FusionAuth in iOS Apps.
 
@@ -195,7 +195,7 @@ end::forDocSiteUsage[]
 <!--
 tag::forDocSiteExampleApp[]
 -->
-See the [FusionAuth iOS SDK Example](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-fusionauth-sdk) for a functional example of an iOS client that uses the SDK.
+See the [FusionAuth iOS SDK Example](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-native) for a functional example of an iOS client that uses the SDK.
 <!--
 end::forDocSiteExampleApp[]
 -->
@@ -205,7 +205,7 @@ end::forDocSiteExampleApp[]
 <!--
 tag::forDocSiteQuickstart[]
 -->
-See the [FusionAuth iOS Quickstart](https://fusionauth.io/docs/quickstarts/quickstart-ios-swift-native-fusionauth-sdk/) for a full tutorial on using FusionAuth and iOS.
+See the [FusionAuth iOS Quickstart](https://fusionauth.io/docs/quickstarts/quickstart-swift-ios-native/) for a full tutorial on using FusionAuth and iOS.
 <!--
 end::forDocSiteQuickstart[]
 -->
@@ -215,7 +215,7 @@ end::forDocSiteQuickstart[]
 <!--
 tag::forDocSiteDocumentation[]
 -->
-See the latest [Full library documentation](https://github.com/FusionAuth/fusionauth-ios-sdk/blob/main/Documentation/Reference/README.md) for the complete documentation of the SDK.
+See the latest [Full library documentation](https://github.com/FusionAuth/fusionauth-swift-sdk/blob/main/Documentation/Reference/README.md) for the complete documentation of the SDK.
 <!--
 end::forDocSiteDocumentation[]
 -->
