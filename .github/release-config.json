@@ -2,7 +2,14 @@
   "release-type": "simple",
   "packages": {
     ".": {
-      "type": "generic"
+      "type": "generic",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": ".github/prerelease-manifest.json",
+          "jsonpath": "$[\".\"]"
+        }
+      ]
     }
   }
 }
