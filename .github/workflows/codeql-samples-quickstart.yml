@@ -58,7 +58,7 @@ jobs:
     steps:
       # Initialize the latest version of Xcode.
       - name: Initialize latest xcode
-        uses: maxim-lobanov/setup-xcode@v1.6.0
+        uses: fusionauth/fusionauth-actions/setup-xcode@v3
         with:
           xcode-version: ${{ matrix.xcode }}
 
