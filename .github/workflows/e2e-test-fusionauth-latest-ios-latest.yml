@@ -187,7 +187,7 @@ jobs:
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
-        uses: actions/upload-artifact@v4.6.1
+        uses: actions/upload-artifact@v4.6.2
         if: ${{ failure() }}
         with:
           name: FusionAuth-${{ matrix.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_swift-${{ matrix.swift }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
