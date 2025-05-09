@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v0.3.0...v0.3.1-rc) (2025-05-09)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/openid/appauth-ios from 1.7.6 to 2.0.0 ([#71](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/71)) ([eb43ca5](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/eb43ca5fd1306f5c76e975563ef0b68b6dd705de))
+
 ## [0.3.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v0.2.0...v0.3.0) (2025-02-07)
 
 
