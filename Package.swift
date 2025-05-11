@@ -17,7 +17,7 @@ let package = Package(
             targets: ["FusionAuth"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.6"),
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "2.0.0"),
         .package(url: "https://github.com/realm/SwiftLint.git", from: "0.57.1")
     ],
     targets: [
@@ -50,7 +50,7 @@ let package = Package(
             targets: ["FusionAuth"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "1.7.6")
+        .package(url: "https://github.com/openid/AppAuth-iOS.git", exact: "2.0.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
