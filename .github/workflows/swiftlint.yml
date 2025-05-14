@@ -26,7 +26,7 @@ jobs:
     steps:
       # Sets up the reviewdog cli
       - name: Setup reviewdog
-        uses: reviewdog/action-setup@v1.3.0
+        uses: reviewdog/action-setup@e04ffabe3898a0af8d0fb1af00c188831c4b5893 # v1.3.2
 
       - name: Show reviewdog version
         run: reviewdog -version
@@ -37,14 +37,14 @@ jobs:
 
       # Performs analysis using Swift Lint and outputs a Sarif Report
       - name: GitHub Action for SwiftLint
-        uses: stanfordbdhg/action-swiftlint@v4.1.1
+        uses: stanfordbdhg/action-swiftlint@f6ee119765c4b81b667fa84b1e9ee77ca864f622 # v4.1.1
         with:
           args: --reporter sarif --output lint-results-debug.sarif
           # https://github.com/realm/SwiftLint/issues/4048
 
       # Uploads Sarif Report for the app to GitHub
       - name: Upload Swift app report
-        uses: github/codeql-action/upload-sarif@v3.28.11
+        uses: github/codeql-action/upload-sarif@v3.28.17
         if: success() || failure()
         with:
           sarif_file: lint-results-debug.sarif
