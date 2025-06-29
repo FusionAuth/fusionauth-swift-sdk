@@ -1,6 +1,9 @@
 name: "Security and Code-Quality scan with CodeQL - Package"
 
 on:
+  # Triggers the workflow on push events but only for default and protected branches
+  push:
+    branches: [ "main" ]
   # Triggers the workflow on pull request events but only for default and protected branches
   pull_request:
     branches: [ "main" ]
@@ -43,11 +46,11 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: [ "6.0.2" ]
+        swift: ["6.1.1"]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: [ "16.2" ]
-        language: [ swift ]
-        build-mode: [ manual ]
+        xcode: ["16.3"]
+        language: [swift]
+        build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
@@ -86,7 +89,7 @@ jobs:
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.17
+        uses: github/codeql-action/init@v3.29.1
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -116,7 +119,7 @@ jobs:
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.17
+        uses: github/codeql-action/analyze@v3.29.1
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
