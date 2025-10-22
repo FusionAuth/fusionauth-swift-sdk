@@ -126,7 +126,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Install FusionAuth with brew.
+      # Install PostgreSQL with brew.
       - name: Install PostgreSQL
         run: brew install postgresql@${{ matrix.postgresql-version }} -v
 
@@ -154,7 +154,7 @@ jobs:
 
       # Install FusionAuth App formula with brew.
       - name: Install FusionAuth App
-        run: brew install --formula ./homebrew-fusionauth-app-formula/fusionauth-app.rb -v
+        run: brew install fusionauth-app -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App

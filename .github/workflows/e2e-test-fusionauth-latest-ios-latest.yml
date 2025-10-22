@@ -97,7 +97,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Install FusionAuth with brew.
+      # Install PostgreSQL with brew.
       - name: Install PostgreSQL
         run: brew install postgresql@${{ matrix.postgresql-version }} -v
 
