@@ -2,7 +2,7 @@
 # It includes all FusionAuth versions of the past ~6 months.
 # And uses the latest iOS Target API level requirements.
 
-name: E2E Test with FusionAuth supported versions
+name: E2E Test with FusionAuth supported versions and latest iOS
 
 on:
   # Allows you to run this workflow manually from the Actions tab
