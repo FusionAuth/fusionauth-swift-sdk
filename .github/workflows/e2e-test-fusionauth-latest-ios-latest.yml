@@ -1,5 +1,5 @@
 # This workflow performs a full End 2 End test of the App
-# It runs the test on the last 5 iOS releases.
+# And uses the latest iOS Target API level requirements.
 
 name: E2E Test with latest FusionAuth and latest iOS
 
@@ -36,10 +36,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=18.4,name=iPhone 16" ]
+        destination: [ "platform=iOS Simulator,OS=26.0,name=iPhone 17" ]
         xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "18.4" ]
+        simulator-version: [ "26.0" ]
         swift: [ "6.2" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]

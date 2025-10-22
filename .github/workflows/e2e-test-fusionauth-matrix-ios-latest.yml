@@ -31,10 +31,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=18.4,name=iPhone 16" ]
+        destination: [ "platform=iOS Simulator,OS=26.0,name=iPhone 17" ]
         xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "18.4" ]
+        simulator-version: [ "26.0" ]
         swift: [ "6.2" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
