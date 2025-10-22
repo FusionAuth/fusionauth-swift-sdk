@@ -43,7 +43,11 @@ final class QuickstartTests: XCTestCase {
 
         confirmLoginAlert(app)
 
-        let loginField = app.textFields["Login"]
+        // Match Login field with any of these identifiers
+        let loginField = app.textFields.matching(
+            NSPredicate(format: "placeholderValue IN %@", ["Login", "Email"])
+        ).firstMatch
+        
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
