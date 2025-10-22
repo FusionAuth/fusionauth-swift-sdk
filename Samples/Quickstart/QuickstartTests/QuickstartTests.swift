@@ -43,16 +43,16 @@ final class QuickstartTests: XCTestCase {
 
         confirmLoginAlert(app)
 
-        let emailField = app.textFields["Email"]
+        let loginField = app.textFields["Login"]
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
-        XCTAssertTrue(emailField.waitForExistence(timeout: 60))
+        XCTAssertTrue(loginField.waitForExistence(timeout: 60))
         XCTAssertTrue(passwordField.waitForExistence(timeout: 60))
         XCTAssertTrue(submitButton.waitForExistence(timeout: 60))
 
-        emailField.tap()
-        emailField.typeText("richard@example.com")
+        loginField.tap()
+        loginField.typeText("richard@example.com")
 
         passwordField.tap()
         passwordField.typeText("password")
