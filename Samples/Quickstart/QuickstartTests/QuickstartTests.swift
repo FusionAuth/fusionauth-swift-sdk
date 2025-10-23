@@ -59,12 +59,13 @@ final class QuickstartTests: XCTestCase {
         loginField.typeText("richard@example.com")
 
         // Scroll to make sure field is visible above keyboard
-        passwordField.swipeUp() // or app.swipeUp()
+        app.swipeUp()
 
+        // Wait for field to be hittable
+        XCTAssertTrue(passwordField.waitForExistence(timeout: 2))
+            
         // Tap the password field to focus it
         passwordField.tap()
-        sleep(1) // Let autofill settle
-        passwordField.tap() // Tap again
         
         // Now type the password
         passwordField.typeText("password")
