@@ -46,9 +46,9 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: ["6.1.0"]
+        swift: ["6.0.2"]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: ["16.4"]
+        xcode: ["16.2"]
         language: [swift]
         build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
@@ -89,7 +89,7 @@ jobs:
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.30.9
+        uses: github/codeql-action/init@v3.28.17
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -119,7 +119,7 @@ jobs:
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.30.9
+        uses: github/codeql-action/init@v3.28.17
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
