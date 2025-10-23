@@ -48,7 +48,7 @@ jobs:
         # https://github.com/swiftlang/swift/releases
         swift: ["6.1.0"]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: ["26.0.1"]
+        xcode: ["16.4"]
         language: [swift]
         build-mode: [manual]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
