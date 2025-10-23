@@ -119,7 +119,7 @@ jobs:
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/init@v3.28.17
+        uses: github/codeql-action/analyze@v3.28.17
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
