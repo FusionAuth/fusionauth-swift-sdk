@@ -58,9 +58,18 @@ final class QuickstartTests: XCTestCase {
         loginField.tap()
         loginField.typeText("richard@example.com")
 
+        // Tap the password field to focus it
+        passwordField.tap()
+
+        // If autofill appears, tap elsewhere to dismiss it
+        if app.keyboards.buttons["AutoFill"].exists {
+            // Tap above the keyboard to dismiss
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3)).tap()
+        }
+
+        // Now type the password
         passwordField.tap()
         passwordField.typeText("password")
-
         passwordField.typeText("\n")
 
         // Check that Welcome message is displayed
