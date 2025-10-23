@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releasess
-        swift: [ "6.1.2" ]
+        swift: [ "6.1.0" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "16.4" ]
         language: [ swift ]
