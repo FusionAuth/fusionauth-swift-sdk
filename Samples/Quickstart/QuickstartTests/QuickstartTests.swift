@@ -49,6 +49,8 @@ final class QuickstartTests: XCTestCase {
         ).firstMatch
         
         let passwordField = app.secureTextFields["Password"]
+        passwordField.accessibilityTextualContext = .none  // Disables autofill suggestions
+        
         let submitButton = app.buttons["Submit"]
 
         XCTAssertTrue(loginField.waitForExistence(timeout: 60))
@@ -60,12 +62,6 @@ final class QuickstartTests: XCTestCase {
 
         // Tap the password field to focus it
         passwordField.tap()
-
-        // Dismiss the autofill suggestion
-        let keyboard = app.keyboards.element
-        if keyboard.buttons["Passwords"].exists {
-            app.tap() // Tap outside to dismiss
-        }
 
         // Now type the password
         passwordField.typeText("password")
