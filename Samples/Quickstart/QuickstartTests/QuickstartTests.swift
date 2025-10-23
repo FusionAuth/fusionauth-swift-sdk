@@ -61,14 +61,13 @@ final class QuickstartTests: XCTestCase {
         // Tap the password field to focus it
         passwordField.tap()
 
-        // If autofill appears, tap elsewhere to dismiss it
-        if app.keyboards.buttons["AutoFill"].exists {
-            // Tap above the keyboard to dismiss
-            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3)).tap()
+        // Dismiss the autofill suggestion
+        let keyboard = app.keyboards.element
+        if keyboard.buttons["Passwords"].exists {
+            app.tap() // Tap outside to dismiss
         }
 
         // Now type the password
-        passwordField.tap()
         passwordField.typeText("password")
         passwordField.typeText("\n")
 
