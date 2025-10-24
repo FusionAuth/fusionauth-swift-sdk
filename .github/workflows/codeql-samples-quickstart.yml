@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/swiftlang/swift/releasess
+        # https://github.com/swiftlang/swift/releases
         swift: [ "6.0.3" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "16.2" ]
