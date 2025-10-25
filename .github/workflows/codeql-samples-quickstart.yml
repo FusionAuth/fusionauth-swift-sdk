@@ -107,8 +107,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      #- name: Autobuild
-      #  uses: github/codeql-action/autobuild@v3.26.5
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v4.31.0
 
       # Check Disk Space before the build.
       - name: Check Disk Space
@@ -120,8 +120,8 @@ jobs:
         run: xcodebuild -showdestinations -scheme fusionauth-quickstart-swift-ios-native-swift-6
 
       # Perform the build manually.
-      - name: Manual Build
-        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
+      # - name: Manual Build
+      #   run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
