@@ -46,13 +46,13 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: [ "6.1.0" ]
+        swift: [ "6.0.3" ]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: [ "26.0.1" ]
+        xcode: [ "16.2" ]
         language: [ swift ]
         build-mode: [ manual ]
         destination:
-          - "platform=iOS Simulator,OS=26.0.1,name=iPhone 17"
+          - "platform=iOS Simulator,OS=18.2,name=iPhone 16"
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
@@ -116,8 +116,8 @@ jobs:
           sleep 10
           df -h
 
-      - name: List available simulators
-        run: xcrun simctl list devices available
+      # - name: List available simulators
+      #   run: xcrun simctl list devices available
 
       # Perform the build manually.
       - name: Manual Build
