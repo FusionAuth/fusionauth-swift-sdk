@@ -50,7 +50,7 @@ jobs:
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "26.0.1" ]
         language: [ swift ]
-        build-mode: [ manual ]
+        build-mode: [ autobuild ]
         destination:
           - "platform=iOS Simulator,OS=18.6,name=iPhone 16"
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
