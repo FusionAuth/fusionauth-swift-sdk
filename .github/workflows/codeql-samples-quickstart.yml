@@ -50,9 +50,9 @@ jobs:
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "26.0.1" ]
         language: [ swift ]
-        build-mode: [ autobuild ]
+        build-mode: [ manual ]
         destination:
-          - "platform=iOS Simulator,OS=18.6,name=iPhone 16"
+          - "platform=iOS Simulator,OS=26.0.1,name=iPhone 17"
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
@@ -107,8 +107,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v4.31.0
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v4.31.0
 
       # Check Disk Space before the build.
       - name: Check Disk Space
@@ -120,8 +120,8 @@ jobs:
         run: xcodebuild -showdestinations -scheme fusionauth-quickstart-swift-ios-native-swift-6
 
       # Perform the build manually.
-      # - name: Manual Build
-      #   run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
+      - name: Manual Build
+        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
