@@ -46,9 +46,9 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: [ "6.0.3" ]
+        swift: [ "6.1.0" ]
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: [ "16.2" ]
+        xcode: [ "26.0.1" ]
         language: [ swift ]
         build-mode: [ manual ]
         destination:
@@ -116,8 +116,8 @@ jobs:
           sleep 10
           df -h
 
-      # - name: List available simulators
-      #   run: xcrun simctl list devices available
+      - name: List available simulators
+        run: xcodebuild -showdestinations -scheme fusionauth-quickstart-swift-ios-native-swift-6
 
       # Perform the build manually.
       - name: Manual Build
