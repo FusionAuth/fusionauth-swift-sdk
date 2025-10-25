@@ -65,9 +65,6 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
 
-      - name: List available simulators
-        run: xcrun simctl list devices available
-
       # Remove any other Xcode version.
       - name: Remove old xcode versions
         run: |
@@ -118,6 +115,9 @@ jobs:
         run: |
           sleep 10
           df -h
+
+      - name: List available simulators
+        run: xcrun simctl list devices available
 
       # Perform the build manually.
       - name: Manual Build
