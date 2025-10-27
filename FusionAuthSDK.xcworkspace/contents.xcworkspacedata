@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Samples/Quickstart/QuickstartTests">
+   </FileRef>
+   <FileRef
+      location = "group:Samples/Quickstart/QuickstartTests">
+   </FileRef>
+   <FileRef
       location = "group:">
    </FileRef>
    <Group
