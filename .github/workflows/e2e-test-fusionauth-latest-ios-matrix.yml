@@ -43,6 +43,7 @@ jobs:
         swift: [ "6.1.0" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
+        schme: [ "fusionauth-quickstart-swift-ios-native-swift-6" ]
         include:
           - destination: "platform=iOS Simulator,OS=18.4,name=iPhone 16"
             xcode: "16.3"
@@ -51,6 +52,7 @@ jobs:
             swift: "6.1.0"
             os: "macos-15"
             postgresql-version: "16"
+            schme: [ "fusionauth-quickstart-swift-ios-native-swift-6" ]
           - destination: "platform=iOS Simulator,OS=18.1,name=iPhone 15"
             xcode: "15.4"
             simulator-platform: "iOS"
@@ -58,6 +60,7 @@ jobs:
             swift: "5.10.1"
             os: "macos-14"
             postgresql-version: "16"
+            schme: [ "fusionauth-quickstart-swift-ios-native" ]
           - destination: "platform=iOS Simulator,OS=17.5,name=iPhone 15"
             xcode: "15.4"
             simulator-platform: "iOS"
@@ -65,6 +68,7 @@ jobs:
             swift: "5.10.1"
             os: "macos-14"
             postgresql-version: "16"
+            schme: [ "fusionauth-quickstart-swift-ios-native" ]
           - destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14"
             xcode: "14.3.1"
             simulator-platform: "iOS"
@@ -72,6 +76,7 @@ jobs:
             swift: "5.8.1"
             os: "macos-13"
             postgresql-version: "16"
+            schme: [ "fusionauth-quickstart-swift-ios-native" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -213,7 +218,7 @@ jobs:
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
-        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
+        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme "${{matrix.schme}}" -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
         uses: actions/upload-artifact@v4.6.2
