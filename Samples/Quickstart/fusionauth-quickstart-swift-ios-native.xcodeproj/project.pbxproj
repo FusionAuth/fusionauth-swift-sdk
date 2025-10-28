@@ -52,6 +52,13 @@
 			remoteGlobalIDString = 0E2795F42BD937B800738892;
 			remoteInfo = "fusionauth-quickstart-swift-ios-native";
 		};
+		CDB79E8F2EB0378300728E1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E2795ED2BD937B800738892 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDB79E6E2EAAF94300728E1E;
+			remoteInfo = "fusionauth-quickstart-swift-ios-native-swift-6";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -254,6 +261,7 @@
 			);
 			dependencies = (
 				CDB79E852EAAF94A00728E1E /* PBXTargetDependency */,
+				CDB79E902EB0378300728E1E /* PBXTargetDependency */,
 			);
 			name = "QuickstartTests-swift-6";
 			packageProductDependencies = (
@@ -278,6 +286,9 @@
 					};
 					0E2795F42BD937B800738892 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					CDB79E842EAAF94A00728E1E = {
+						TestTargetID = CDB79E6E2EAAF94300728E1E;
 					};
 				};
 			};
@@ -402,6 +413,11 @@
 			isa = PBXTargetDependency;
 			target = 0E2795F42BD937B800738892 /* fusionauth-quickstart-swift-ios-native */;
 			targetProxy = CDB79E862EAAF94A00728E1E /* PBXContainerItemProxy */;
+		};
+		CDB79E902EB0378300728E1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDB79E6E2EAAF94300728E1E /* fusionauth-quickstart-swift-ios-native-swift-6 */;
+			targetProxy = CDB79E8F2EB0378300728E1E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -702,14 +718,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2GK5CM846;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "fusionauth-quickstart-swift-ios-native";
+				TEST_TARGET_NAME = "fusionauth-quickstart-swift-ios-native-swift-6";
 			};
 			name = Debug;
 		};
@@ -720,14 +736,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2GK5CM846;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "fusionauth-quickstart-swift-ios-native";
+				TEST_TARGET_NAME = "fusionauth-quickstart-swift-ios-native-swift-6";
 			};
 			name = Release;
 		};
