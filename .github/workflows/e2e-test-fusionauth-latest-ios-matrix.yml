@@ -39,7 +39,7 @@ jobs:
         destination: [ "platform=iOS Simulator,OS=26.0,name=iPhone 17" ]
         xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "26.0" ]
+        simulator-version: [ "26.0.1" ]
         swift: [ "6.1.0" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
@@ -52,7 +52,7 @@ jobs:
             swift: "6.1.0"
             os: "macos-15"
             postgresql-version: "16"
-            scheme: "fusionauth-quickstart-swift-ios-native-swift-6" 
+            scheme: "fusionauth-quickstart-swift-ios-native-swift" 
           - destination: "platform=iOS Simulator,OS=18.1,name=iPhone 15"
             xcode: "15.4"
             simulator-platform: "iOS"
