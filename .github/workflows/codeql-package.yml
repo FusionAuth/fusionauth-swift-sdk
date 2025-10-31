@@ -92,7 +92,7 @@ jobs:
         uses: github/codeql-action/init@v3.30.9
         with:
           languages: ${{ matrix.language }}
-          # build-mode: ${{ matrix.build-mode }}
+          build-mode: ${{ matrix.build-mode }}
 
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
@@ -104,8 +104,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.30.9
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v3.30.9
 
       # Check disk space.
       - name: Check Disk Space
@@ -114,8 +114,8 @@ jobs:
           df -h
 
       # Manual build with the release configuration.
-      # - name: Manual build
-      #   run: swift build --build-tests --configuration debug -v
+      - name: Manual build
+        run: swift build --build-tests --configuration debug -v
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
