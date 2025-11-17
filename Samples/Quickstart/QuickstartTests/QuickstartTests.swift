@@ -58,10 +58,9 @@ final class QuickstartTests: XCTestCase {
         loginField.tap()
         loginField.typeText("richard@example.com")
         loginField.typeText("\n")
-
-        XCTAssertTrue(passwordField.waitForExistence(timeout: 5))
         
         // Tap the password field to focus it
+        XCTAssertTrue(passwordField.waitForExistence(timeout: 5))
         passwordField.tap()
         
         // Now type the password
