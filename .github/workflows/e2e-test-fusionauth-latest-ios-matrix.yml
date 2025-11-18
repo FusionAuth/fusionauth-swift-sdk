@@ -1,7 +1,7 @@
 # This workflow performs a full End 2 End test of the App
 # It runs the test on the last 4 iOS releases, since June 2023
 
-name: E2E Test with latest FusionAuth and last 4 iOS releases
+name: E2E Test with latest FusionAuth and last 3 iOS releases
 
 on:
   # Triggers the workflow on pull request events but only for default and protected branches
@@ -58,14 +58,6 @@ jobs:
             simulator-platform: "iOS"
             simulator-version: "17.5"
             swift: "5.10.1"
-            os: "macos-14"
-            postgresql-version: "16"
-            scheme: "fusionauth-quickstart-swift-ios-native"
-          - destination: "platform=iOS Simulator,OS=16.4,name=iPhone 14"
-            xcode: "14.3.1"
-            simulator-platform: "iOS"
-            simulator-version: "16.4"
-            swift: "5.8.1"
             os: "macos-14"
             postgresql-version: "16"
             scheme: "fusionauth-quickstart-swift-ios-native"
