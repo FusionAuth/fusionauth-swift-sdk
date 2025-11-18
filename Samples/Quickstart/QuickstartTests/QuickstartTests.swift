@@ -56,19 +56,13 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
         loginField.tap()
-        loginField.typeText("richard@example.com")
-
-        // Tap the password field to focus it
-        let frame = passwordField.frame
-        let normalized = app.coordinate(withNormalizedOffset: .zero)
-        let coordinate = normalized.withOffset(CGVector(dx: frame.midX, dy: frame.midY))
-        coordinate.tap()
+        loginField.typeText("richard@example.com\n")
         
-        //passwordField.tap()
+        // Tap the password field
+        passwordField.tap()
         
         // Now type the password
-        passwordField.typeText("password")
-        passwordField.typeText("\n")
+        passwordField.typeText("password\n")
 
         // Check that Welcome message is displayed
         let welcomeText = app.staticTexts["Welcome Richard Hendricks"]
