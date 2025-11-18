@@ -57,7 +57,8 @@ final class QuickstartTests: XCTestCase {
 
         loginField.tap()
         loginField.typeText("richard@example.com")
-        
+        loginField.typeText("\n")
+
         // Tap the password field to focus it
         passwordField.tap()
         
