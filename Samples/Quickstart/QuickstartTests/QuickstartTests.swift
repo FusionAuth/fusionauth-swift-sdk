@@ -47,7 +47,7 @@ final class QuickstartTests: XCTestCase {
         let loginField = app.textFields.matching(
             NSPredicate(format: "placeholderValue IN %@", ["Login", "Email"])
         ).firstMatch
-        
+
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
@@ -57,10 +57,10 @@ final class QuickstartTests: XCTestCase {
 
         loginField.tap()
         loginField.typeText("richard@example.com\n")
-        
+
         // Tap the password field
         passwordField.tap()
-        
+
         // Now type the password
         passwordField.typeText("password\n")
 
@@ -78,8 +78,8 @@ final class QuickstartTests: XCTestCase {
 
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
     }
-    
-    func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+
+    private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
         let predicate = NSPredicate(format: "exists == true AND hittable == true")
         let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
         let result = XCTWaiter().wait(for: [exp], timeout: timeout)
