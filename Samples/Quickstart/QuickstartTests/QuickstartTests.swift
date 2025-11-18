@@ -51,16 +51,14 @@ final class QuickstartTests: XCTestCase {
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
-        XCTAssertTrue(loginField.waitForExistence(timeout: 60))
-        XCTAssertTrue(passwordField.waitForExistence(timeout: 60))
-        XCTAssertTrue(submitButton.waitForExistence(timeout: 60))
+        XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
         loginField.tap()
         loginField.typeText("richard@example.com")
-        loginField.typeText("\n")
         
         // Tap the password field to focus it
-        XCTAssertTrue(passwordField.waitForExistence(timeout: 5))
         passwordField.tap()
         
         // Now type the password
@@ -80,5 +78,12 @@ final class QuickstartTests: XCTestCase {
         confirmLoginAlert(app)
 
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
+    }
+    
+    func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == true AND hittable == true")
+        let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
+        let result = XCTWaiter().wait(for: [exp], timeout: timeout)
+        return result == .completed
     }
 }
