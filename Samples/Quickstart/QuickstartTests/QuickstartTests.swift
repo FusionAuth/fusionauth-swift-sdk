@@ -57,10 +57,14 @@ final class QuickstartTests: XCTestCase {
 
         loginField.tap()
         loginField.typeText("richard@example.com")
-        loginField.typeText("\n")
 
         // Tap the password field to focus it
-        passwordField.tap()
+        let frame = passwordField.frame
+        let normalized = app.coordinate(withNormalizedOffset: .zero)
+        let coordinate = normalized.withOffset(CGVector(dx: frame.midX, dy: frame.midY))
+        coordinate.tap()
+        
+        //passwordField.tap()
         
         // Now type the password
         passwordField.typeText("password")
