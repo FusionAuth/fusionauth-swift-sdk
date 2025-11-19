@@ -38,7 +38,7 @@ jobs:
         swift: [ "6.1.0" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
-        fusionauth-docker-image-version: [ "1.56.0", "1.57.0" ]
+        fusionauth-docker-image-version: [ "1.57.1", "1.58.3", "1.59.1", "1.60.2", "1.61.0" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

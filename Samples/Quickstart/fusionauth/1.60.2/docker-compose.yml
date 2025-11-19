@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18.1-bookworm
+    image: postgres:16.9-bookworm
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER: ${POSTGRES_USER}
@@ -47,7 +47,7 @@ services:
       - search_net
 
   fusionauth:
-    image: fusionauth/fusionauth-app:latest
+    image: fusionauth/fusionauth-app:1.60.2
     depends_on:
       db:
         condition: service_healthy
