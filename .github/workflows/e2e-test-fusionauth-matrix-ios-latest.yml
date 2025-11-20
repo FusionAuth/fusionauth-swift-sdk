@@ -113,15 +113,13 @@ jobs:
       - name: Add PostgreSQL fusionauth database
         run: createdb --owner=fusionauth fusionauth
 
-      # Download FusionAuth App formula.
-      - name: Download FusionAuth App formula
-        run: |
-          mkdir -p ./homebrew-fusionauth-app-formula
-          curl -L https://raw.githubusercontent.com/FusionAuth/homebrew-fusionauth/refs/tags/${{ matrix.fusionauth-docker-image-version }}/Formula/fusionauth-app.rb -o ./homebrew-fusionauth-app-formula/fusionauth-app.rb
+      # Tap FusionAuth Homebrew formulae.
+      - name: Tap FusionAuth Homebrew formulae
+        run: brew tap fusionauth/fusionauth
 
-      # Install FusionAuth App formula with brew.
+      # Install FusionAuth App with brew.
       - name: Install FusionAuth App
-        run: brew install --formula ./homebrew-fusionauth-app-formula/fusionauth-app.rb -v
+        run: brew install fusionauth-app@${{ matrix.fusionauth-docker-image-version }} -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App
