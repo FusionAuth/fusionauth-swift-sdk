@@ -113,29 +113,14 @@ jobs:
       - name: Add PostgreSQL fusionauth database
         run: createdb --owner=fusionauth fusionauth
 
-      # Tap FusionAuth Homebrew formulae.
-      - name: Tap FusionAuth Homebrew formulae
-        run: brew tap fusionauth/fusionauth
-
-      # Install FusionAuth App with brew.
-      - name: Install FusionAuth App
-        run: brew install fusionauth-app -v
-
-      # Configure FusionAuth App with silent mode.
-      - name: Configure FusionAuth App
-        run: |
-          echo "" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
-          echo "fusionauth-app.kickstart.file=$(echo $GITHUB_WORKSPACE)/Samples/Quickstart/fusionauth/${{ matrix.fusionauth-docker-image-version }}/kickstart/kickstart.json" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
-          echo "fusionauth-app.silent-mode=true" >> $(brew --prefix)/etc/fusionauth/fusionauth.properties
-          cat $(brew --prefix)/etc/fusionauth/fusionauth.properties
-
-      # Start FusionAuth App.
-      - name: Start FusionAuth App
-        run: brew services start fusionauth-app -v
-
-      # Check Brew services status.
-      - name: Check Brew services status
-        run: brew services list
+      # Create and start FusionAuth containers used by E2E test and sleeps for 30 seconds.
+      # Despite its waiting until the container started with the status healthy,
+      # it will run the kickstart after that, which takes a moment.
+      - name: Start FusionAuth
+        uses: fusionauth/fusionauth-github-action@v1
+        with:
+          FUSIONAUTH_VERSION: ${{ matrix.fusionauth-docker-image-version }}
+          FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: fusionauth/${{ matrix.fusionauth-docker-image-version }}/kickstart
 
       # Check FusionAuth status 10 times with increasing wait times
       # Continue if FusionAuth status is OK or fail at the end.
