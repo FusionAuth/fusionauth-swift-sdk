@@ -121,7 +121,7 @@ jobs:
 
       # Install FusionAuth App formula with brew.
       - name: Install FusionAuth App
-        run: brew install --formula ./homebrew-fusionauth-app-formula/fusionauth-app.rb -v
+        run: brew install ./homebrew-fusionauth-app-formula/fusionauth-app.rb -v
 
       # Configure FusionAuth App with silent mode.
       - name: Configure FusionAuth App
