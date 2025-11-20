@@ -118,7 +118,7 @@ jobs:
         run: |
           mkdir -p ./homebrew-fusionauth-app-formula
           curl -L https://raw.githubusercontent.com/FusionAuth/homebrew-fusionauth/refs/tags/${{ matrix.fusionauth-docker-image-version }}/Formula/fusionauth-app.rb -o ./homebrew-fusionauth-app-formula/fusionauth-app.rb
-     
+
       # Install FusionAuth App formula with brew.
       - name: Install FusionAuth App
         run: brew install --formula ./homebrew-fusionauth-app-formula/fusionauth-app.rb -v
@@ -138,7 +138,7 @@ jobs:
       # Check Brew services status.
       - name: Check Brew services status
         run: brew services list
-        
+
       # Check FusionAuth status 10 times with increasing wait times
       # Continue if FusionAuth status is OK or fail at the end.
       - name: Check FusionAuth status
