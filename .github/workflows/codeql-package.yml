@@ -1,6 +1,9 @@
 name: "Security and Code-Quality scan with CodeQL - Package"
 
 on:
+  # Triggers the workflow on push events but only for default and protected branches
+  push:
+    branches: [ "main" ]
   # Triggers the workflow on pull request events but only for default and protected branches
   pull_request:
     branches: [ "main" ]
@@ -43,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/swiftlang/swift/releases
-        swift: [ "6.0.2" ]
+        swift: [ "6.0.3" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "16.2" ]
         language: [ swift ]
@@ -82,11 +85,11 @@ jobs:
 
       # Checkout the repository.
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.17
+        uses: github/codeql-action/init@v4.31.2
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -101,8 +104,8 @@ jobs:
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)
-      #- name: Autobuild
-      #  uses: github/codeql-action/autobuild@v3.26.5
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v4.31.2
 
       # Check disk space.
       - name: Check Disk Space
@@ -116,7 +119,7 @@ jobs:
 
       # Perform CodeQL analysis after the build has completed successfully or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3.28.17
+        uses: github/codeql-action/analyze@v4.31.2
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"

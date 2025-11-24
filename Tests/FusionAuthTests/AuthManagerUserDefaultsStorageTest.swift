@@ -14,6 +14,7 @@ final class AuthManagerUserDefaultsStorageTest: XCTestCase {
         userDefaultsStorage = UserDefaultsStorage()
         tokenManager = TokenManager()
         userInfo = UserInfo()
+        authorizationManager = AuthorizationManager.instance
     }
 
     override func tearDown() {

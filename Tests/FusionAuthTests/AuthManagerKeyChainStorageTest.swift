@@ -14,6 +14,7 @@ final class AuthManagerKeyChainStorageTest: XCTestCase {
         keyChainStorage = KeyChainStorage()
         tokenManager = TokenManager()
         userInfo = UserInfo()
+        authorizationManager = AuthorizationManager.instance
     }
 
     override func tearDown() {

@@ -1,6 +1,9 @@
 name: "Code-Quality scan with SwiftLint"
 
 on:
+  # Triggers the workflow on push events but only for default and protected branches
+  push:
+    branches: [ "main" ]
   # Triggers the workflow on pull request events but only for default and protected branches
   pull_request:
     branches: [ "main" ]
@@ -26,25 +29,25 @@ jobs:
     steps:
       # Sets up the reviewdog cli
       - name: Setup reviewdog
-        uses: reviewdog/action-setup@e04ffabe3898a0af8d0fb1af00c188831c4b5893 # v1.3.2
+        uses: reviewdog/action-setup@d8edfce3dd5e1ec6978745e801f9c50b5ef80252 # v1.4.0
 
       - name: Show reviewdog version
         run: reviewdog -version
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       # Performs analysis using Swift Lint and outputs a Sarif Report
       - name: GitHub Action for SwiftLint
-        uses: stanfordbdhg/action-swiftlint@f6ee119765c4b81b667fa84b1e9ee77ca864f622 # v4.1.1
+        uses: stanfordbdhg/action-swiftlint@234b29234afef1ae74ee94b915c41484bddb7f17 # v4.1.2
         with:
           args: --reporter sarif --output lint-results-debug.sarif
           # https://github.com/realm/SwiftLint/issues/4048
 
       # Uploads Sarif Report for the app to GitHub
       - name: Upload Swift app report
-        uses: github/codeql-action/upload-sarif@v3.28.17
+        uses: github/codeql-action/upload-sarif@v4.31.2
         if: success() || failure()
         with:
           sarif_file: lint-results-debug.sarif

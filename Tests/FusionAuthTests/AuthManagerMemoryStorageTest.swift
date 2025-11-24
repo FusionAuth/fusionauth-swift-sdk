@@ -14,6 +14,7 @@ final class AuthManagerMemoryStorageTest: XCTestCase {
         memoryStorage = MemoryStorage()
         tokenManager = TokenManager()
         userInfo = UserInfo()
+        authorizationManager = AuthorizationManager.instance
     }
 
     override func tearDown() {

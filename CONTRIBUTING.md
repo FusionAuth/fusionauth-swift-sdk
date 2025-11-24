@@ -85,10 +85,6 @@ Installation: `brew install swiftlint`
 
 Run SwiftLint: `swiftlint`
 
-#### Testing
-
-See [FusionAuth Swift SDK Quickstart Testing](https://github.com/FusionAuth/fusionauth-quickstart-swift-ios-native/blob/main/TESTING.md) for a full tutorial on Android Test.
-
 ## Submitting a Pull Request
 
 When you are ready to submit your pull request, visit the main repository on GitHub and click the "Compare & pull request" button. Here you can select the branch you have been working on and create a pull request.

@@ -1,5 +1,5 @@
 # This workflow performs a full End 2 End test of the App
-# It runs the test on the last 5 iOS releases.
+# And uses the latest iOS Target API level requirements.
 
 name: E2E Test with latest FusionAuth and latest iOS
 
@@ -36,11 +36,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=18.2,name=iPhone 16" ]
-        xcode: [ "16.2" ]
+        destination: [ "platform=iOS Simulator,OS=26.0.1,name=iPhone 17" ]
+        xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "18.2" ]
-        swift: [ "6.0.2" ]
+        simulator-version: [ "26.0.1" ]
+        swift: [ "6.1.0" ]
         os: [ "macos-15" ]
         postgresql-version: [ "16" ]
 
@@ -95,9 +95,9 @@ jobs:
 
       # Checkout the repository.
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
-      # Install FusionAuth with brew.
+      # Install PostgreSQL with brew.
       - name: Install PostgreSQL
         run: brew install postgresql@${{ matrix.postgresql-version }} -v
 
@@ -184,7 +184,7 @@ jobs:
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
-        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
+        run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
         uses: actions/upload-artifact@v4.6.2

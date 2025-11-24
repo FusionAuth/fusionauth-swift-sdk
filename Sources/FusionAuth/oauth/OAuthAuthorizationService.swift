@@ -1,5 +1,5 @@
 import Foundation
-import AppAuth
+@preconcurrency import AppAuth
 import SwiftUI
 
 /// OAuthAuthorizationService class is responsible for handling OAuth authorization and authorization process.
@@ -121,10 +121,11 @@ extension OAuthAuthorizationService {
                                               redirectURL: URL(string: options.redirectUri)!,
                                               responseType: OIDResponseTypeCode,
                                               additionalParameters: getParametersFromOptions(options))
+        let presenting = self.getPresenting()
 
         let authState: OIDAuthState = try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async {
-                OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: self.getPresenting()) { authState, error in
+                OAuthAuthorizationStore.shared.store(OIDAuthState.authState(byPresenting: request, presenting: presenting) { authState, error in
                     if error != nil {
                         continuation.resume(throwing: error!)
                         return

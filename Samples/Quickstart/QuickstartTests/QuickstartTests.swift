@@ -43,21 +43,26 @@ final class QuickstartTests: XCTestCase {
 
         confirmLoginAlert(app)
 
-        let emailField = app.textFields["Email"]
+        // Match Login field with any of these identifiers
+        let loginField = app.textFields.matching(
+            NSPredicate(format: "placeholderValue IN %@", ["Login", "Email"])
+        ).firstMatch
+
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
-        XCTAssertTrue(emailField.waitForExistence(timeout: 60))
-        XCTAssertTrue(passwordField.waitForExistence(timeout: 60))
-        XCTAssertTrue(submitButton.waitForExistence(timeout: 60))
+        XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
-        emailField.tap()
-        emailField.typeText("richard@example.com")
+        loginField.tap()
+        loginField.typeText("richard@example.com\n")
 
+        // Tap the password field
         passwordField.tap()
-        passwordField.typeText("password")
 
-        passwordField.typeText("\n")
+        // Now type the password
+        passwordField.typeText("password\n")
 
         // Check that Welcome message is displayed
         let welcomeText = app.staticTexts["Welcome Richard Hendricks"]
@@ -72,5 +77,12 @@ final class QuickstartTests: XCTestCase {
         confirmLoginAlert(app)
 
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
+    }
+
+    private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == true AND hittable == true")
+        let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
+        let result = XCTWaiter().wait(for: [exp], timeout: timeout)
+        return result == .completed
     }
 }
