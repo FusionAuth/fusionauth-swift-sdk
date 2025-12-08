@@ -94,7 +94,7 @@ extension OAuthAuthorizationService {
                 continuation.resume(throwing: OAuthError.invalidIssuer)
                 return
             }
-            
+
             OIDAuthorizationService.discoverConfiguration(forIssuer: unwrappedIssuer) { configuration, error in
                 if error != nil {
                     continuation.resume(throwing: error!)
