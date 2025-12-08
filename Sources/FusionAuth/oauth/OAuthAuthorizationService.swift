@@ -90,12 +90,7 @@ extension OAuthAuthorizationService {
                 return
             }
 
-            guard let unwrappedIssuer = issuer else {
-                continuation.resume(throwing: OAuthError.invalidIssuer)
-                return
-            }
-
-            OIDAuthorizationService.discoverConfiguration(forIssuer: unwrappedIssuer) { configuration, error in
+            OIDAuthorizationService.discoverConfiguration(forIssuer: issuer!) { configuration, error in
                 if error != nil {
                     continuation.resume(throwing: error!)
                     return
