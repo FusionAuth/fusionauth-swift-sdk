@@ -79,11 +79,11 @@ extension OAuthAuthorizationService {
     private func fetchConfiguration() async throws -> OIDServiceConfiguration {
         try await withCheckedThrowingContinuation { continuation in
             var issuer = URL(string: self.fusionAuthUrl)
-            
+
             if let tenantId {
                 issuer = issuer?.appendingPathComponent(tenantId)
             }
-                
+
             OIDAuthorizationService.discoverConfiguration(forIssuer: issuer!) { configuration, error in
                 if error != nil {
                     continuation.resume(throwing: error!)
