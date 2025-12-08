@@ -78,7 +78,12 @@ extension OAuthAuthorizationService {
     /// Fetches the OIDServiceConfiguration from FusionAuth using AppAuth
     private func fetchConfiguration() async throws -> OIDServiceConfiguration {
         try await withCheckedThrowingContinuation { continuation in
-            let issuer = URL(string: self.fusionAuthUrl)
+            var issuer = URL(string: self.fusionAuthUrl)
+            
+            if let tenantId {
+                issuer = issuer?.appendingPathComponent(tenantId)
+            }
+                
             OIDAuthorizationService.discoverConfiguration(forIssuer: issuer!) { configuration, error in
                 if error != nil {
                     continuation.resume(throwing: error!)
