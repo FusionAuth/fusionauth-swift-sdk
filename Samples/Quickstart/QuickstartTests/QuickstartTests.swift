@@ -85,4 +85,139 @@ final class QuickstartTests: XCTestCase {
         let result = XCTWaiter().wait(for: [exp], timeout: timeout)
         return result == .completed
     }
+
+    @MainActor
+    func testConfigurationResetButtonExists() throws {
+        // Login first
+        try loginToApp()
+
+        // Navigate to Home tab
+        let homeTab = app.tabBars.buttons["Home"]
+        XCTAssertTrue(homeTab.exists)
+        homeTab.tap()
+
+        // Check that Reset Configuration button exists
+        let resetButton = app.buttons["Reset Configuration"]
+        XCTAssertTrue(resetButton.exists, "Reset Configuration button should be visible after login")
+    }
+
+    @MainActor
+    func testConfigurationResetAlertPresentation() throws {
+        // Login first
+        try loginToApp()
+
+        // Navigate to Home tab
+        let homeTab = app.tabBars.buttons["Home"]
+        homeTab.tap()
+
+        // Tap Reset Configuration button
+        let resetButton = app.buttons["Reset Configuration"]
+        resetButton.tap()
+
+        // Wait for alert and verify it has the expected options
+        let alert = app.alerts.element
+        XCTAssertTrue(alert.exists, "Configuration reset alert should appear")
+
+        // Check for expected buttons in alert
+        let switchAlternativeButton = alert.buttons["Switch to Alternative Tenant"]
+        let switchPrimaryButton = alert.buttons["Switch to Primary Tenant"]
+        let cancelButton = alert.buttons["Cancel"]
+
+        XCTAssertTrue(switchAlternativeButton.exists, "Should have 'Switch to Alternative Tenant' button")
+        XCTAssertTrue(switchPrimaryButton.exists, "Should have 'Switch to Primary Tenant' button")
+        XCTAssertTrue(cancelButton.exists, "Should have 'Cancel' button")
+
+        // Cancel the alert
+        cancelButton.tap()
+
+        // Verify alert is dismissed
+        XCTAssertFalse(alert.exists, "Alert should be dismissed after canceling")
+    }
+
+    @MainActor
+    func testConfigurationDisplayExists() throws {
+        // Login first
+        try loginToApp()
+
+        // Navigate to Home tab
+        let homeTab = app.tabBars.buttons["Home"]
+        homeTab.tap()
+
+        // Check that configuration display text exists
+        let configurationLabel = app.staticTexts["Configuration:"]
+        XCTAssertTrue(configurationLabel.exists, "Configuration label should be displayed")
+    }
+
+    @MainActor
+    func testConfigurationIndicatorInHeader() throws {
+        // Login first
+        try loginToApp()
+
+        // Check that the configuration indicator exists in the header
+        let configIndicator = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Tenant:'")).firstMatch
+        XCTAssertTrue(configIndicator.exists, "Configuration indicator should show tenant in header")
+    }
+
+    @MainActor
+    func testAlertCancellationDoesNotChangeConfig() throws {
+        // Login first
+        try loginToApp()
+
+        // Navigate to Home tab
+        let homeTab = app.tabBars.buttons["Home"]
+        homeTab.tap()
+
+        // Get the initial configuration text
+        let configIndicators = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Tenant:'"))
+        XCTAssertTrue(configIndicators.count > 0, "Should have at least one configuration indicator")
+        let initialConfigText = configIndicators.firstMatch.label
+
+        // Tap Reset Configuration button
+        let resetButton = app.buttons["Reset Configuration"]
+        resetButton.tap()
+
+        // Cancel the alert
+        let alert = app.alerts.element
+        let cancelButton = alert.buttons["Cancel"]
+        cancelButton.tap()
+
+        // Verify configuration hasn't changed
+        let finalConfigIndicators = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Tenant:'"))
+        XCTAssertTrue(finalConfigIndicators.count > 0)
+        let finalConfigText = finalConfigIndicators.firstMatch.label
+
+        XCTAssertEqual(initialConfigText, finalConfigText, "Configuration should not change when alert is canceled")
+    }
+
+    // MARK: - Helper Methods
+
+    private func loginToApp() throws {
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.exists)
+        loginButton.tap()
+
+        confirmLoginAlert(app)
+
+        // Match Login field with any of these identifiers
+        let loginField = app.textFields.matching(
+            NSPredicate(format: "placeholderValue IN %@", ["Login", "Email"])
+        ).firstMatch
+
+        let passwordField = app.secureTextFields["Password"]
+        let submitButton = app.buttons["Submit"]
+
+        XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
+        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
+
+        loginField.tap()
+        loginField.typeText("richard@example.com\n")
+
+        passwordField.tap()
+        passwordField.typeText("password\n")
+
+        // Wait for Welcome message
+        let welcomeText = app.staticTexts["Welcome Richard Hendricks"]
+        XCTAssertTrue(welcomeText.waitForExistence(timeout: 60))
+    }
 }

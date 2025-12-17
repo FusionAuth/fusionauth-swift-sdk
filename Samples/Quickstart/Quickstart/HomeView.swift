@@ -2,7 +2,10 @@ import SwiftUI
 import FusionAuth
 
 struct HomeView: View {
+    @EnvironmentObject private var authState: FusionAuthStateObject
     @State var userInfo: UserInfo?
+    @State private var showingConfigurationAlert = false
+    @State private var configurationError: String? = nil
 
     var body: some View {
         if userInfo == nil {
@@ -15,7 +18,7 @@ struct HomeView: View {
                 getUserInfo()
             }
         } else {
-            VStack {
+            VStack(alignment: .leading, spacing: 16) {
                 if userInfo?.given_name == nil || userInfo?.family_name == nil {
                     if userInfo?.email == nil {
                         Text("Welcome \(userInfo?.name ?? "") ").padding(.bottom, 20).font(.headline)
@@ -25,8 +28,27 @@ struct HomeView: View {
                 } else {
                     Text("Welcome \(userInfo?.given_name ?? "") \(userInfo?.family_name ?? "")").padding(.bottom, 20).font(.headline)
                 }
+
                 Text("Your balance is:")
                 Text("$0.00").font(.largeTitle)
+
+                // Configuration display
+                HStack {
+                    Text("Configuration:")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Spacer()
+                    Text(authState.getCurrentConfigurationDescription())
+                        .font(.caption)
+                        .padding(4)
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(4)
+                }
+                .padding(.vertical, 8)
+
+                Divider()
+
+                // Action buttons
                 Button("Refresh token") {
                     Task {
                         do {
@@ -45,6 +67,12 @@ struct HomeView: View {
                         }
                     }
                 }
+
+                Button("Reset Configuration") {
+                    showingConfigurationAlert = true
+                }
+                .buttonStyle(SecondaryButtonStyle())
+
                 Button("Log out") {
                     Task {
                         do {
@@ -55,7 +83,25 @@ struct HomeView: View {
                             print(error)
                         }
                     }
-                }.buttonStyle(SecondaryButtonStyle())
+                }
+                .buttonStyle(SecondaryButtonStyle())
+
+                Spacer()
+            }
+            .alert("Reset Configuration", isPresented: $showingConfigurationAlert) {
+                Button("Switch to Alternative Tenant", action: switchToAlternativeConfiguration)
+                Button("Switch to Primary Tenant", action: switchToPrimaryConfiguration)
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Choose a configuration to switch to. This will clear your current authentication state.")
+            }
+            .alert("Configuration Error", isPresented: Binding<Bool>(
+                get: { configurationError != nil },
+                set: { newValue in if !newValue { configurationError = nil } }
+            )) {
+                Button("OK") { configurationError = nil }
+            } message: {
+                Text(configurationError ?? "Unknown error")
             }
         }
     }
@@ -68,6 +114,34 @@ struct HomeView: View {
                     .userInfo()
             } catch let error as NSError {
                 print("JSON decode failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func switchToAlternativeConfiguration() {
+        Task {
+            do {
+                try ConfigurationManager.switchToAlternativeConfiguration()
+                authState.currentConfigurationName = "Alternative"
+                // Reset user info to trigger refresh
+                userInfo = nil
+                getUserInfo()
+            } catch let error as NSError {
+                configurationError = "Failed to switch configuration: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    func switchToPrimaryConfiguration() {
+        Task {
+            do {
+                try ConfigurationManager.switchToPrimaryConfiguration()
+                authState.currentConfigurationName = "Primary"
+                // Reset user info to trigger refresh
+                userInfo = nil
+                getUserInfo()
+            } catch let error as NSError {
+                configurationError = "Failed to switch configuration: \(error.localizedDescription)"
             }
         }
     }

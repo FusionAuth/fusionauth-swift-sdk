@@ -21,6 +21,8 @@
 		0EB100102CD90699007AB813 /* FusionAuth.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EB1000F2CD90699007AB813 /* FusionAuth.plist */; };
 		9326C2A12C80692B001C9CDB /* fusionauth-swift-sdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */; };
 		939AED192CC91492000E2D3F /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
+		CD12D0472EF310A000266540 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD12D0462EF310A000266540 /* ConfigurationManager.swift */; };
+		CD12D0482EF310A000266540 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD12D0462EF310A000266540 /* ConfigurationManager.swift */; };
 		CDB79E712EAAF94300728E1E /* FusionAuthStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5184922CD627E5004E2416 /* FusionAuthStateObject.swift */; };
 		CDB79E722EAAF94300728E1E /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C92BF50C62007C5E0D /* LoggedInView.swift */; };
 		CDB79E732EAAF94300728E1E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C52BF509C6007C5E0D /* LoginView.swift */; };
@@ -77,6 +79,7 @@
 		0EB1000F2CD90699007AB813 /* FusionAuth.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FusionAuth.plist; sourceTree = "<group>"; };
 		9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "fusionauth-swift-sdk"; path = ../..; sourceTree = "<group>"; };
 		939AED162CC91492000E2D3F /* QuickstartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTests.swift; sourceTree = "<group>"; };
+		CD12D0462EF310A000266540 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		CDB79E832EAAF94300728E1E /* fusionauth-quickstart-swift-ios-native-swift-6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fusionauth-quickstart-swift-ios-native-swift-6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDB79E8E2EAAF94A00728E1E /* QuickstartTests-swift-6.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QuickstartTests-swift-6.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -142,6 +145,7 @@
 			children = (
 				0E5184922CD627E5004E2416 /* FusionAuthStateObject.swift */,
 				0E2795F82BD937B800738892 /* QuickstartApp.swift */,
+				CD12D0462EF310A000266540 /* ConfigurationManager.swift */,
 				0E2795FA2BD937B800738892 /* ContentView.swift */,
 				0E2795FC2BD937BA00738892 /* Assets.xcassets */,
 				0E2795FE2BD937BA00738892 /* Preview Content */,
@@ -372,6 +376,7 @@
 				0E8454C62BF509C6007C5E0D /* LoginView.swift in Sources */,
 				0E2795FB2BD937B800738892 /* ContentView.swift in Sources */,
 				0E8454CC2BF50CE8007C5E0D /* HomeView.swift in Sources */,
+				CD12D0472EF310A000266540 /* ConfigurationManager.swift in Sources */,
 				0E2795F92BD937B800738892 /* QuickstartApp.swift in Sources */,
 				0E8454CE2BF50D19007C5E0D /* MakeChangeView.swift in Sources */,
 				0E8454C82BF50A3C007C5E0D /* Styles.swift in Sources */,
@@ -387,6 +392,7 @@
 				CDB79E732EAAF94300728E1E /* LoginView.swift in Sources */,
 				CDB79E742EAAF94300728E1E /* ContentView.swift in Sources */,
 				CDB79E752EAAF94300728E1E /* HomeView.swift in Sources */,
+				CD12D0482EF310A000266540 /* ConfigurationManager.swift in Sources */,
 				CDB79E762EAAF94300728E1E /* QuickstartApp.swift in Sources */,
 				CDB79E772EAAF94300728E1E /* MakeChangeView.swift in Sources */,
 				CDB79E782EAAF94300728E1E /* Styles.swift in Sources */,
