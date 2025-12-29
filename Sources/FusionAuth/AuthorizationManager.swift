@@ -135,7 +135,8 @@ public class AuthorizationManager {
         self.configuration = configuration
         if let storage = storage {
             self.initTokenManager(storage)
-        } else if self.tokenManager == nil {
+            return self
+        if self.tokenManager == nil {
             self.initTokenManager()
         }
         return self

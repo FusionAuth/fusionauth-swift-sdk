@@ -81,7 +81,7 @@ struct HomeView: View {
             .alert("Reset Configuration", isPresented: $showingConfigurationAlert) {
                 Button("Switch to Alternative Tenant", action: switchToAlternativeConfiguration)
                 Button("Switch to Primary Tenant", action: switchToPrimaryConfiguration)
-                Button("Cancel", role: .cancel) { }
+                Button("Cancel", role: .cancel) {  /* no-op */ }
             } message: {
                 Text("Choose a configuration to switch to. This will clear your current authentication state.")
             }

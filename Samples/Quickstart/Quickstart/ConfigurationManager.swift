@@ -50,4 +50,3 @@ class ConfigurationManager {
         return "Not configured"
     }
 }
-
