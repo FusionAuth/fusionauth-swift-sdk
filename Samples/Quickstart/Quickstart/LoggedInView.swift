@@ -18,11 +18,10 @@ struct LoggedInView: View {
             .frame(maxWidth: .infinity, alignment: .topLeading)
 
             // Configuration indicator
-            HStack {
+            VStack(alignment: .leading, spacing: 16) {
                 Label("Active Configuration", systemImage: "gear")
                     .font(.caption)
                     .foregroundColor(.gray)
-                Spacer()
                 Text(authState.getCurrentConfigurationDescription())
                     .font(.caption)
                     .fontWeight(.semibold)

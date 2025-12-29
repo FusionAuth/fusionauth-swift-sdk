@@ -18,7 +18,7 @@ struct HomeView: View {
                 getUserInfo()
             }
         } else {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(spacing: 16) {
                 if userInfo?.given_name == nil || userInfo?.family_name == nil {
                     if userInfo?.email == nil {
                         Text("Welcome \(userInfo?.name ?? "") ").padding(.bottom, 20).font(.headline)
@@ -31,20 +31,6 @@ struct HomeView: View {
 
                 Text("Your balance is:")
                 Text("$0.00").font(.largeTitle)
-
-                // Configuration display
-                HStack {
-                    Text("Configuration:")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Text(authState.getCurrentConfigurationDescription())
-                        .font(.caption)
-                        .padding(4)
-                        .background(Color.blue.opacity(0.1))
-                        .cornerRadius(4)
-                }
-                .padding(.vertical, 8)
 
                 Divider()
 
@@ -114,6 +100,16 @@ struct HomeView: View {
                     .userInfo()
             } catch let error as NSError {
                 print("JSON decode failed: \(error.localizedDescription)")
+
+                // Attempt to log the user out
+                do {
+                    try await AuthorizationManager
+                        .oauth()
+                        .logout(options: OAuthLogoutOptions())
+                } catch {
+                    // If logout also fails, log it (and optionally show an alert)
+                    print("Failed to log out after userInfo error: \(error.localizedDescription)")
+                }
             }
         }
     }
