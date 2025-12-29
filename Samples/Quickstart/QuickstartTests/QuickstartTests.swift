@@ -12,7 +12,15 @@ final class QuickstartTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Attempt to log out after each test if user is logged in
+        let logoutButton = app.buttons["Log out"]
+        if logoutButton.exists && logoutButton.isHittable {
+            logoutButton.tap()
+            confirmLoginAlert(app)
+            // Wait for login button to reappear
+            let loginButton = app.buttons["Login"]
+            XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should appear after logging out")
+        }
     }
 
     private func confirmLoginAlert(_ app: XCUIApplication) {
@@ -144,8 +152,8 @@ final class QuickstartTests: XCTestCase {
         homeTab.tap()
 
         // Check that configuration display text exists
-        let configurationLabel = app.staticTexts["Configuration:"]
-        XCTAssertTrue(configurationLabel.exists, "Configuration label should be displayed")
+        let configurationLabel = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Active Configuration'")).firstMatch
+        XCTAssertTrue(configurationLabel.exists, "Active Configuration label should be displayed")
     }
 
     @MainActor
