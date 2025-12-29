@@ -5,7 +5,7 @@ struct HomeView: View {
     @EnvironmentObject private var authState: FusionAuthStateObject
     @State var userInfo: UserInfo?
     @State private var showingConfigurationAlert = false
-    @State private var configurationError: String? = nil
+    @State private var configurationError: String?
 
     var body: some View {
         if userInfo == nil {
