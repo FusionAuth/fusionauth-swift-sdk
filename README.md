@@ -186,6 +186,80 @@ do {
 ```
 
 If the user is signed out, the auth state will be cleared.
+
+## Runtime Configuration Management
+
+The SDK provides powerful configuration management features that allow you to switch between different FusionAuth instances or tenants at runtime without restarting the application.
+
+### Switching Between FusionAuth Instances
+
+If you need to switch between different FusionAuth instances (e.g., different base URLs), use `clearAllState()` to clear both tokens and configuration, then reinitialize:
+
+```swift
+// Clear all state from the previous FusionAuth instance
+try AuthorizationManager.instance.clearAllState()
+
+// Initialize with the new FusionAuth instance configuration
+AuthorizationManager.instance.initialize(configuration: AuthorizationConfiguration(
+    clientId: "new-client-id",
+    fusionAuthUrl: "https://new-fusionauth-instance.com",
+    additionalScopes: ["email", "profile"]))
+```
+
+### Switching Between Tenants
+
+For switching between tenants within the same FusionAuth instance, use `updateConfiguration()` which automatically handles state management:
+
+```swift
+// Switch from one tenant to another
+try AuthorizationManager.instance.updateConfiguration(
+    configuration: AuthorizationConfiguration(
+        clientId: "tenant-a-client-id",
+        fusionAuthUrl: "https://fusionauth.example.com",
+        tenant: "tenant-a"))
+
+// Later, switch to a different tenant
+try AuthorizationManager.instance.updateConfiguration(
+    configuration: AuthorizationConfiguration(
+        clientId: "tenant-b-client-id",
+        fusionAuthUrl: "https://fusionauth.example.com",
+        tenant: "tenant-b"))
+```
+
+### Multi-Tenant Application Example
+
+Here's a practical example for an app that supports multiple organizations:
+
+```swift
+struct Organization {
+    let name: String
+    let clientId: String
+    let tenantId: String
+}
+
+let organizations = [
+    Organization(name: "Acme Corp", clientId: "acme-client-id", tenantId: "acme-tenant"),
+    Organization(name: "Tech Startup", clientId: "startup-client-id", tenantId: "startup-tenant")
+]
+
+// Switch to the selected organization
+func switchOrganization(_ org: Organization) throws {
+    try AuthorizationManager.instance.updateConfiguration(
+        configuration: AuthorizationConfiguration(
+            clientId: org.clientId,
+            fusionAuthUrl: "https://fusionauth.example.com",
+            tenant: org.tenantId))
+}
+```
+
+### Configuration Management Methods
+
+- `getConfiguration()` - Retrieves the currently active configuration
+- `resetConfiguration()` - Clears the configuration without clearing auth tokens (useful for configuration updates on the same tenant)
+- `updateConfiguration(configuration:storage:)` - Updates configuration and clears auth state for a fresh start with new tenant
+- `clearAllState()` - Clears both configuration and authentication state
+
+This is important when your app supports multiple FusionAuth instances, multiple tenants, or when users need to switch between different accounts on different FusionAuth servers.
 <!--
 end::forDocSiteUsage[]
 -->
