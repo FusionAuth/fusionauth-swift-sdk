@@ -18,62 +18,66 @@ struct HomeView: View {
                 getUserInfo()
             }
         } else {
-            VStack(spacing: 16) {
-                if userInfo?.given_name == nil || userInfo?.family_name == nil {
-                    if userInfo?.email == nil {
-                        Text("Welcome \(userInfo?.name ?? "") ").padding(.bottom, 20).font(.headline)
+            ZStack {
+                VStack {
+                    if userInfo?.given_name == nil || userInfo?.family_name == nil {
+                        if userInfo?.email == nil {
+                            Text("Welcome \(userInfo?.name ?? "") ").padding(.bottom, 20).font(.headline)
+                        } else {
+                            Text("Welcome \(userInfo?.email ?? "") ").padding(.bottom, 20).font(.headline)
+                        }
                     } else {
-                        Text("Welcome \(userInfo?.email ?? "") ").padding(.bottom, 20).font(.headline)
+                        Text("Welcome \(userInfo?.given_name ?? "") \(userInfo?.family_name ?? "")").padding(.bottom, 20).font(.headline)
                     }
-                } else {
-                    Text("Welcome \(userInfo?.given_name ?? "") \(userInfo?.family_name ?? "")").padding(.bottom, 20).font(.headline)
-                }
 
-                Text("Your balance is:")
-                Text("$0.00").font(.largeTitle)
+                    Text("Your balance is:")
+                    Text("$0.00").font(.largeTitle)
 
-                Divider()
+                    Divider()
 
-                // Action buttons
-                Button("Refresh token") {
-                    Task {
-                        do {
-                            let accessToken = try await AuthorizationManager
-                                .oauth()
-                                .freshAccessToken()
+                    // Action buttons
+                    Button("Refresh token") {
+                        Task {
+                            do {
+                                let accessToken = try await AuthorizationManager
+                                    .oauth()
+                                    .freshAccessToken()
 
-                            guard let accessToken else {
-                                print("Access token is not returned")
-                                return
+                                guard let accessToken else {
+                                    print("Access token is not returned")
+                                    return
+                                }
+
+                                print("Refreshed access token: \(accessToken)")
+                            } catch let error as NSError {
+                                print(error)
                             }
-
-                            print("Refreshed access token: \(accessToken)")
-                        } catch let error as NSError {
-                            print(error)
                         }
                     }
-                }
 
-                Button("Reset Configuration") {
-                    showingConfigurationAlert = true
-                }
-                .buttonStyle(SecondaryButtonStyle())
+                    Button("Reset Configuration") {
+                        showingConfigurationAlert = true
+                    }
+                    .buttonStyle(SecondaryButtonStyle())
 
-                Button("Log out") {
-                    Task {
-                        do {
-                            try await AuthorizationManager
-                                .oauth()
-                                .logout(options: OAuthLogoutOptions())
-                        } catch let error as NSError {
-                            print(error)
+                    Button("Log out") {
+                        Task {
+                            do {
+                                try await AuthorizationManager
+                                    .oauth()
+                                    .logout(options: OAuthLogoutOptions())
+                            } catch let error as NSError {
+                                print(error)
+                            }
                         }
                     }
+                    .buttonStyle(SecondaryButtonStyle())
                 }
-                .buttonStyle(SecondaryButtonStyle())
-
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.systemBackground)) // optional, for visibility
             .alert("Reset Configuration", isPresented: $showingConfigurationAlert) {
                 Button("Switch to Alternative Tenant", action: switchToAlternativeConfiguration)
                 Button("Switch to Primary Tenant", action: switchToPrimaryConfiguration)
