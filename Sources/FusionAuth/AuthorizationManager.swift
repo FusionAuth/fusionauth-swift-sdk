@@ -133,7 +133,7 @@ public class AuthorizationManager {
     @discardableResult public func resetConfiguration(configuration: AuthorizationConfiguration, storage: Storage? = nil) throws -> Self {
         try clearAllState()
         self.configuration = configuration
-        if let storage = storage {
+        if let storage {
             self.initTokenManager(storage)
             return self
         }
