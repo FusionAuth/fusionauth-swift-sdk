@@ -186,7 +186,6 @@ do {
 ```
 
 If the user is signed out, the auth state will be cleared.
-
 <!--
 end::forDocSiteUsage[]
 -->
