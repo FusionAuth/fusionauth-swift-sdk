@@ -42,7 +42,7 @@
       "body": {
         "key": {
           "algorithm": "RS256",
-          "name": "For Example Android App",
+          "name": "For Example iOS App",
           "length": 2048
         }
       }
