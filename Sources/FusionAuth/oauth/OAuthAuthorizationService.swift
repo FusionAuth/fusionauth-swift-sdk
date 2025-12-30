@@ -51,6 +51,14 @@ public class OAuthAuthorizationService {
 // MARK: - Configuration
 
 extension OAuthAuthorizationService {
+    /// Clears the cached OpenID configuration and token task.
+    /// This is called automatically when switching tenants via AuthorizationManager.updateConfiguration().
+    /// Calling this directly is optional as a new OAuthAuthorizationService instance is typically created per request.
+    internal func clearCache() {
+        self.configurationTask = nil
+        self.tokenTask = nil
+    }
+
     /// Retrieves the OIDServiceConfiguration from FusionAuth.
     ///
     /// Starts a task to fetch the configuration if it is not already started.

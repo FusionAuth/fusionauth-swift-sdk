@@ -108,6 +108,40 @@ public class AuthorizationManager {
         try self.tokenManager?.clearAuthState()
         triggerEvent(nil)
     }
+
+    /// Clears all authorization state and configuration.
+    /// This method should be called when switching between different FusionAuth instances or when performing a logout.
+    /// It clears both the stored authentication tokens and resets the configuration.
+    public func clearAllState() throws {
+        try clearState()
+        self.configuration = nil
+    }
+
+    /// Retrieves the current authorization configuration.
+    /// - Returns: The current AuthorizationConfiguration, or nil if not initialized.
+    public func getConfiguration() -> AuthorizationConfiguration? {
+        return self.configuration
+    }
+
+    /// Updates the configuration and clears tokens for a fresh authentication with a new tenant.
+    /// This method combines configuration update with state clearing, making it ideal for tenant switching.
+    /// It automatically clears existing authentication state before applying the new configuration.
+    ///
+    /// - Parameter configuration: The new AuthorizationConfiguration to apply.
+    /// - Parameter storage: Optional custom storage implementation. If not provided, existing storage is preserved.
+    /// - Returns: Self for method chaining.
+    @discardableResult public func resetConfiguration(configuration: AuthorizationConfiguration, storage: Storage? = nil) throws -> Self {
+        try clearAllState()
+        self.configuration = configuration
+        if let storage {
+            self.initTokenManager(storage)
+            return self
+        }
+        if self.tokenManager == nil {
+            self.initTokenManager()
+        }
+        return self
+    }
 }
 
 // MARK: - PList Configuration
