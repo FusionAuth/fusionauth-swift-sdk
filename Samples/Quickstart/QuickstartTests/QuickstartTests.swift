@@ -236,12 +236,12 @@ final class QuickstartTests: XCTestCase {
         let submitButton = app.buttons["Submit"]
 
         XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
-        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
         loginField.tap()
         loginField.typeText(login + "\n")
 
+        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
         passwordField.tap()
         passwordField.typeText("password\n")
 
