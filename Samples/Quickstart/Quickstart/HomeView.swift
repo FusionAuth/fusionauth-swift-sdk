@@ -66,6 +66,9 @@ struct HomeView: View {
                                 try await AuthorizationManager
                                     .oauth()
                                     .logout(options: OAuthLogoutOptions())
+
+                                // on logout, switch to the primary configuration.
+                                switchToPrimaryConfiguration()
                             } catch let error as NSError {
                                 print(error)
                             }

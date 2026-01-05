@@ -1,6 +1,11 @@
 import XCTest
 
 final class QuickstartTests: XCTestCase {
+    private var primaryLogin = "richard@example.com"
+    private var primaryWelcomeName = "Richard Hendricks"
+    private var alternateLogin = "mike@example.com"
+    private var alternateWelcomeName = "Mike Hendricks"
+
     private var app: XCUIApplication!
 
     override func setUpWithError() throws {
@@ -45,37 +50,8 @@ final class QuickstartTests: XCTestCase {
 
     @MainActor
     func testExample() throws {
-        let loginButton = app.buttons["Login"]
-        XCTAssertTrue(loginButton.exists)
-        loginButton.tap()
-
-        confirmLoginAlert(app)
-
-        // Match Login field with any of these identifiers
-        let loginField = app.textFields.matching(
-            NSPredicate(format: "placeholderValue IN %@", ["Login", "Email"])
-        ).firstMatch
-
-        let passwordField = app.secureTextFields["Password"]
-        let submitButton = app.buttons["Submit"]
-
-        XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
-        XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
-        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
-
-        loginField.tap()
-        loginField.typeText("richard@example.com\n")
-
-        // Tap the password field
-        passwordField.tap()
-
-        // Now type the password
-        passwordField.typeText("password\n")
-
-        // Check that Welcome message is displayed
-        let welcomeText = app.staticTexts["Welcome Richard Hendricks"]
-
-        XCTAssertTrue(welcomeText.waitForExistence(timeout: 60))
+        // Login first
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Check that Log out button is displayed
         let logoutButton = app.buttons["Log out"]
@@ -84,6 +60,7 @@ final class QuickstartTests: XCTestCase {
 
         confirmLoginAlert(app)
 
+        let loginButton = app.buttons["Login"]
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
     }
 
@@ -97,7 +74,7 @@ final class QuickstartTests: XCTestCase {
     @MainActor
     func testConfigurationResetButtonExists() throws {
         // Login first
-        try loginToApp()
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Navigate to Home tab
         let homeTab = app.tabBars.buttons["Home"]
@@ -112,7 +89,7 @@ final class QuickstartTests: XCTestCase {
     @MainActor
     func testConfigurationResetAlertPresentation() throws {
         // Login first
-        try loginToApp()
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Navigate to Home tab
         let homeTab = app.tabBars.buttons["Home"]
@@ -145,7 +122,7 @@ final class QuickstartTests: XCTestCase {
     @MainActor
     func testConfigurationDisplayExists() throws {
         // Login first
-        try loginToApp()
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Navigate to Home tab
         let homeTab = app.tabBars.buttons["Home"]
@@ -159,7 +136,7 @@ final class QuickstartTests: XCTestCase {
     @MainActor
     func testConfigurationIndicatorInHeader() throws {
         // Login first
-        try loginToApp()
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Check that the configuration indicator exists in the header
         let configIndicator = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'Tenant:'")).firstMatch
@@ -169,7 +146,7 @@ final class QuickstartTests: XCTestCase {
     @MainActor
     func testAlertCancellationDoesNotChangeConfig() throws {
         // Login first
-        try loginToApp()
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
 
         // Navigate to Home tab
         let homeTab = app.tabBars.buttons["Home"]
@@ -197,9 +174,53 @@ final class QuickstartTests: XCTestCase {
         XCTAssertEqual(initialConfigText, finalConfigText, "Configuration should not change when alert is canceled")
     }
 
+    // MARK: - New End to End Test
+
+    @MainActor
+    func testSwitchToAlternateConfigAndLogin() throws {
+        // Login first
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
+
+        // Navigate to Home tab
+        let homeTab = app.tabBars.buttons["Home"]
+        homeTab.tap()
+
+        // Tap "Reset Configuration"
+        let resetButton = app.buttons["Reset Configuration"]
+        XCTAssertTrue(waitUntilHittable(resetButton, timeout: 15), "Reset Configuration button should be hittable")
+        resetButton.tap()
+
+        // Tap "Switch to Alternative Tenant" in alert
+        let alert = app.alerts.element
+        XCTAssertTrue(alert.waitForExistence(timeout: 10), "Configuration reset alert should appear")
+        let switchAlternativeButton = alert.buttons["Switch to Alternative Tenant"]
+        XCTAssertTrue(switchAlternativeButton.exists, "Should have 'Switch to Alternative Tenant' button")
+        switchAlternativeButton.tap()
+
+        var loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
+
+        // Proceed to Login to the alternate tenant
+        try loginToApp(login: alternateLogin, welcomeName: alternateWelcomeName)
+
+        // Check that Log out button is displayed
+        let logoutButton = app.buttons["Log out"]
+        XCTAssertTrue(logoutButton.exists)
+        logoutButton.tap()
+
+        confirmLoginAlert(app)
+
+        // Proceed to Login to the primary tenant
+        loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
+        loginButton.tap()
+
+        confirmLoginAlert(app)
+    }
+
     // MARK: - Helper Methods
 
-    private func loginToApp() throws {
+    private func loginToApp(login: String, welcomeName: String) throws {
         let loginButton = app.buttons["Login"]
         XCTAssertTrue(loginButton.exists)
         loginButton.tap()
@@ -219,13 +240,13 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
         loginField.tap()
-        loginField.typeText("richard@example.com\n")
+        loginField.typeText(login + "\n")
 
         passwordField.tap()
         passwordField.typeText("password\n")
 
         // Wait for Welcome message
-        let welcomeText = app.staticTexts["Welcome Richard Hendricks"]
+        let welcomeText = app.staticTexts["Welcome " + welcomeName]
         XCTAssertTrue(welcomeText.waitForExistence(timeout: 60))
     }
 }
