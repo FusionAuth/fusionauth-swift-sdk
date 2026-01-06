@@ -48,6 +48,37 @@ final class QuickstartTests: XCTestCase {
         removeUIInterruptionMonitor(alertMonitor)
     }
 
+    private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == true AND hittable == true")
+        let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
+        let result = XCTWaiter().wait(for: [exp], timeout: timeout)
+        return result == .completed
+    }
+    
+    private func focusTextField(_ field: XCUIElement, timeout: TimeInterval = 5) {
+        let deadline = Date().addingTimeInterval(timeout)
+        var lastError: String?
+
+        while Date() < deadline {
+            if field.exists && field.isHittable {
+                field.tap()
+                // Give the UI a moment to react after the tap.
+                RunLoop.current.run(until: Date().addingTimeInterval(0.15))
+                if field.hasFocus {
+                    return
+                } else {
+                    lastError = "Tapped but field did not gain focus."
+                }
+            } else {
+                lastError = "Field not hittable."
+            }
+            // Small backoff to let overlays/animations settle.
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        }
+
+        XCTFail("Failed to focus text field within \(timeout)s. Last state: \(lastError ?? "unknown")")
+    }
+
     @MainActor
     func testExample() throws {
         // Login first
@@ -62,13 +93,6 @@ final class QuickstartTests: XCTestCase {
 
         let loginButton = app.buttons["Login"]
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60))
-    }
-
-    private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
-        let predicate = NSPredicate(format: "exists == true AND hittable == true")
-        let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
-        let result = XCTWaiter().wait(for: [exp], timeout: timeout)
-        return result == .completed
     }
 
     @MainActor
@@ -239,19 +263,10 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
-        loginField.tap()
+        focusTextField(loginField)
         loginField.typeText(login + "\n")
 
-        passwordField.tap()
-
-        // If the first tap just dismissed an overlay, the field might not be focused.
-        // Try a second tap if needed.
-        if !passwordField.hasFocus || !passwordField.isSelected || !passwordField.isHittable {
-            // Optionally wait a brief moment for UI to settle
-            _ = passwordField.waitForExistence(timeout: 1)
-            passwordField.tap()
-        }
-
+        focusTextField(passwordField)
         passwordField.typeText("password\n")
 
         // Wait for Welcome message
