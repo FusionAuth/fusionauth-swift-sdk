@@ -239,19 +239,13 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
+        // tap outside to dismiss if an overlay appears
+        app.tap()
+
         loginField.tap()
         loginField.typeText(login + "\n")
 
         passwordField.tap()
-
-        // If the first tap just dismissed an overlay, the field might not be focused.
-        // Try a second tap if needed.
-        if !passwordField.hasFocus && !passwordField.isSelected && !passwordField.isHittable {
-            // Optionally wait a brief moment for UI to settle
-            _ = passwordField.waitForExistence(timeout: 1)
-            passwordField.tap()
-        }
-
         passwordField.typeText("password\n")
 
         // Wait for Welcome message
