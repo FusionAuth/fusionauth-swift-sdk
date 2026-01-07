@@ -54,7 +54,50 @@ final class QuickstartTests: XCTestCase {
         let result = XCTWaiter().wait(for: [exp], timeout: timeout)
         return result == .completed
     }
-    
+
+    private func waitForStableFrame(_ element: XCUIElement, timeout: TimeInterval = 5) -> Bool {
+        let deadline = Date().addingTimeInterval(timeout)
+        var lastFrame: CGRect = .null
+        var lastStableAt: Date?
+
+        while Date() < deadline {
+            // Ensure the element exists before querying frame meaningfully
+            guard element.exists else {
+                RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+                continue
+            }
+
+            let frame = element.frame
+
+            // Check for a "real" frame: finite and non-zero size
+            let hasRealFrame = frame.width.isFinite && frame.height.isFinite && frame.width > 0 && frame.height > 0
+
+            if hasRealFrame {
+                if frame == lastFrame {
+                    // If frame hasn't changed since last check, consider it stable after a short dwell time
+                    if let stableSince = lastStableAt, Date().timeIntervalSince(stableSince) >= 0.2 {
+                        return true
+                    } else if lastStableAt == nil {
+                        lastStableAt = Date()
+                    }
+                } else {
+                    // Frame changed; reset stability timer
+                    lastStableAt = nil
+                    lastFrame = frame
+                }
+            } else {
+                // No real frame yet; reset and keep waiting
+                lastStableAt = nil
+                lastFrame = .null
+            }
+
+            // Small poll interval to avoid busy-waiting
+            RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+        }
+
+        return false
+    }
+
     private func focusTextField(_ field: XCUIElement, timeout: TimeInterval = 5) {
         let deadline = Date().addingTimeInterval(timeout)
         var lastError: String?
@@ -66,9 +109,8 @@ final class QuickstartTests: XCTestCase {
                 RunLoop.current.run(until: Date().addingTimeInterval(0.15))
                 if field.hasFocus {
                     return
-                } else {
-                    lastError = "Tapped but field did not gain focus."
                 }
+                lastError = "Tapped but field did not gain focus."
             } else {
                 lastError = "Field not hittable."
             }
@@ -259,8 +301,16 @@ final class QuickstartTests: XCTestCase {
         let passwordField = app.secureTextFields["Password"]
         let submitButton = app.buttons["Submit"]
 
+        XCTAssertTrue(loginField.waitForExistence(timeout: 60))
+        XCTAssertTrue(waitForStableFrame(loginField))
         XCTAssertTrue(waitUntilHittable(loginField, timeout: 60))
+
+        XCTAssertTrue(passwordField.waitForExistence(timeout: 60))
+        XCTAssertTrue(waitForStableFrame(passwordField))
         XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
+
+        XCTAssertTrue(submitButton.waitForExistence(timeout: 60))
+        XCTAssertTrue(waitForStableFrame(submitButton))
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
 
         focusTextField(loginField)
