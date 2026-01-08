@@ -103,7 +103,7 @@ jobs:
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
-        uses: swift-actions/setup-swift@682457186b71c25a884c45c06f859febbe259240 # v2.3.0
+        uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a # v2.4.0
         with:
           swift-version: ${{ matrix.swift }}
 
@@ -113,7 +113,7 @@ jobs:
 
       # Checkout the repository.
       - name: Checkout repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       # Install PostgreSQL with brew.
       - name: Install PostgreSQL
@@ -205,7 +205,7 @@ jobs:
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme "${{matrix.scheme}}" -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v6.0.0
         if: ${{ failure() }}
         with:
           name: FusionAuth-${{ env.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_swift-${{ matrix.swift }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
