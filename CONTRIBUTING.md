@@ -108,20 +108,20 @@ The pre-release process is as follows:
 - Check if the latest FusionAuth version is used in the different jobs and configurations.
 - Review, test and merge any open [Dependency Pull Requests](https://github.com/FusionAuth/fusionauth-swift-sdk/pulls).
 - Update the documentation with `sourcedocs generate -- -scheme FusionAuth`.
-- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and prerelease PR.
 - Approve and merge the prerelease PR with the rc tag (release candidate) once all actions run successfully.
-- Make sure all Prerelease-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Make sure all Prerelease-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 
 ## Release Process
 
 The release process is as follows:
 - Check if a prerelease run successfully, if not start with the pre-release process.
 - Update the release version in the `library/build.gradle.kts` file, derived from the pre-release version according to the [Semantic Versioning](https://semver.org/) guidelines.
-- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and release PR.
 - Approve and merge the release PR once all actions run successfully.
-- Make sure all Release-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-android-sdk/actions).
+- Make sure all Release-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 
 ### Quickstart Release Process
 
