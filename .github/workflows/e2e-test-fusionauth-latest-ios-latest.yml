@@ -182,6 +182,9 @@ jobs:
       - name: Connect to FusionAuth App
         run: curl http://localhost:9011/api/status
 
+      - name: List available simulators
+        run: xcrun simctl list runtimes
+
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
