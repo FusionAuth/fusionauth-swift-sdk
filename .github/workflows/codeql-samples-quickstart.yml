@@ -91,7 +91,7 @@ jobs:
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.31.10
+        uses: github/codeql-action/init@v4.32.0
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -125,7 +125,7 @@ jobs:
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.31.10
+        uses: github/codeql-action/analyze@v4.32.0
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
