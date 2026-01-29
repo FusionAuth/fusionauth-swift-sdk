@@ -41,7 +41,7 @@ jobs:
         simulator-platform: [ "iOS" ]
         simulator-version: [ "26.0.1" ]
         swift: [ "6.1.0" ]
-        os: [ "macos-15" ]
+        os: [ "macos-26" ]
         postgresql-version: [ "16" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -65,23 +65,6 @@ jobs:
       # Get the Xcode version.
       - name: Get Xcode version
         run: xcodebuild -version
-
-      # Install Xcodes.
-      - name: Install Xcodes
-        if: matrix.os == 'macos-13'
-        shell: bash
-        run: |
-          brew install aria2
-          brew install xcodes
-
-      # Install simulator platform.
-      - name: Install Simulator
-        if: matrix.os == 'macos-13'
-        shell: bash
-        run: |
-          sudo xcodes runtimes
-          sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
-          sudo xcodes runtimes
 
       # Initialize Swift in the matrix specified version.
       - name: Initialize Swift
@@ -181,6 +164,9 @@ jobs:
       # Connect to FusionAuth App.
       - name: Connect to FusionAuth App
         run: curl http://localhost:9011/api/status
+
+      - name: List available simulators
+        run: xcrun simctl list runtimes
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests

@@ -41,7 +41,7 @@ jobs:
         simulator-platform: [ "iOS" ]
         simulator-version: [ "26.0.1" ]
         swift: [ "6.1.0" ]
-        os: [ "macos-15" ]
+        os: [ "macos-26" ]
         postgresql-version: [ "16" ]
         scheme: [ "fusionauth-quickstart-swift-ios-native-swift-6" ]
         include:
