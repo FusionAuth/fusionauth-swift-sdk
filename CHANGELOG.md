@@ -2,18 +2,21 @@
 
 ## [1.0.0-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v0.3.0...v1.0.0-rc) (2026-01-31)
 
+### Features
+
+* **feat:** bump swift to 6.x and xcode 26.0.1 ([#103](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/103))
+* **feat:** Add way to clear all AuthorizationManager state ([#112](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/112))
+
 
 ### Bug Fixes
 
 * **deps:** bump github.com/openid/appauth-ios from 1.7.6 to 2.0.0 ([#71](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/71)) ([eb43ca5](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/eb43ca5fd1306f5c76e975563ef0b68b6dd705de))
-* end to end tests are failing when starting a pre-release ([#116](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/116)) ([a073f35](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/a073f352a00802ed197f424719abc59b85f3075f))
+* **bug:** Ensure the tenant id is set for well known configuration ([#111](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/111
+))
+* **bug:** end to end tests are failing when starting a pre-release ([#116](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/116))
 
 
 ### Miscellaneous Chores
-
-* release 1.0.0 ([79afefb](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/79afefb998fcdfb832150aa024fc68d8d6a6077a))
-* release 1.0.0-rc ([185f45f](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/185f45f449b4b66a5023187e56c346d0ccded1be))
-* release 1.0.0-rc ([d0c10a0](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d0c10a0bfd00a9ad83c2fd7852e316f8412de2fd))
 * sync release manifests ([d540687](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d540687c63c25e438d44071516962ebd18e18e07))
 
 
