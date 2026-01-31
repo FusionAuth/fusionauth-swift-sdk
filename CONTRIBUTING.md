@@ -117,7 +117,6 @@ The pre-release process is as follows:
 
 The release process is as follows:
 - Check if a prerelease run successfully, if not start with the pre-release process.
-- Update the release version in the `library/build.gradle.kts` file, derived from the pre-release version according to the [Semantic Versioning](https://semver.org/) guidelines.
 - Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and release PR.
 - Approve and merge the release PR once all actions run successfully.
