@@ -81,3 +81,43 @@ public func getIdToken() -> String?
 ```
 
 Retrieves the ID token, if available
+
+### `clearAllState()`
+
+```swift
+public func clearAllState() throws
+```
+
+Clears all authorization state and configuration.
+This method should be called when switching between different FusionAuth instances or when performing a logout.
+It clears both the stored authentication tokens and resets the configuration.
+
+### `getConfiguration()`
+
+```swift
+public func getConfiguration() -> AuthorizationConfiguration?
+```
+
+Retrieves the current authorization configuration.
+- Returns: The current AuthorizationConfiguration, or nil if not initialized.
+
+### `resetConfiguration(configuration:storage:)`
+
+```swift
+@discardableResult public func resetConfiguration(configuration: AuthorizationConfiguration, storage: Storage? = nil) throws -> Self
+```
+
+Updates the configuration and clears tokens for a fresh authentication with a new tenant.
+This method combines configuration update with state clearing, making it ideal for tenant switching.
+It automatically clears existing authentication state before applying the new configuration.
+
+- Parameter configuration: The new AuthorizationConfiguration to apply.
+- Parameter storage: Optional custom storage implementation. If not provided, existing storage is preserved.
+- Returns: Self for method chaining.
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| configuration | The new AuthorizationConfiguration to apply. |
+| storage | Optional custom storage implementation. If not provided, existing storage is preserved. |
