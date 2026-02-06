@@ -65,8 +65,7 @@
 ### Bug Fixes
 
 * **deps:** bump github.com/openid/appauth-ios from 1.7.6 to 2.0.0 ([#71](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/71)) ([eb43ca5](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/eb43ca5fd1306f5c76e975563ef0b68b6dd705de))
-* **fix:** Ensure the tenant id is set for well known configuration ([#111](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/111
-))
+* **fix:** Ensure the tenant id is set for well known configuration ([#111](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/111))
 * **fix:** end to end tests are failing when starting a pre-release ([#116](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/116))
 
 
