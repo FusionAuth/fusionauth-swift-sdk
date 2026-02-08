@@ -110,8 +110,9 @@ The pre-release process is as follows:
 - Update the documentation with `sourcedocs generate -- -scheme FusionAuth`.
 - Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and prerelease PR.
-- Approve and merge the prerelease PR with the rc tag (release candidate) once all actions run successfully.
-- Make sure all Prerelease-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
+- Make sure all Prerelease-Workflows were successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
+- Approve and merge the prerelease PR with the rc tag (prerelease candidate) once all actions run successfully.
+
 
 ## Release Process
 
@@ -119,8 +120,9 @@ The release process is as follows:
 - Check if a prerelease run successfully, if not start with the pre-release process.
 - Make sure all Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
 - Update the [SECURITY.md](SECURITY.md) version information with the latest `Supported Versions` according to the current specification E2E test workflows and release PR.
-- Approve and merge the release PR once all actions run successfully.
-- Make sure all Release-Workflows where successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
+- Make sure all Release-Workflows were successful in [Actions](https://github.com/FusionAuth/fusionauth-swift-sdk/actions).
+- Approve and merge the release PR with the tag (release candidate) once all actions run successfully.
+
 
 ### Quickstart Release Process
 
