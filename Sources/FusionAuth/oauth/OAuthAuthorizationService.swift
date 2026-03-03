@@ -195,17 +195,21 @@ extension OAuthAuthorizationService {
 
         let request: OIDEndSessionRequest
 
+        let additionalParameters = [
+            "client_id": clientId
+        ]
+
         if options.state == nil || options.state!.isEmpty {
             request = OIDEndSessionRequest(configuration: configuration,
                                            idTokenHint: idToken,
                                            postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
-                                           additionalParameters: nil)
+                                           additionalParameters: additionalParameters)
         } else {
             request = OIDEndSessionRequest(configuration: configuration,
                                            idTokenHint: idToken,
                                            postLogoutRedirectURL: URL(string: options.postLogoutRedirectUri)!,
                                            state: options.state!,
-                                           additionalParameters: nil)
+                                           additionalParameters: additionalParameters)
         }
 
         let _: Bool = try await withCheckedThrowingContinuation { continuation in
