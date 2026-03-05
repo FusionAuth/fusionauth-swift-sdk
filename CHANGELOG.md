@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.0.0-rc...v1.1.0-rc) (2026-03-04)
+
+### Features
+
+* Add client_id as a logout option ([3fd8de7](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/3fd8de7038a76f12de775c1734b3c023be728be5))
+
+
 ## [1.0.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v0.3.0...v1.0.0) (2026-01-31)
 
 ### Features
