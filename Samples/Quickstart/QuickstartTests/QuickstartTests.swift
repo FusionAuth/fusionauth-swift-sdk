@@ -244,6 +244,7 @@ final class QuickstartTests: XCTestCase {
     // MARK: - Helper Methods
 
     private func loginToApp(login: String, welcomeName: String) throws {
+        let loginButton = app.buttons["Login"]
         XCTAssertTrue(loginButton.exists)
         loginButton.tap()
 
@@ -272,8 +273,8 @@ final class QuickstartTests: XCTestCase {
         focusTextField(passwordField)
         passwordField.typeText("password\n")
 
-        //XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
-        //submitButton.tap()
+        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
+        submitButton.tap()
 
         // Wait for Welcome message
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
