@@ -311,15 +311,26 @@ final class QuickstartTests: XCTestCase {
         focusTextField(passwordField)
         passwordField.typeText("password\n")
 
+        // dismiss the password prompt if it appears
         dismissPasswordSavePrompt(app)
 
-        // Re-assert that the submit button exists and is hittable.
-        XCTAssertTrue(submitButton.waitForExistence(timeout: 10))
-        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
-        submitButton.tap()
+        // Give UI a brief moment to settle.
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
 
-        // Wait for Welcome message
+        // Try to detect post-login success early
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
+        if welcomeText.waitForExistence(timeout: 2) {
+            // Already submitted via return key; proceed.
+        } else {
+            // Otherwise, explicitly submit.
+            //
+            // Re-assert existence/hittable
+            XCTAssertTrue(submitButton.waitForExistence(timeout: 10))
+            XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
+            submitButton.tap()
+        }
+
+        // Finally, ensure we reach the post-login state.
         XCTAssertTrue(welcomeText.waitForExistence(timeout: 60))
     }
 }
