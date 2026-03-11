@@ -40,7 +40,6 @@ jobs:
         xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
         simulator-version: [ "26.0.1" ]
-        swift: [ "6.1.0" ]
         os: [ "macos-26" ]
         postgresql-version: [ "16" ]
         scheme: [ "fusionauth-quickstart-swift-ios-native-swift-6" ]
@@ -49,7 +48,6 @@ jobs:
             xcode: "16.4"
             simulator-platform: "iOS"
             simulator-version: "18.5"
-            swift: "6.1.0"
             os: "macos-15"
             postgresql-version: "16"
             scheme: "fusionauth-quickstart-swift-ios-native"
@@ -57,7 +55,6 @@ jobs:
             xcode: "15.4"
             simulator-platform: "iOS"
             simulator-version: "17.5"
-            swift: "5.10.1"
             os: "macos-14"
             postgresql-version: "16"
             scheme: "fusionauth-quickstart-swift-ios-native"
@@ -202,5 +199,5 @@ jobs:
         uses: actions/upload-artifact@v7.0.0
         if: ${{ failure() }}
         with:
-          name: FusionAuth-${{ env.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_swift-${{ matrix.swift }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
+          name: FusionAuth-${{ env.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
