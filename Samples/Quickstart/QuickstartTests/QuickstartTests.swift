@@ -48,6 +48,44 @@ final class QuickstartTests: XCTestCase {
         removeUIInterruptionMonitor(alertMonitor)
     }
 
+    private func dismissPasswordSavePrompt(_ app: XCUIApplication) {
+        var alertHandled = false
+
+        let alertMonitor = addUIInterruptionMonitor(withDescription: "Password Save Prompt") { alert -> Bool in
+            if alert.buttons["Don't Save"].exists {
+                alert.buttons["Don't Save"].tap()
+                alertHandled = true
+                return true
+            }
+            if alert.buttons["Not Now"].exists {
+                alert.buttons["Not Now"].tap()
+                alertHandled = true
+                return true
+            }
+            if alert.buttons["Never for This Website"].exists {
+                alert.buttons["Never for This Website"].tap()
+                alertHandled = true
+                return true
+            }
+            if alert.buttons["Cancel"].exists {
+                alert.buttons["Cancel"].tap()
+                alertHandled = true
+                return true
+            }
+            return false
+        }
+
+        let predicate = NSPredicate { evaluatedObject, _ in
+            let application = evaluatedObject as? XCUIApplication
+            application?.tap()
+            return alertHandled
+        }
+
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app)
+        _ = XCTWaiter().wait(for: [expectation], timeout: 5)
+        removeUIInterruptionMonitor(alertMonitor)
+    }
+
     private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
         let predicate = NSPredicate(format: "exists == true AND hittable == true")
         let exp = XCTNSPredicateExpectation(predicate: predicate, object: element)
@@ -273,6 +311,10 @@ final class QuickstartTests: XCTestCase {
         focusTextField(passwordField)
         passwordField.typeText("password\n")
 
+        dismissPasswordSavePrompt(app)
+
+        // Re-assert that the submit button exists and is hittable.
+        XCTAssertTrue(submitButton.waitForExistence(timeout: 10))
         XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
         submitButton.tap()
 
