@@ -72,12 +72,24 @@ final class QuickstartTests: XCTestCase {
             return true
         }
 
-        // Trigger any pending password save prompt with a single tap
-        app.tap()
+        // ensure the alert monitor is cleaned up after handling the password prompt.
+        defer { removeUIInterruptionMonitor(alertMonitor) }
 
-        // Wait for the alert to appear and be handled; if it does not,
-        // proceed without incurring a long delay or repeated taps.
-        _ = XCTWaiter().wait(for: [handledExpectation], timeout: 1)
+        // Repeatedly tap to surface the prompt for a short window so the interruption monitor can intercept it.
+        // This mirrors the pattern used in confirmLoginAlert to reliably trigger the handler.
+        let start = Date()
+        let timeout: TimeInterval = 3
+        while !alertHandled && Date().timeIntervalSince(start) < timeout {
+            app.tap()
+            // Give the system a moment to present the alert and for the monitor to run.
+            RunLoop.current.run(until: Date().addingTimeInterval(0.15))
+        }
+
+        // As a final nudge in case the alert appeared right after the loop ends, tap once more.
+        if !alertHandled { app.tap() }
+
+        // Do a very short wait to allow the handler to fulfill if it just fired.
+        _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.5)
     }
 
     private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
@@ -308,32 +320,20 @@ final class QuickstartTests: XCTestCase {
         // dismiss the password prompt if it appears
         dismissPasswordSavePrompt(app)
 
-        // Wait for either success or confirmation that we're still on the login screen.
+        // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
-
-        // Poll for up to, say, 5 seconds to determine which branch to take.
-        let decisionDeadline = Date().addingTimeInterval(5)
-        var shouldTapSubmit = false
-
-        while Date() < decisionDeadline {
-            if welcomeText.exists {
-                // Success path detected early — no need to tap Submit.
-                break
-            }
-
-            // If we're still clearly on the login screen and Submit is hittable, we can decide to tap it.
-            if submitButton.exists && submitButton.isHittable {
-                shouldTapSubmit = true
-                break
-            }
-
-            // Small sleep to avoid busy waiting
-            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        let graceDeadline = Date().addingTimeInterval(1.0)
+        while Date() < graceDeadline {
+            if welcomeText.exists { break }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.15))
         }
 
-        if shouldTapSubmit {
-            XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
-            submitButton.tap()
+        // Fallback: if we're clearly still on the login screen, tap Submit once.
+        if !welcomeText.exists {
+            let stillOnLoginScreen = loginField.exists && loginField.isHittable && passwordField.exists && passwordField.isHittable
+            if stillOnLoginScreen && submitButton.exists && submitButton.isHittable {
+                submitButton.tap()
+            }
         }
 
         // Finally, ensure we reach the post-login state.
