@@ -78,9 +78,9 @@ final class QuickstartTests: XCTestCase {
         // Near-zero-cost path when no prompt: trigger once and wait briefly for the monitor to run.
         app.tap()
         if XCTWaiter().wait(for: [handledExpectation], timeout: 0.4) != .completed {
-            // If the alert appeared right after the first wait, nudge once more and do a tiny wait.
+            // Nudge once more, then just pause briefly — don't re-wait the same expectation.
             app.tap()
-            _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.2)
+            Thread.sleep(forTimeInterval: 0.2)
         }
     }
 
@@ -313,7 +313,7 @@ final class QuickstartTests: XCTestCase {
         if app.alerts.element.exists {
             dismissPasswordSavePrompt(app)
         }
-        
+
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
         let graceDeadline = Date().addingTimeInterval(1.0)
