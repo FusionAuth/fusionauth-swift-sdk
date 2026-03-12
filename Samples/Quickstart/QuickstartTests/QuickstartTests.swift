@@ -325,7 +325,7 @@ final class QuickstartTests: XCTestCase {
         // Fallback: if we're clearly still on the login screen, tap Submit once.
         if !welcomeText.exists {
             let stillOnLoginScreen = loginField.exists && passwordField.exists
-            if stillOnLoginScreen && submitButton.exists && submitButton.isHittable {
+            if stillOnLoginScreen && submitButton.exists {
                 submitButton.tap()
             }
         }
