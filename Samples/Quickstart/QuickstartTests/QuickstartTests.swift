@@ -308,18 +308,30 @@ final class QuickstartTests: XCTestCase {
         // dismiss the password prompt if it appears
         dismissPasswordSavePrompt(app)
 
-        // Give UI a brief moment to settle.
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
-
-        // Try to detect post-login success early
+        // Wait for either success or confirmation that we're still on the login screen.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
-        if welcomeText.waitForExistence(timeout: 2) {
-            // Already submitted via return key; proceed.
-        } else {
-            // Otherwise, explicitly submit.
-            //
-            // Re-assert existence/hittable
-            XCTAssertTrue(submitButton.waitForExistence(timeout: 10))
+
+        // Poll for up to, say, 5 seconds to determine which branch to take.
+        let decisionDeadline = Date().addingTimeInterval(5)
+        var shouldTapSubmit = false
+
+        while Date() < decisionDeadline {
+            if welcomeText.exists {
+                // Success path detected early — no need to tap Submit.
+                break
+            }
+
+            // If we're still clearly on the login screen and Submit is hittable, we can decide to tap it.
+            if submitButton.exists && submitButton.isHittable {
+                shouldTapSubmit = true
+                break
+            }
+
+            // Small sleep to avoid busy waiting
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        }
+
+        if shouldTapSubmit {
             XCTAssertTrue(waitUntilHittable(submitButton, timeout: 10))
             submitButton.tap()
         }
