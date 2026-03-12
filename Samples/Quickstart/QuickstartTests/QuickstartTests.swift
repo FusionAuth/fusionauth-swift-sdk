@@ -51,39 +51,33 @@ final class QuickstartTests: XCTestCase {
     private func dismissPasswordSavePrompt(_ app: XCUIApplication) {
         var alertHandled = false
 
+        let handledExpectation = expectation(description: "Password Save Prompt handled")
         let alertMonitor = addUIInterruptionMonitor(withDescription: "Password Save Prompt") { alert -> Bool in
-            if alert.buttons["Don't Save"].exists {
-                alert.buttons["Don't Save"].tap()
-                alertHandled = true
-                return true
+            let buttons = alert.buttons
+            if buttons["Don't Save"].exists {
+                buttons["Don't Save"].tap()
+            } else if buttons["Not Now"].exists {
+                buttons["Not Now"].tap()
+            } else if buttons["Never for This Website"].exists {
+                buttons["Never for This Website"].tap()
+            } else if buttons["Cancel"].exists {
+                buttons["Cancel"].tap()
+            } else {
+                return false
             }
-            if alert.buttons["Not Now"].exists {
-                alert.buttons["Not Now"].tap()
+            if !alertHandled {
                 alertHandled = true
-                return true
+                handledExpectation.fulfill()
             }
-            if alert.buttons["Never for This Website"].exists {
-                alert.buttons["Never for This Website"].tap()
-                alertHandled = true
-                return true
-            }
-            if alert.buttons["Cancel"].exists {
-                alert.buttons["Cancel"].tap()
-                alertHandled = true
-                return true
-            }
-            return false
+            return true
         }
 
-        let predicate = NSPredicate { evaluatedObject, _ in
-            let application = evaluatedObject as? XCUIApplication
-            application?.tap()
-            return alertHandled
-        }
+        // Trigger any pending password save prompt with a single tap
+        app.tap()
 
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app)
-        _ = XCTWaiter().wait(for: [expectation], timeout: 5)
-        removeUIInterruptionMonitor(alertMonitor)
+        // Wait for the alert to appear and be handled; if it does not,
+        // proceed without incurring a long delay or repeated taps.
+        _ = XCTWaiter().wait(for: [handledExpectation], timeout: 1)
     }
 
     private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
