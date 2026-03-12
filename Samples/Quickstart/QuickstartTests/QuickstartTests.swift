@@ -75,21 +75,13 @@ final class QuickstartTests: XCTestCase {
         // ensure the alert monitor is cleaned up after handling the password prompt.
         defer { removeUIInterruptionMonitor(alertMonitor) }
 
-        // Repeatedly tap to surface the prompt for a short window so the interruption monitor can intercept it.
-        // This mirrors the pattern used in confirmLoginAlert to reliably trigger the handler.
-        let start = Date()
-        let timeout: TimeInterval = 3
-        while !alertHandled && Date().timeIntervalSince(start) < timeout {
+        // Near-zero-cost path when no prompt: trigger once and wait briefly for the monitor to run.
+        app.tap()
+        if XCTWaiter().wait(for: [handledExpectation], timeout: 0.4) != .completed {
+            // If the alert appeared right after the first wait, nudge once more and do a tiny wait.
             app.tap()
-            // Give the system a moment to present the alert and for the monitor to run.
-            RunLoop.current.run(until: Date().addingTimeInterval(0.15))
+            _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.2)
         }
-
-        // As a final nudge in case the alert appeared right after the loop ends, tap once more.
-        if !alertHandled { app.tap() }
-
-        // Do a very short wait to allow the handler to fulfill if it just fired.
-        _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.5)
     }
 
     private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
@@ -318,8 +310,10 @@ final class QuickstartTests: XCTestCase {
         passwordField.typeText("password\n")
 
         // dismiss the password prompt if it appears
-        dismissPasswordSavePrompt(app)
-
+        if app.alerts.element.exists {
+            dismissPasswordSavePrompt(app)
+        }
+        
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
         let graceDeadline = Date().addingTimeInterval(1.0)
