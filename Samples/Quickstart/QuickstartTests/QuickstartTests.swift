@@ -1,6 +1,7 @@
 import XCTest
 
-final class QuickstartTests: XCTestCase {
+@MainActor
+final class QuickstartTests: XCTestCase, @unchecked Sendable {
     private var primaryLogin = "richard@example.com"
     private var primaryWelcomeName = "Richard Hendricks"
     private var alternateLogin = "mike@example.com"
@@ -8,23 +9,27 @@ final class QuickstartTests: XCTestCase {
 
     private var app: XCUIApplication!
 
-    override func setUpWithError() throws {
-        app = XCUIApplication()
+    nonisolated override func setUpWithError() throws {
+        MainActor.assumeIsolated {
+            app = XCUIApplication()
 
-        continueAfterFailure = false
+            continueAfterFailure = false
 
-        app.launch()
+            app.launch()
+        }
     }
 
-    override func tearDownWithError() throws {
+    nonisolated override func tearDownWithError() throws {
         // Attempt to log out after each test if user is logged in
-        let logoutButton = app.buttons["Log out"]
-        if logoutButton.exists && logoutButton.isHittable {
-            logoutButton.tap()
-            confirmLoginAlert(app)
-            // Wait for login button to reappear
-            let loginButton = app.buttons["Login"]
-            XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should appear after logging out")
+        MainActor.assumeIsolated {
+            let logoutButton = app.buttons["Log out"]
+            if logoutButton.exists && logoutButton.isHittable {
+                logoutButton.tap()
+                confirmLoginAlert(app)
+                // Wait for login button to reappear
+                let loginButton = app.buttons["Login"]
+                XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should appear after logging out")
+            }
         }
     }
 
