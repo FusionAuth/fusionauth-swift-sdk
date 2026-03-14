@@ -9,7 +9,7 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
 
     private var app: XCUIApplication!
 
-    nonisolated override func setUpWithError() throws {
+    override nonisolated func setUpWithError() throws {
         MainActor.assumeIsolated {
             app = XCUIApplication()
 
@@ -19,7 +19,7 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
         }
     }
 
-    nonisolated override func tearDownWithError() throws {
+    override nonisolated func tearDownWithError() throws {
         // Attempt to log out after each test if user is logged in
         MainActor.assumeIsolated {
             let logoutButton = app.buttons["Log out"]
