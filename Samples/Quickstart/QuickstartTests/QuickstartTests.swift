@@ -321,7 +321,7 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
 
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
-        let graceDeadline = Date().addingTimeInterval(1.0)
+        let graceDeadline = Date().addingTimeInterval(2.0)
         while Date() < graceDeadline {
             if welcomeText.exists { break }
             RunLoop.current.run(until: Date().addingTimeInterval(0.15))
@@ -332,6 +332,7 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
             let stillOnLoginScreen = loginField.exists && passwordField.exists
             if stillOnLoginScreen {
                 let requerySubmitButton = app.buttons["Submit"] // re-query
+                XCTAssertTrue(waitUntilHittable(requerySubmitButton, timeout: 5))
                 requerySubmitButton.tap()
             }
         }
