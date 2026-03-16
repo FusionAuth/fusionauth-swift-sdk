@@ -331,9 +331,9 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
         if !welcomeText.exists {
             let stillOnLoginScreen = loginField.exists && passwordField.exists
             if stillOnLoginScreen {
-                let submitButton = app.buttons["Submit"] // re-query
-                XCTAssertTrue(waitUntilHittable(submitButton, timeout: 5))
-                submitButton.tap()
+                let requerySubmitButton = app.buttons["Submit"] // re-query
+                XCTAssertTrue(waitUntilHittable(requerySubmitButton, timeout: 5))
+                requerySubmitButton.tap()
             }
         }
 
