@@ -1,7 +1,7 @@
 import XCTest
 
 @MainActor
-final class QuickstartTests: XCTestCase, @unchecked Sendable {
+final class QuickstartTests: XCTestCase {
     private var primaryLogin = "richard@example.com"
     private var primaryWelcomeName = "Richard Hendricks"
     private var alternateLogin = "mike@example.com"
@@ -81,7 +81,7 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
         if XCTWaiter().wait(for: [handledExpectation], timeout: 0.4) != .completed {
             // Nudge once more, then just pause briefly — don't re-wait the same expectation.
             app.tap()
-            Thread.sleep(forTimeInterval: 0.2)
+            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
         }
     }
 
