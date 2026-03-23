@@ -9,24 +9,20 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
 
     private var app: XCUIApplication!
 
-    override nonisolated func setUpWithError() throws {
-        MainActor.assumeIsolated {
+    override func setUp() async throws {
+        continueAfterFailure = false
+        await MainActor.run {
             app = XCUIApplication()
-
-            continueAfterFailure = false
-
             app.launch()
         }
     }
 
-    override nonisolated func tearDownWithError() throws {
-        // Attempt to log out after each test if user is logged in
-        MainActor.assumeIsolated {
+    override func tearDown() async throws {
+        await MainActor.run {
             let logoutButton = app.buttons["Log out"]
             if logoutButton.exists && logoutButton.isHittable {
                 logoutButton.tap()
                 confirmLoginAlert(app)
-                // Wait for login button to reappear
                 let loginButton = app.buttons["Login"]
                 XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should appear after logging out")
             }
@@ -314,10 +310,8 @@ final class QuickstartTests: XCTestCase, @unchecked Sendable {
         focusTextField(passwordField)
         passwordField.typeText("password\n")
 
-        // dismiss the password prompt if it appears
-        if app.alerts.element.exists {
-            dismissPasswordSavePrompt(app)
-        }
+        // dismiss a password prompt
+        dismissPasswordSavePrompt(app)
 
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
