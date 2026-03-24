@@ -77,7 +77,9 @@ final class QuickstartTests: XCTestCase {
         defer { removeUIInterruptionMonitor(alertMonitor) }
 
         // Near-zero-cost path when no prompt: trigger once and wait briefly for the monitor to run.
-        app.tap()
+        // app.tap()
+        let safeCoord = app.coordinate(withNormalizedOffset: CGVector(dx: 0.05, dy: 0.1))
+        safeCoord.tap()
         _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.5)
     }
 
