@@ -77,7 +77,7 @@ final class QuickstartTests: XCTestCase {
         defer { removeUIInterruptionMonitor(alertMonitor) }
 
         // Near-zero-cost path when no prompt: trigger once and wait briefly for the monitor to run.
-        app.statusBars.firstMatch.tap()
+        app.tap()
         _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.5)
     }
 
