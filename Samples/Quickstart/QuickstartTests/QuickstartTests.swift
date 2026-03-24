@@ -77,12 +77,8 @@ final class QuickstartTests: XCTestCase {
         defer { removeUIInterruptionMonitor(alertMonitor) }
 
         // Near-zero-cost path when no prompt: trigger once and wait briefly for the monitor to run.
-        app.tap()
-        if XCTWaiter().wait(for: [handledExpectation], timeout: 0.4) != .completed {
-            // Nudge once more, then just pause briefly — don't re-wait the same expectation.
-            app.tap()
-            RunLoop.current.run(until: Date().addingTimeInterval(0.2))
-        }
+        app.statusBars.firstMatch.tap()
+        _ = XCTWaiter().wait(for: [handledExpectation], timeout: 0.5)
     }
 
     private func waitUntilHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
