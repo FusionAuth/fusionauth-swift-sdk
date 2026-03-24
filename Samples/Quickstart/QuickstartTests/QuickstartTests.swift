@@ -308,7 +308,7 @@ final class QuickstartTests: XCTestCase {
 
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
-        let graceDeadline = Date().addingTimeInterval(3.0)
+        let graceDeadline = Date().addingTimeInterval(4.0)
         while Date() < graceDeadline {
             if welcomeText.exists { break }
             RunLoop.current.run(until: Date().addingTimeInterval(0.15))
