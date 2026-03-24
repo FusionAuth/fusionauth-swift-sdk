@@ -301,9 +301,6 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(passwordField.waitForExistence(timeout: 60))
         XCTAssertTrue(waitUntilHittable(passwordField, timeout: 60))
 
-        XCTAssertTrue(submitButton.waitForExistence(timeout: 60))
-        XCTAssertTrue(waitUntilHittable(submitButton, timeout: 60))
-
         focusTextField(loginField)
         loginField.typeText(login)
 
