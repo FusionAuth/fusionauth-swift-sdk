@@ -305,8 +305,10 @@ final class QuickstartTests: XCTestCase {
         focusTextField(passwordField)
         passwordField.typeText("password\n")
 
-        // dismiss a password prompt
-        dismissPasswordSavePrompt(app)
+        // dismiss the password prompt if it appears
+        if app.alerts.element.exists {
+            dismissPasswordSavePrompt(app)
+        }
 
         // Primary path: rely on Return to submit. Give the UI a brief grace period to transition.
         let welcomeText = app.staticTexts["Welcome " + welcomeName]
