@@ -12,11 +12,11 @@
     { "type": "docs", "hidden": false, "section": "Docs" }
   ],
   "packages": {
-      ".": {
-        "release-type": "simple",
-        "prerelease": true,
-        "prerelease-type": "rc",
-        "versioning": "prerelease"
-      }
+    ".": {
+      "release-type": "simple",
+      "prerelease": true,
+      "prerelease-type": "rc",
+      "versioning": "prerelease"
     }
+  }
 }
