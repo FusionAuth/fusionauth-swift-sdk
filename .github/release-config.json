@@ -10,14 +10,7 @@
   ],
   "packages": {
     ".": {
-      "type": "generic",
-      "extra-files": [
-        {
-          "type": "json",
-          "path": ".github/prerelease-manifest.json",
-          "jsonpath": "$[\".\"]"
-        }
-      ]
+      "release-type": "generic"
     }
   }
 }
