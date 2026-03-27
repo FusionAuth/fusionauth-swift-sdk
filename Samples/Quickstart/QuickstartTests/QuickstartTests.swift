@@ -303,6 +303,52 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60), "Login button should reappear after logging out")
     }
 
+    /// Tests that passing `prompt=none` to the OAuth authorize call fails with an
+    /// error when the user is not already authenticated.
+    ///
+    /// Per the OIDC spec, `prompt=none` instructs the authorization server not to
+    /// display any UI.  FusionAuth responds with a `login_required` error when
+    /// there is no active session.  The app should surface that as an error alert
+    /// and the user should remain on the unauthenticated Login screen.
+    @MainActor
+    func testLoginWithPromptNoneFailsWhenUnauthenticated() throws {
+        // Relaunch the app fresh (no existing session) with prompt=none.
+        app.terminate()
+        app.launchArguments = ["--prompt-parameter", "none"]
+        app.launch()
+
+        // Confirm the Login button is present before attempting.
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should be present before attempting login")
+        loginButton.tap()
+
+        // The system will present a SFSafariViewController/ASWebAuthenticationSession
+        // confirmation sheet – dismiss it to let the authorization request proceed.
+        confirmLoginAlert(app)
+
+        // FusionAuth returns login_required because no session exists.  AppAuth
+        // surfaces this as an error, and LoginView shows the "Error occured while
+        // logging in" alert.
+        let errorAlert = app.alerts["Error occurred while logging in"]
+        XCTAssertTrue(
+            errorAlert.waitForExistence(timeout: 60),
+            "An error alert should appear because prompt=none requires an existing session"
+        )
+
+        // Dismiss the error alert.
+        errorAlert.buttons["OK"].tap()
+
+        // Verify the user is still on the unauthenticated Login screen.
+        XCTAssertTrue(
+            loginButton.waitForExistence(timeout: 10),
+            "Login button should still be visible – user must not be authenticated after a prompt=none failure"
+        )
+        let welcomeText = app.staticTexts.matching(
+            NSPredicate(format: "label BEGINSWITH 'Welcome '")
+        ).firstMatch
+        XCTAssertFalse(welcomeText.exists, "Welcome text must not appear – authentication should have failed")
+    }
+
     // MARK: - Helper Methods
 
     private func loginToApp(login: String, welcomeName: String) throws {

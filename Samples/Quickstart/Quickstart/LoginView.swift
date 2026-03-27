@@ -38,7 +38,7 @@ struct LoginView: View {
         }
         .padding()
         .alert(
-            "Error occured while logging in",
+            "Error occurred while logging in",
             isPresented: $errorWhileLogin,
             presenting: error
         ) { _ in
