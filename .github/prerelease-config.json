@@ -13,7 +13,10 @@
   ],
   "packages": {
     ".": {
-      "type": "generic"
+      "release-type": "simple",
+      "prerelease": true,
+      "prerelease-type": "rc",
+      "versioning": "prerelease"
     }
   }
 }
