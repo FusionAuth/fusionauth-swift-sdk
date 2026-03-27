@@ -35,7 +35,6 @@ jobs:
         xcode: [ "26.0.1" ]
         simulator-platform: [ "iOS" ]
         simulator-version: [ "26.0.1" ]
-        swift: [ "6.1.0" ]
         os: [ "macos-26" ]
         postgresql-version: [ "16" ]
         fusionauth-docker-image-version: [ "1.57.1", "1.58.3", "1.59.1", "1.60.2", "1.61.0" ]
@@ -79,19 +78,13 @@ jobs:
           sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
           sudo xcodes runtimes
 
-      # Initialize Swift in the matrix specified version.
-      - name: Initialize Swift
-        uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a # v2.4.0
-        with:
-          swift-version: ${{ matrix.swift }}
-
       # Get the Swift version.
       - name: Get Swift version
         run: swift --version
 
       # Checkout the repository.
       - name: Checkout repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
 
       # Install PostgreSQL with brew.
       - name: Install PostgreSQL
@@ -185,8 +178,8 @@ jobs:
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         if: ${{ failure() }}
         with:
-          name: FusionAuth-${{ matrix.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_swift-${{ matrix.swift }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
+          name: FusionAuth-${{ matrix.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
           path: /Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
