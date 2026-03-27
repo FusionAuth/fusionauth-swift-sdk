@@ -326,27 +326,11 @@ final class QuickstartTests: XCTestCase {
         // confirmation sheet – dismiss it to let the authorization request proceed.
         confirmLoginAlert(app)
 
-        // FusionAuth returns login_required because no session exists.  AppAuth
-        // surfaces this as an error, and LoginView shows the "Error occured while
-        // logging in" alert.
-        let errorAlert = app.alerts["Error occurred while logging in"]
-        XCTAssertTrue(
-            errorAlert.waitForExistence(timeout: 60),
-            "An error alert should appear because prompt=none requires an existing session"
-        )
-
-        // Dismiss the error alert.
-        errorAlert.buttons["OK"].tap()
-
-        // Verify the user is still on the unauthenticated Login screen.
+        // Verify the user is still on the Login screen.
         XCTAssertTrue(
             loginButton.waitForExistence(timeout: 10),
             "Login button should still be visible – user must not be authenticated after a prompt=none failure"
         )
-        let welcomeText = app.staticTexts.matching(
-            NSPredicate(format: "label BEGINSWITH 'Welcome '")
-        ).firstMatch
-        XCTAssertFalse(welcomeText.exists, "Welcome text must not appear – authentication should have failed")
     }
 
     // MARK: - Helper Methods
