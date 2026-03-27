@@ -276,6 +276,33 @@ final class QuickstartTests: XCTestCase {
         confirmLoginAlert(app)
     }
 
+    /// Tests that passing `prompt=login` to the OAuth authorize call forces the
+    /// FusionAuth login page to be shown and that authentication still completes
+    /// successfully.  The app is relaunched with the `--prompt-parameter login`
+    /// launch argument so that `LoginView` picks it up and forwards it via
+    /// `OAuthAuthorizeOptions(prompt:)`.
+    @MainActor
+    func testLoginWithPromptLogin() throws {
+        // Relaunch the app with the prompt=login launch argument.
+        app.terminate()
+        app.launchArguments = ["--prompt-parameter", "login"]
+        app.launch()
+
+        // Verify that the login flow completes successfully even when prompt=login
+        // is forwarded – FusionAuth should display the login form and accept credentials.
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
+
+        // Confirm the authenticated state is reached.
+        let logoutButton = app.buttons["Log out"]
+        XCTAssertTrue(logoutButton.exists, "Log out button should appear after successful login with prompt=login")
+        logoutButton.tap()
+
+        confirmLoginAlert(app)
+
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 60), "Login button should reappear after logging out")
+    }
+
     // MARK: - Helper Methods
 
     private func loginToApp(login: String, welcomeName: String) throws {
