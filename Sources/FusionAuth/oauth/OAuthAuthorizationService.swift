@@ -44,6 +44,9 @@ public class OAuthAuthorizationService {
         if options.userCode != nil {
             additionalParameters.updateValue(options.userCode!, forKey: "user_code")
         }
+        if options.prompt != nil {
+            additionalParameters.updateValue(options.prompt!, forKey: "prompt")
+        }
         return additionalParameters
     }
 }
