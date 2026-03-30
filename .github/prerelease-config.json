@@ -2,7 +2,7 @@
   "release-type": "simple",
   "prerelease": true,
   "prerelease-type": "rc",
-  "versioning": "prerelease",
+  "versioning-strategy": "prerelease",
   "changelog-sections": [
     { "type": "feat", "hidden": false, "section": "Features" },
     { "type": "fix", "hidden": false, "section": "Bug Fixes" },
@@ -16,7 +16,7 @@
       "release-type": "simple",
       "prerelease": true,
       "prerelease-type": "rc",
-      "versioning": "prerelease"
+      "versioning-strategy": "prerelease"
     }
   }
 }
