@@ -27,6 +27,11 @@ public struct OAuthAuthorizeOptions {
     let state: String?
     /// The end-user verification code.
     let userCode: String?
+    /// The prompt parameter to be used for the OAuth authorize request.
+    /// Controls whether the Authorization Server prompts the End-User for reauthentication and consent.
+    /// See [OIDC prompt parameter](https://fusionauth.io/docs/lifecycle/authenticate-users/oauth/prompt)
+    /// for more information.
+    let prompt: String?
 
     /// Creates a new instance of OAuthAuthorizeOptions.
     public init(
@@ -37,7 +42,8 @@ public struct OAuthAuthorizeOptions {
         deviceDescription: String? = nil,
         nonce: String? = nil,
         state: String? = nil,
-        userCode: String? = nil
+        userCode: String? = nil,
+        prompt: String? = nil
     ) {
         self.redirectUriSuffix = redirectUriSuffix
         self.bundleId = bundleId
@@ -48,5 +54,6 @@ public struct OAuthAuthorizeOptions {
         self.nonce = nonce
         self.state = state
         self.userCode = userCode
+        self.prompt = prompt
     }
 }
