@@ -14,7 +14,8 @@
     ".": {
       "release-type": "simple",
       "prerelease": true,
-      "prerelease-type": "rc"
+      "prerelease-type": "rc",
+      "release-as": "1.1.1-rc"
     }
   }
 }
