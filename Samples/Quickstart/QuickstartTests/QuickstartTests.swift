@@ -306,7 +306,7 @@ final class QuickstartTests: XCTestCase {
     /// Tests that passing `prompt=none` to the OAuth authorize call fails when
     /// the user is not already authenticated.
     ///
-    /// FusionAuth responds with the login screen when  there is no active session.
+    /// FusionAuth responds with the login screen when there is no active session.
     @MainActor
     func testLoginWithPromptNoneFailsWhenUnauthenticated() throws {
         // Relaunch the app fresh (no existing session) with prompt=none.
