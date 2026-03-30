@@ -303,13 +303,10 @@ final class QuickstartTests: XCTestCase {
         XCTAssertTrue(loginButton.waitForExistence(timeout: 60), "Login button should reappear after logging out")
     }
 
-    /// Tests that passing `prompt=none` to the OAuth authorize call fails with an
-    /// error when the user is not already authenticated.
+    /// Tests that passing `prompt=none` to the OAuth authorize call fails when
+    /// the user is not already authenticated.
     ///
-    /// Per the OIDC spec, `prompt=none` instructs the authorization server not to
-    /// display any UI.  FusionAuth responds with a `login_required` error when
-    /// there is no active session.  The app should surface that as an error alert
-    /// and the user should remain on the unauthenticated Login screen.
+    /// FusionAuth responds with the login screen when  there is no active session.
     @MainActor
     func testLoginWithPromptNoneFailsWhenUnauthenticated() throws {
         // Relaunch the app fresh (no existing session) with prompt=none.
