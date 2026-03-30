@@ -15,7 +15,7 @@
       "release-type": "simple",
       "prerelease": true,
       "prerelease-type": "rc",
-      "release-as": "1.1.1-rc"
+      "release-as": "1.2.0-rc"
     }
   }
 }
