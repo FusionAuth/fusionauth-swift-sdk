@@ -276,6 +276,60 @@ final class QuickstartTests: XCTestCase {
         confirmLoginAlert(app)
     }
 
+    /// Tests that passing `prompt=login` to the OAuth authorize call forces the
+    /// FusionAuth login page to be shown and that authentication still completes
+    /// successfully.  The app is relaunched with the `--prompt-parameter login`
+    /// launch argument so that `LoginView` picks it up and forwards it via
+    /// `OAuthAuthorizeOptions(prompt:)`.
+    @MainActor
+    func testLoginWithPromptLogin() throws {
+        // Relaunch the app with the prompt=login launch argument.
+        app.terminate()
+        app.launchArguments = ["--prompt-parameter", "login"]
+        app.launch()
+
+        // Verify that the login flow completes successfully even when prompt=login
+        // is forwarded – FusionAuth should display the login form and accept credentials.
+        try loginToApp(login: primaryLogin, welcomeName: primaryWelcomeName)
+
+        // Confirm the authenticated state is reached.
+        let logoutButton = app.buttons["Log out"]
+        XCTAssertTrue(logoutButton.exists, "Log out button should appear after successful login with prompt=login")
+        logoutButton.tap()
+
+        confirmLoginAlert(app)
+
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 60), "Login button should reappear after logging out")
+    }
+
+    /// Tests that passing `prompt=none` to the OAuth authorize call fails when
+    /// the user is not already authenticated.
+    ///
+    /// FusionAuth responds with the login screen when there is no active session.
+    @MainActor
+    func testLoginWithPromptNoneFailsWhenUnauthenticated() throws {
+        // Relaunch the app fresh (no existing session) with prompt=none.
+        app.terminate()
+        app.launchArguments = ["--prompt-parameter", "none"]
+        app.launch()
+
+        // Confirm the Login button is present before attempting.
+        let loginButton = app.buttons["Login"]
+        XCTAssertTrue(loginButton.waitForExistence(timeout: 30), "Login button should be present before attempting login")
+        loginButton.tap()
+
+        // The system will present a SFSafariViewController/ASWebAuthenticationSession
+        // confirmation sheet – dismiss it to let the authorization request proceed.
+        confirmLoginAlert(app)
+
+        // Verify the user is still on the Login screen.
+        XCTAssertTrue(
+            loginButton.waitForExistence(timeout: 10),
+            "Login button should still be visible – user must not be authenticated after a prompt=none failure"
+        )
+    }
+
     // MARK: - Helper Methods
 
     private func loginToApp(login: String, welcomeName: String) throws {
