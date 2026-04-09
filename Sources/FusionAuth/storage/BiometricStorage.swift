@@ -127,6 +127,10 @@ public class BiometricStorage: Storage {
     /// Authenticates the user with biometrics and, on success, loads all persisted tokens from
     /// the Keychain into the in-memory cache, transitioning the store to the unlocked state.
     ///
+    /// Authentication is enforced by the Keychain's Secure Enclave access control
+    /// (`.biometryCurrentSet`), making it hardware-backed. The `LAContext` is only used to
+    /// provide an early availability check and a localised reason string for the system prompt.
+    ///
     /// - Parameter reason: The localized reason string presented to the user in the
     ///   system biometric prompt.
     /// - Throws: `BiometricStorageError.biometricsNotAvailable` if Face ID / Touch ID is not
@@ -138,25 +142,23 @@ public class BiometricStorage: Storage {
         let context = LAContext()
         var policyError: NSError?
 
+        // Early capability check – provides a meaningful error before attempting Keychain access.
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &policyError) else {
             throw BiometricStorageError.biometricsNotAvailable
         }
 
-        let success = try await withCheckedThrowingContinuation { continuation in
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: success)
-                }
-            }
-        }
+        // The localised reason is shown in the system biometric prompt that the Keychain
+        // triggers automatically when reading items protected with .biometryCurrentSet.
+        context.localizedReason = reason
 
-        guard success else {
-            throw BiometricStorageError.authenticationFailed
-        }
+        // SecItemCopyMatching blocks until the user authenticates (or cancels).
+        // Wrapping it in a detached Task keeps the caller's thread free.
+        // Authentication is enforced entirely by the Keychain / Secure Enclave – the
+        // security boundary is not a bypassable boolean but the hardware-backed ACL.
+        try await Task.detached(priority: .userInitiated) { [self] in
+            try self.loadKeychainItems(context: context)
+        }.value
 
-        try loadKeychainItems(context: context)
         isLocked = false
     }
 
@@ -174,7 +176,7 @@ public class BiometricStorage: Storage {
         guard let access = SecAccessControlCreateWithFlags(
             kCFAllocatorDefault,
             kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-            .biometryAny,
+            .biometryCurrentSet,
             &cfError
         ) else {
             AuthorizationManager.log?.warning("BiometricStorage: Failed to create access control for key '\(key)': \(String(describing: cfError))")
@@ -204,8 +206,12 @@ public class BiometricStorage: Storage {
         SecItemDelete(query as CFDictionary)
     }
 
-    /// Uses the already-authenticated `LAContext` to read all items stored under our service
-    /// name without triggering an additional biometric prompt.
+    /// Reads all items stored under the SDK's service name using the provided `LAContext`.
+    ///
+    /// When items are protected with `.biometryCurrentSet`, `SecItemCopyMatching` blocks and
+    /// shows the system biometric prompt. On cancellation or failure the Keychain returns
+    /// `errSecUserCanceled` or `errSecAuthFailed`, which are mapped to
+    /// `BiometricStorageError.authenticationFailed`.
     private func loadKeychainItems(context: LAContext) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -219,15 +225,23 @@ public class BiometricStorage: Storage {
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
-        if status == errSecSuccess, let items = result as? [[String: Any]] {
-            for item in items {
-                if let account = item[kSecAttrAccount as String] as? String,
-                   let data = item[kSecValueData as String] as? Data,
-                   let value = String(data: data, encoding: .utf8) {
-                    memoryCache[account] = value
+        switch status {
+        case errSecSuccess:
+            if let items = result as? [[String: Any]] {
+                for item in items {
+                    if let account = item[kSecAttrAccount as String] as? String,
+                       let data = item[kSecValueData as String] as? Data,
+                       let value = String(data: data, encoding: .utf8) {
+                        memoryCache[account] = value
+                    }
                 }
             }
-        } else if status != errSecItemNotFound {
+        case errSecItemNotFound:
+            // No items stored yet — treat as a successful unlock with an empty cache.
+            break
+        case errSecUserCanceled, errSecAuthFailed:
+            throw BiometricStorageError.authenticationFailed
+        default:
             throw BiometricStorageError.keychainError(status)
         }
     }
