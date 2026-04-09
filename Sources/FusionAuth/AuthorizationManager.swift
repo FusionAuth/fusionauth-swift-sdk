@@ -212,3 +212,47 @@ extension AuthorizationManager {
         self.log = Logger(subsystem: "io.fusionauth.mobilesdk", category: "AuthorizationManager")
     }
 }
+
+// MARK: - Biometric Authentication
+
+extension AuthorizationManager {
+    /// Authenticates the user with Face ID / Touch ID and loads tokens from the
+    /// biometric-protected Keychain into the in-memory cache.
+    ///
+    /// The `AuthorizationManager` must have been initialized with a `BiometricStorage`
+    /// instance as its storage backend. If it was not, this method throws
+    /// `BiometricStorageError.notBiometricStorage`.
+    ///
+    /// If the user declines or biometrics are unavailable, consider falling back to
+    /// `MemoryStorage` so the user is required to re-authenticate via FusionAuth on
+    /// each app launch.
+    ///
+    /// - Parameter reason: The localized reason string presented to the user in the
+    ///   system biometric prompt. Defaults to "Authenticate to access your account".
+    /// - Throws: `BiometricStorageError` describing why the unlock failed.
+    public func enableBiometrics(reason: String = "Authenticate to access your account") async throws {
+        guard let biometricStorage = tokenManager?.currentStorage as? BiometricStorage else {
+            throw BiometricStorageError.notBiometricStorage
+        }
+        try await biometricStorage.enableBiometrics(reason: reason)
+    }
+
+    /// Locks the biometric token store by clearing the in-memory token cache.
+    ///
+    /// After calling this method, `getAccessToken()`, `getIdToken()`, and related
+    /// accessors will return `nil` until `enableBiometrics(reason:)` is successfully
+    /// called again. This is a no-op if the storage backend is not a `BiometricStorage`.
+    ///
+    /// Call this method when the app enters the background or after a period of inactivity
+    /// to reduce the window of opportunity for unauthorized access.
+    public func lockBiometrics() {
+        (tokenManager?.currentStorage as? BiometricStorage)?.lock()
+    }
+
+    /// `true` when the biometric token store is currently locked (biometric authentication
+    /// required before tokens can be read), `false` when unlocked, and `nil` when the
+    /// storage backend is not a `BiometricStorage`.
+    public var isBiometricStorageLocked: Bool? {
+        return (tokenManager?.currentStorage as? BiometricStorage)?.isLocked
+    }
+}
