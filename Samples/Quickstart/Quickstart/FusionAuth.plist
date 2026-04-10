@@ -12,7 +12,7 @@
 		<string>email</string>
 	</array>
 	<key>fusionAuthUrl</key>
-	<string>http://localhost:9011</string>
+	<string>https://601dc7cb4dfa.ngrok.app</string>
 	<key>clientId</key>
 	<string>e9fdb985-9173-4e01-9d73-ac2d60d1dc8e</string>
 </dict>
