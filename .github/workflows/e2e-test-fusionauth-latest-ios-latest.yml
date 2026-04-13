@@ -51,6 +51,9 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
 
+      - name: Install iOS 26.0.1 Platform which was removed from the runner in https://github.com/actions/runner-images/pull/13875
+        run: sudo xcodebuild -downloadPlatform iOS
+
       # Remove any other Xcode version.
       - name: Remove old xcode versions
         run: |
@@ -64,6 +67,9 @@ jobs:
       # Get the Xcode version.
       - name: Get Xcode version
         run: xcodebuild -version
+
+      - name: List available simulators
+        run: xcrun simctl list runtimes
 
       # Get the Swift version.
       - name: Get Swift version
@@ -157,9 +163,6 @@ jobs:
       # Connect to FusionAuth App.
       - name: Connect to FusionAuth App
         run: curl http://localhost:9011/api/status
-
-      - name: List available simulators
-        run: xcrun simctl list runtimes
 
       # Perform the tests from the fusionauth-quickstart-swift-ios-native Sample.
       - name: Perform end to end tests
