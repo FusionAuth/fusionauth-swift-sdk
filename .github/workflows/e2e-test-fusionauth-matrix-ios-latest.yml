@@ -48,6 +48,8 @@ jobs:
           xcode-version: ${{ matrix.xcode }}
 
       - name: Install iOS 26.0.1 Platform which was removed from the runner in https://github.com/actions/runner-images/pull/13875
+        if: matrix.os == 'macos-26'
+        shell: bash
         run: sudo xcodebuild -downloadPlatform iOS
 
       # Remove any other Xcode version.
