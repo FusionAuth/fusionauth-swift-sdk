@@ -9,7 +9,7 @@ struct QuickstartApp: App {
     private let biometricStorage = BiometricStorage()
     
     /// Clears all persisted credentials and forces a fresh login.
-    private func forceLogout() {
+    private func forceLogout() async {
         // Lock and clear any biometric-protected storage.
         AuthorizationManager.instance.lockBiometrics()
         do {
@@ -19,6 +19,17 @@ struct QuickstartApp: App {
             // Ignored on purpose; we'll still reset app state.
             print("Failed to clear credentials explicitly: \(error)")
         }
+
+        // logout if a session exists
+        do {
+            try await AuthorizationManager
+                .oauth()
+                .logout(options: OAuthLogoutOptions())
+        } catch let error as NSError {
+            print(error)
+        }
+
+        print("User-session terminated: Logged out smoothly.")
     }
 
     init() {
@@ -42,14 +53,14 @@ struct QuickstartApp: App {
                     } catch BiometricStorageError.biometricsNotAvailable {
                         // Biometrics unavailable. Authorization will fall back to memory-only tokens.
                         print("Biometrics not unavailable - task")
-                        forceLogout()
+                        await forceLogout()
                     } catch BiometricStorageError.authenticationFailed {
                         // User canceled or failed authentication; storage remains locked.
                         print("Authentication Failed - task")
-                        forceLogout()
+                        await forceLogout()
                     } catch {
                         // Handle other unexpected errors.
-                        forceLogout()
+                        await forceLogout()
                         print("Other unexpected error - task: \(error.localizedDescription)")
                         print("Error: \(error)")
                         dump(error)
