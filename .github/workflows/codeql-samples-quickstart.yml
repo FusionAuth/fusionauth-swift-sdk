@@ -65,6 +65,9 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
 
+      - name: Install iOS 26.0.1 Platform which was removed from the runner in https://github.com/actions/runner-images/pull/13875
+        run: sudo xcodebuild -downloadPlatform iOS
+
       # Remove any other Xcode version.
       - name: Remove old xcode versions
         run: |
@@ -75,14 +78,15 @@ jobs:
           echo "Available Xcode versions after removal:"
           find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
 
-      # Initialize Swift in the matrix specified version.
-      - name: Initialize Swift
-        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
-        with:
-          swift-version: ${{ matrix.swift }}
+      # Get the Xcode version.
+      - name: Get Xcode version
+        run: xcodebuild -version
+
+      - name: List available simulators
+        run: xcrun simctl list runtimes
 
       # Get the Swift version.
-      - name: Get swift version
+      - name: Get Swift version
         run: swift --version
 
       # Checkout the repository.
