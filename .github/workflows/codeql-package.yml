@@ -45,8 +45,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/swiftlang/swift/releases
-        swift: [ "6.2.0" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "26.1.1" ]
         language: [ swift ]
@@ -73,14 +71,15 @@ jobs:
           echo "Available Xcode versions after removal:"
           find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
 
-      # Initialize Swift in the matrix specified version.
-      - name: Initialize Swift
-        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
-        with:
-          swift-version: ${{ matrix.swift }}
+      # Get the Xcode version.
+      - name: Get Xcode version
+        run: xcodebuild -version
+
+      - name: List available simulators
+        run: xcrun simctl list runtimes
 
       # Get the Swift version.
-      - name: Get swift version
+      - name: Get Swift version
         run: swift --version
 
       # Checkout the repository.

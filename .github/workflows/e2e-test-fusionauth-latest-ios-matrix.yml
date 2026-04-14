@@ -67,6 +67,11 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
 
+      - name: Install iOS 26.0.1 Platform which was removed from the runner in https://github.com/actions/runner-images/pull/13875
+        if: matrix.os == 'macos-26'
+        shell: bash
+        run: sudo xcodebuild -downloadPlatform iOS
+        
       # Remove any other Xcode version.
       - name: Remove old xcode versions
         run: |
@@ -81,22 +86,8 @@ jobs:
       - name: Get Xcode version
         run: xcodebuild -version
 
-      # Install Xcodes.
-      - name: Install Xcodes
-        if: matrix.os == 'macos-13'
-        shell: bash
-        run: |
-          brew install aria2
-          brew install xcodes
-
-      # Install simulator platform.
-      - name: Install Simulator
-        if: matrix.os == 'macos-13'
-        shell: bash
-        run: |
-          sudo xcodes runtimes
-          sudo xcodes runtimes install '${{ matrix.simulator-platform }} ${{ matrix.simulator-version }}'
-          sudo xcodes runtimes
+      - name: List available simulators
+        run: xcrun simctl list runtimes
 
       # Get the Swift version.
       - name: Get Swift version
