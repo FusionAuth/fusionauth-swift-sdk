@@ -26,16 +26,14 @@ class ConfigurationManager {
     /// This demonstrates the updateConfiguration() functionality for tenant switching
     static func switchToAlternativeConfiguration() throws {
         try AuthorizationManager.instance.resetConfiguration(
-            configuration: alternativeConfiguration,
-            storage: KeyChainStorage()
+            configuration: alternativeConfiguration
         )
     }
 
     /// Switches back to the primary configuration
     static func switchToPrimaryConfiguration() throws {
         try AuthorizationManager.instance.resetConfiguration(
-            configuration: primaryConfiguration,
-            storage: KeyChainStorage()
+            configuration: primaryConfiguration
         )
     }
 

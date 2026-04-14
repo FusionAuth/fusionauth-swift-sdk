@@ -9,3 +9,13 @@ DerivedData/
 .idea
 Samples/Quickstart/build/
 Samples/Quickstart/fusionauth-quickstart-swift-ios-native.xcodeproj/xcshareddata/
+
+.opencode/init
+
+.opencode/opencode.db
+
+.opencode/opencode.db-shm
+
+.opencode/opencode.db-wal
+
+OpenCode.md

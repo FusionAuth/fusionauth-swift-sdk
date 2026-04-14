@@ -20,6 +20,11 @@ public class TokenManager {
         return self
     }
 
+    /// Returns the current storage implementation.
+    var currentStorage: Storage? {
+        return self.storage
+    }
+
     /// Retrieves the current authorization state from the storage.
     /// - Returns: The FusionAuthState object representing the current authorization state, or nil if not found.
     func getAuthState() -> FusionAuthState? {

@@ -127,8 +127,8 @@ struct HomeView: View {
                 try ConfigurationManager.switchToAlternativeConfiguration()
                 authState.currentConfigurationName = "Alternative"
                 // Reset user info to trigger refresh
-                userInfo = nil
-                getUserInfo()
+//                userInfo = nil
+//                getUserInfo()
             } catch let error as NSError {
                 configurationError = "Failed to switch configuration: \(error.localizedDescription)"
             }
@@ -141,8 +141,8 @@ struct HomeView: View {
                 try ConfigurationManager.switchToPrimaryConfiguration()
                 authState.currentConfigurationName = "Primary"
                 // Reset user info to trigger refresh
-                userInfo = nil
-                getUserInfo()
+//                userInfo = nil
+//                getUserInfo()
             } catch let error as NSError {
                 configurationError = "Failed to switch configuration: \(error.localizedDescription)"
             }

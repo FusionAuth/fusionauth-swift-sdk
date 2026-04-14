@@ -63,6 +63,8 @@ extension AuthorizationConfiguration {
             return KeyChainStorage()
         case "userdefaults":
             return UserDefaultsStorage()
+        case "biometric":
+            return BiometricStorage()
         default:
             return MemoryStorage()
         }
