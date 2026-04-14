@@ -45,8 +45,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/swiftlang/swift/releases
-        swift: [ "6.2.0" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "26.1.1" ]
         language: [ swift ]
@@ -73,7 +71,7 @@ jobs:
           echo "Available Xcode versions after removal:"
           find /Applications -name "Xcode_*" -maxdepth 1 -mindepth 1
 
-       # Get the Xcode version.
+      # Get the Xcode version.
       - name: Get Xcode version
         run: xcodebuild -version
 

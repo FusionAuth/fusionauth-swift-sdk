@@ -45,8 +45,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/swiftlang/swift/releases
-        swift: [ "6.2.0" ]
         # https://developer.apple.com/documentation/xcode-release-notes
         xcode: [ "26.1.1" ]
         language: [ swift ]
@@ -116,9 +114,6 @@ jobs:
         run: |
           sleep 10
           df -h
-
-      - name: List available simulators
-        run: xcodebuild -showdestinations -scheme fusionauth-quickstart-swift-ios-native-swift-6
 
       # Perform the build manually.
       - name: Manual Build
