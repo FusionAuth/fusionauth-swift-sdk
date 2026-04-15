@@ -59,7 +59,7 @@ jobs:
     steps:
       # Initialize the latest version of Xcode.
       - name: Initialize latest xcode
-        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd # v1.6.0
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: ${{ matrix.xcode }}
 
@@ -90,7 +90,7 @@ jobs:
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.32.6
+        uses: github/codeql-action/init@v4.35.1
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -121,7 +121,7 @@ jobs:
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4.32.6
+        uses: github/codeql-action/analyze@v4.35.1
         if: success() || failure()
         with:
           category: "/language:${{matrix.language}}"
