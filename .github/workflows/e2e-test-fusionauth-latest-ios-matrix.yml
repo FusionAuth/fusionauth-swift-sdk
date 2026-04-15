@@ -63,7 +63,7 @@ jobs:
     steps:
       # Initialize the latest version of Xcode.
       - name: Initialize latest xcode
-        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd # v1.6.0
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: ${{ matrix.xcode }}
 
@@ -187,7 +187,7 @@ jobs:
         run: set -o pipefail && xcodebuild test -workspace FusionAuthSDK.xcworkspace/ -scheme "${{matrix.scheme}}" -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       - name: Upload recording
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         if: ${{ failure() }}
         with:
           name: FusionAuth-${{ env.fusionauth-docker-image-version }}_${{ matrix.os }}_xcode-${{ matrix.xcode }}_${{ matrix.simulator-platform }}-${{ matrix.simulator-version }}.xcresult
