@@ -12,7 +12,7 @@ See [FusionAuth OAuth 2.0 Authorization Endpoint](https://fusionauth.io/docs/lif
 for more information.
 
 ## Methods
-### `init(bundleId:redirectUriSuffix:idpHint:loginHint:deviceDescription:nonce:state:userCode:)`
+### `init(bundleId:redirectUriSuffix:idpHint:loginHint:deviceDescription:nonce:state:userCode:prompt:)`
 
 ```swift
 public init(
@@ -23,7 +23,8 @@ public init(
     deviceDescription: String? = nil,
     nonce: String? = nil,
     state: String? = nil,
-    userCode: String? = nil
+    userCode: String? = nil,
+    prompt: String? = nil
 )
 ```
 

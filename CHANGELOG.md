@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.2.0-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.1.0...v1.2.0-rc) (2026-04-14)
+
+
+### Features
+
+* Add OIDC prompt parameter support ([#135](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/135)) ([b2114e5](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/b2114e5d72c8c5d3505ac140bc12570b04f54889))
+
+
+### Miscellaneous Chores
+
+* iOS 26.0.1 removed from macos-26 runner ([#150](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/150)) ([9b41e61](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/9b41e61eccd22d46178aceab5e1497f269973a4b))
+* intermittent failures in the end to end tests ([#133](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/133)) ([1a2c904](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/1a2c904475e27e5343909a2c2eae386776bab674))
+* added installation source ([#131](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/131)) ([dd4b561](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/dd4b561751d496c0dc0e6cdb469bc5fa1afa87f7))
+
+### Build System and Dependencies
+
+* **deps:** bump the prod-github-actions group across 1 directory with 2 updates ([#134](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/134)) ([d2d93ee](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d2d93eea684ada66af736d9e20149803bea3df57))
+ * **deps:** bump the prod-github-actions group across 1 directory with 6 updates ([#132](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/132)) ([171a9c2](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/171a9c22c0f9416678e066393c1a1fb3e3a490e7))
+
+
 ## [1.1.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.1.0-rc...v1.1.0) (2026-03-04)
 
 ### Features
