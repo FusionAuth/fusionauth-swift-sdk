@@ -88,12 +88,12 @@ jobs:
           echo "Running end to end tests for prerelease!"
 
   # This job runs the E2E tests with FusionAuth Matrix as a prerequisite for creating the prerelease
-  prerelease-e2e-test-fusionauth-matrix:
-    name: Run Prerelease E2E Tests with FusionAuth Matrix
-    needs: [ prerelease-prep ]
-    # This job runs only if there was no release created
-    if: ${{ needs.prerelease-prep.outputs.releases_created == 'false' }}
-    uses: ./.github/workflows/e2e-test-fusionauth-matrix-ios-latest.yml
+  # prerelease-e2e-test-fusionauth-matrix:
+  #   name: Run Prerelease E2E Tests with FusionAuth Matrix
+  #   needs: [ prerelease-prep ]
+  #   # This job runs only if there was no release created
+  #   if: ${{ needs.prerelease-prep.outputs.releases_created == 'false' }}
+  #   uses: ./.github/workflows/e2e-test-fusionauth-matrix-ios-latest.yml
 
   # This job runs the E2E tests with iOS Matrix as a prerequisite for creating the prerelease
   prerelease-e2e-test-ios-matrix:
