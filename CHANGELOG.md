@@ -16,8 +16,10 @@
 
 ### Build System and Dependencies
 
-* **deps:** bump the prod-github-actions group across 1 directory with 2 updates ([#134](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/134)) ([d2d93ee](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d2d93eea684ada66af736d9e20149803bea3df57))
- * **deps:** bump the prod-github-actions group across 1 directory with 6 updates ([#132](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/132)) ([171a9c2](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/171a9c22c0f9416678e066393c1a1fb3e3a490e7))
+* **deps:** bump the prod-github-actions group across 1 directory with 2 updates
+ ([#134](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/134)) ([d2d93ee](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d2d93eea684ada66af736d9e20149803bea3df57))
+* **deps:** bump the prod-github-actions group across 1 directory with 6 updates
+ ([#132](https://github.com/FusionAuth/fusionauth-swift-sdk/pull/132)) ([171a9c2](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/171a9c22c0f9416678e066393c1a1fb3e3a490e7))
 
 
 ## [1.1.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.1.0-rc...v1.1.0) (2026-03-04)
