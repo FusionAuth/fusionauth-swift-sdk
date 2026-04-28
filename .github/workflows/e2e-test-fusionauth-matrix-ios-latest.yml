@@ -37,8 +37,7 @@ jobs:
         simulator-version: [ "26.0.1" ]
         os: [ "macos-26" ]
         postgresql-version: [ "16" ]
-        fusionauth-docker-image-version: [ 1.61.2, 1.62.1, 1.63.0, 1.64.1 ]
-
+        fusionauth-docker-image-version: [ "1.61.2", "1.62.1", "1.63.0", "1.64.1" ]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Initialize the latest version of Xcode.
