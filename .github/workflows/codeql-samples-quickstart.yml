@@ -49,6 +49,8 @@ jobs:
         xcode: [ "26.1.1" ]
         language: [ swift ]
         build-mode: [ manual ]
+        destination:
+          - "platform=iOS Simulator,OS=26.2,name=iPhone 17"
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
@@ -115,9 +117,7 @@ jobs:
 
       # Perform the build manually.
       - name: Manual Build
-        run: |
-          cd Samples
-          swift build --build-tests --configuration debug -v
+        run: set -o pipefail && xcodebuild -workspace FusionAuthSDK.xcworkspace/ -scheme fusionauth-quickstart-swift-ios-native-swift-6 -destination "${{matrix.destination}}" -skipPackagePluginValidation -parallel-testing-enabled NO
 
       # Perform CodeQL Analysis if the build succeeded or failed.
       - name: Perform CodeQL Analysis
