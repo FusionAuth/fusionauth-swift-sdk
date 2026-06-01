@@ -162,6 +162,7 @@ extension OAuthAuthorizationService {
     /// - Parameter onUserCodeReceived: Called when user verification data is available.
     /// - Returns: The OAuth authorization state once the device authorization flow completes.
     @discardableResult
+    @MainActor
     public func authorizeDevice(
         options: OAuthDeviceAuthorizeOptions = OAuthDeviceAuthorizeOptions(),
         onUserCodeReceived: @escaping (OAuthDeviceAuthorizationData) -> Void
@@ -189,66 +190,78 @@ extension OAuthAuthorizationService {
 
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
-                DispatchQueue.main.async {
-                    var didResume = false
-                    self.deviceAuthorizationCancelBlock = OIDTVAuthorizationService.authorizeTVRequest(
-                        request,
-                        initialization: { response, error in
-                            if let error, !didResume {
-                                didResume = true
+                var didResume = false
+                let resumeLock = NSLock()
+
+                func resumeOnce(_ action: () -> Void) {
+                    resumeLock.lock()
+                    defer { resumeLock.unlock() }
+                    guard !didResume else {
+                        return
+                    }
+                    didResume = true
+                    action()
+                }
+                self.deviceAuthorizationCancelBlock = OIDTVAuthorizationService.authorizeTVRequest(
+                    request,
+                    initialization: { response, error in
+                        if let error {
+                            resumeOnce {
                                 continuation.resume(throwing: error)
-                                return
                             }
+                            return
+                        }
 
-                            guard let response else {
-                                if !didResume {
-                                    didResume = true
-                                    continuation.resume(throwing: OAuthError.deviceAuthorizationResponseNil)
-                                }
-                                return
+                        guard let response else {
+                            resumeOnce {
+                                continuation.resume(throwing: OAuthError.deviceAuthorizationResponseNil)
                             }
+                            return
+                        }
 
-                            onUserCodeReceived(OAuthDeviceAuthorizationData(response: response))
-                        },
-                        completion: { authState, error in
-                            self.deviceAuthorizationCancelBlock = nil
+                        onUserCodeReceived(OAuthDeviceAuthorizationData(response: response))
+                    },
+                    completion: { authState, error in
+                        self.deviceAuthorizationCancelBlock = nil
 
-                            if didResume {
-                                return
-                            }
-
-                            if let error {
-                                didResume = true
+                        if let error {
+                            resumeOnce {
                                 continuation.resume(throwing: error)
-                                return
                             }
+                            return
+                        }
 
-                            guard let authorizationState = authState else {
-                                didResume = true
+                        guard let authorizationState = authState else {
+                            resumeOnce {
                                 continuation.resume(throwing: OAuthError.authStateNil)
-                                return
                             }
+                            return
+                        }
 
-                            do {
-                                try AuthorizationManager.instance.updateAuthState(authState: authorizationState)
-                            } catch {
-                                didResume = true
+                        do {
+                            try AuthorizationManager.instance.updateAuthState(authState: authorizationState)
+                        } catch {
+                            resumeOnce {
                                 continuation.resume(throwing: OAuthError.unableToUpdateInternalState)
-                                return
                             }
+                            return
+                        }
 
-                            didResume = true
+                        resumeOnce {
                             continuation.resume(returning: authorizationState)
                         }
-                    )
-                }
+                    }
+                )
             }
         } onCancel: {
-            self.cancelDeviceAuthorization()
+            Task { @MainActor in
+                self.cancelDeviceAuthorization()
+            }
         }
     }
 
     /// Cancels an active OAuth Device Authorization Grant request.
+    @MainActor
     public func cancelDeviceAuthorization() {
         deviceAuthorizationCancelBlock?()
         deviceAuthorizationCancelBlock = nil
