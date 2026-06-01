@@ -14,7 +14,7 @@ public struct OAuthDeviceAuthorizationData {
     /// The expiration date for the device authorization request.
     public let expirationDate: Date?
 
-    init(response: OIDTVAuthorizationResponse) {
+    internal init(response: OIDTVAuthorizationResponse) {
         self.verificationURI = response.verificationURI
         self.verificationURIComplete = response.verificationURIComplete
         self.userCode = response.userCode
