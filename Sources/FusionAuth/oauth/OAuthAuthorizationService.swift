@@ -182,7 +182,7 @@ extension OAuthAuthorizationService {
         let request = OIDTVAuthorizationRequest(
             configuration: tvConfiguration,
             clientId: clientId,
-            clientSecret: options.clientSecret ?? "",
+            clientSecret: options.clientSecret,
             scopes: options.scopes ?? defaultScopes,
             additionalParameters: getParametersFromDeviceOptions(options)
         )
