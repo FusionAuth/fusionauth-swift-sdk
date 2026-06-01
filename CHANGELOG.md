@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.1](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.2.0...v1.2.1) (2026-06-01)
+
+
+### Build System and Dependencies
+
+* **deps:** bump github/codeql-action in the prod-github-actions group ([#157](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/157)) ([dfa2520](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/dfa2520873b9e1d513638fdc85fa3b7af1b33771))
+* **deps:** bump github/codeql-action in the prod-github-actions group ([#160](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/160)) ([16aec40](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/16aec40f7dc695824726b05746b097a833f33913))
+* **deps:** bump the prod-github-actions group across 1 directory with 2 updates ([#156](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/156)) ([821c740](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/821c7400cb280eabbe3471a5544c4c161741d988))
+* The workflow Security and Code-Quality scan with CodeQL - Quickstart Sample is failing ([#163](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/163)) ([d8da820](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d8da8206f499c2684bdc2d817679a848f1db29b0))
+
 ## [1.2.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.1.0...v1.2.0) (2026-04-14)
 
 
