@@ -231,14 +231,14 @@ runOnlyForDeploymentPostprocessing = 0;
 			path = QuickstartTests;
 			sourceTree = "<group>";
 		};
-TVTESTGROUP123456789ABCD /* QuickstartTVOSTests */ = {
-isa = PBXGroup;
-children = (
-939AED162CC91492000E2D3F /* QuickstartTests.swift */,
-);
-path = QuickstartTVOSTests;
-sourceTree = "<group>";
-};
+		TVTESTGROUP123456789ABCD /* QuickstartTVOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				A2B3C4D5E6F7A8B9C0D1E2F3 /* QuickstartTVOSTests.swift */,
+			);
+			path = QuickstartTVOSTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
