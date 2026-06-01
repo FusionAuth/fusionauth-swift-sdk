@@ -6,11 +6,11 @@ import SwiftUI
 /// It provides methods to authorize the user, handle the redirect intent, fetch user information,
 /// perform logout, retrieve fresh access token, and get the authorization service.
 public class OAuthAuthorizationService {
-    private let fusionAuthUrl: String
-    private let clientId: String
-    private let tenantId: String?
-    private let locale: String?
-    private let additionalScopes: [String]
+    let fusionAuthUrl: String
+    let clientId: String
+    let tenantId: String?
+    let locale: String?
+    let additionalScopes: [String]
 
     private var configurationTask: Task<OIDServiceConfiguration, Error>?
 
@@ -27,7 +27,7 @@ public class OAuthAuthorizationService {
     }
 
     /// Builds additional parameters for the OAuth authorize request.
-    private func getParametersFromOptions(_ options: OAuthAuthorizeOptions) -> [String: String] {
+    func getParametersFromOptions(_ options: OAuthAuthorizeOptions) -> [String: String] {
         var additionalParameters: [String: String] = [:]
         if tenantId != nil {
             additionalParameters.updateValue(tenantId!, forKey: "tenantId")
@@ -131,6 +131,7 @@ extension OAuthAuthorizationService {
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
     /// - Returns: The OAuth authorization state.
+    #if !os(tvOS)
     @discardableResult
     public func authorize(options: OAuthAuthorizeOptions) async throws -> OIDAuthState {
         AuthorizationManager.log?.trace("Starting OAuth authorization...")
@@ -177,6 +178,7 @@ extension OAuthAuthorizationService {
 
         return authState
     }
+    #endif
 }
 
 // MARK: - Logout
@@ -185,6 +187,7 @@ extension OAuthAuthorizationService {
     /// Log out the user
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
+    #if !os(tvOS)
     public func logout(options: OAuthLogoutOptions) async throws {
         let idToken = AuthorizationManager.instance.getIdToken()
 
@@ -238,6 +241,7 @@ extension OAuthAuthorizationService {
             }
         }
     }
+    #endif
 }
 
 // MARK: - User Info

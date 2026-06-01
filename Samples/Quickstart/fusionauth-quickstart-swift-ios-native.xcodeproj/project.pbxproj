@@ -37,6 +37,22 @@
 		CDB79E7E2EAAF94300728E1E /* fusionauth-swift-sdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */; };
 		CDB79E7F2EAAF94300728E1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E2795FC2BD937BA00738892 /* Assets.xcassets */; };
 		CDB79E882EAAF94A00728E1E /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
+2993BBCB7EB246D2A3B1C701 /* QuickstartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2795F82BD937B800738892 /* QuickstartApp.swift */; };
+634DCA7072B7451F883F3255 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2795FA2BD937B800738892 /* ContentView.swift */; };
+EEA505E792DE48AA9C0BAD6B /* FusionAuthStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5184922CD627E5004E2416 /* FusionAuthStateObject.swift */; };
+E7B9452DABD04489B41F1F3E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C52BF509C6007C5E0D /* LoginView.swift */; };
+04B6AA066DE14DAE927A5B4A /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C72BF50A3C007C5E0D /* Styles.swift */; };
+B6E11FD5F85C4C90981497C2 /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454C92BF50C62007C5E0D /* LoggedInView.swift */; };
+7B5174C95F9B456DBC706167 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CB2BF50CE8007C5E0D /* HomeView.swift */; };
+64EECE23BD5A4A9C93FEDD74 /* MakeChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8454CD2BF50D19007C5E0D /* MakeChangeView.swift */; };
+7E67B8A114E147459B181A4B /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD12D0462EF310A000266540 /* ConfigurationManager.swift */; };
+8A784F54BA904482AD0A16C9 /* FusionAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4EA5D25A2D3B4C3E87F33A68 /* FusionAuth */; };
+2ACC698554B64253825B85C7 /* FusionAuth.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EB1000F2CD90699007AB813 /* FusionAuth.plist */; };
+C36BF98C124C4DFE9663C381 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E2795FF2BD937BA00738892 /* Preview Assets.xcassets */; };
+F226D0D63CB44902B43036DF /* fusionauth-swift-sdk in Resources */ = {isa = PBXBuildFile; fileRef = 9326C2A02C80692B001C9CDB /* fusionauth-swift-sdk */; };
+C6EB1DAA5E7046F8BA2FC4B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E2795FC2BD937BA00738892 /* Assets.xcassets */; };
+F61B71A90CAF4B7ABD4F6412 /* QuickstartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AED162CC91492000E2D3F /* QuickstartTests.swift */; };
+		B3C4D5E6F7A8B9C0D1E2F3A4 /* QuickstartTVOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3C4D5E6F7A8B9C0D1E2F3 /* QuickstartTVOSTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +77,13 @@
 			remoteGlobalIDString = CDB79E6E2EAAF94300728E1E;
 			remoteInfo = "fusionauth-quickstart-swift-ios-native-swift-6";
 		};
+EAFC223A710C4137A7A5B2EE /* PBXContainerItemProxy */ = {
+isa = PBXContainerItemProxy;
+containerPortal = 0E2795ED2BD937B800738892 /* Project object */;
+proxyType = 1;
+remoteGlobalIDString = 332CA81ED8EF458598A874AB;
+remoteInfo = "fusionauth-quickstart-swift-tvos-native";
+};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +105,9 @@
 		CD12D0462EF310A000266540 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		CDB79E832EAAF94300728E1E /* fusionauth-quickstart-swift-ios-native-swift-6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fusionauth-quickstart-swift-ios-native-swift-6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDB79E8E2EAAF94A00728E1E /* QuickstartTests-swift-6.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QuickstartTests-swift-6.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+3D29CCE4A9944A06B3A20FC6 /* fusionauth-quickstart-swift-tvos-native.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fusionauth-quickstart-swift-tvos-native.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+7417EA81306A413296E19BE9 /* QuickstartTVOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickstartTVOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2B3C4D5E6F7A8B9C0D1E2F3 /* QuickstartTVOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickstartTVOSTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +141,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+A5470560AEB244AFAF79F9E7 /* Frameworks */ = {
+isa = PBXFrameworksBuildPhase;
+buildActionMask = 2147483647;
+files = (
+8A784F54BA904482AD0A16C9 /* FusionAuth in Frameworks */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+C597BCADF2584921A8B3416D /* Frameworks */ = {
+isa = PBXFrameworksBuildPhase;
+buildActionMask = 2147483647;
+files = (
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -190,6 +231,14 @@
 			path = QuickstartTests;
 			sourceTree = "<group>";
 		};
+TVTESTGROUP123456789ABCD /* QuickstartTVOSTests */ = {
+isa = PBXGroup;
+children = (
+939AED162CC91492000E2D3F /* QuickstartTests.swift */,
+);
+path = QuickstartTVOSTests;
+sourceTree = "<group>";
+};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -274,6 +323,46 @@
 			productReference = CDB79E8E2EAAF94A00728E1E /* QuickstartTests-swift-6.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+332CA81ED8EF458598A874AB /* fusionauth-quickstart-swift-tvos-native */ = {
+isa = PBXNativeTarget;
+buildConfigurationList = 958EA97D529F43308AC8B33D /* Build configuration list for PBXNativeTarget "fusionauth-quickstart-swift-tvos-native" */;
+buildPhases = (
+A68F48CDE23F49C8951131D1 /* Sources */,
+A5470560AEB244AFAF79F9E7 /* Frameworks */,
+A1316B50AFD7420BBA1F8A52 /* Resources */,
+);
+buildRules = (
+);
+dependencies = (
+);
+name = "fusionauth-quickstart-swift-tvos-native";
+packageProductDependencies = (
+4EA5D25A2D3B4C3E87F33A68 /* FusionAuth */,
+);
+productName = Quickstart;
+productReference = 3D29CCE4A9944A06B3A20FC6 /* fusionauth-quickstart-swift-tvos-native.app */;
+productType = "com.apple.product-type.application";
+};
+DF2F2C055985417AB4A13E77 /* QuickstartTVOSTests */ = {
+isa = PBXNativeTarget;
+buildConfigurationList = 11BD7DC61773438080E05B7B /* Build configuration list for PBXNativeTarget "QuickstartTVOSTests" */;
+buildPhases = (
+8479ABAA388B4C51BF430AC6 /* Sources */,
+C597BCADF2584921A8B3416D /* Frameworks */,
+E0766D01803F45469E445FE0 /* Resources */,
+);
+buildRules = (
+);
+dependencies = (
+6ADC383345CF453885E066F1 /* PBXTargetDependency */,
+);
+name = QuickstartTVOSTests;
+packageProductDependencies = (
+);
+productName = QuickstartTVOSTests;
+productReference = 7417EA81306A413296E19BE9 /* QuickstartTVOSTests.xctest */;
+productType = "com.apple.product-type.bundle.ui-testing";
+};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -293,6 +382,12 @@
 					};
 					CDB79E842EAAF94A00728E1E = {
 						TestTargetID = CDB79E6E2EAAF94300728E1E;
+					};
+					332CA81ED8EF458598A874AB = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					DF2F2C055985417AB4A13E77 = {
+						TestTargetID = 332CA81ED8EF458598A874AB;
 					};
 				};
 			};
@@ -315,6 +410,8 @@
 				0E232BE42CC7ABD100D944E5 /* QuickstartTests */,
 				CDB79E6E2EAAF94300728E1E /* fusionauth-quickstart-swift-ios-native-swift-6 */,
 				CDB79E842EAAF94A00728E1E /* QuickstartTests-swift-6 */,
+				332CA81ED8EF458598A874AB /* fusionauth-quickstart-swift-tvos-native */,
+				DF2F2C055985417AB4A13E77 /* QuickstartTVOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -356,6 +453,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+A1316B50AFD7420BBA1F8A52 /* Resources */ = {
+isa = PBXResourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+2ACC698554B64253825B85C7 /* FusionAuth.plist in Resources */,
+C36BF98C124C4DFE9663C381 /* Preview Assets.xcassets in Resources */,
+F226D0D63CB44902B43036DF /* fusionauth-swift-sdk in Resources */,
+C6EB1DAA5E7046F8BA2FC4B2 /* Assets.xcassets in Resources */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+E0766D01803F45469E445FE0 /* Resources */ = {
+isa = PBXResourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -407,6 +522,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+A68F48CDE23F49C8951131D1 /* Sources */ = {
+isa = PBXSourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+EEA505E792DE48AA9C0BAD6B /* FusionAuthStateObject.swift in Sources */,
+B6E11FD5F85C4C90981497C2 /* LoggedInView.swift in Sources */,
+E7B9452DABD04489B41F1F3E /* LoginView.swift in Sources */,
+634DCA7072B7451F883F3255 /* ContentView.swift in Sources */,
+7B5174C95F9B456DBC706167 /* HomeView.swift in Sources */,
+7E67B8A114E147459B181A4B /* ConfigurationManager.swift in Sources */,
+2993BBCB7EB246D2A3B1C701 /* QuickstartApp.swift in Sources */,
+64EECE23BD5A4A9C93FEDD74 /* MakeChangeView.swift in Sources */,
+04B6AA066DE14DAE927A5B4A /* Styles.swift in Sources */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+8479ABAA388B4C51BF430AC6 /* Sources */ = {
+isa = PBXSourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+F61B71A90CAF4B7ABD4F6412 /* QuickstartTests.swift in Sources */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -425,6 +564,11 @@
 			target = CDB79E6E2EAAF94300728E1E /* fusionauth-quickstart-swift-ios-native-swift-6 */;
 			targetProxy = CDB79E8F2EB0378300728E1E /* PBXContainerItemProxy */;
 		};
+6ADC383345CF453885E066F1 /* PBXTargetDependency */ = {
+isa = PBXTargetDependency;
+target = 332CA81ED8EF458598A874AB /* fusionauth-quickstart-swift-tvos-native */;
+targetProxy = EAFC223A710C4137A7A5B2EE /* PBXContainerItemProxy */;
+};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -753,6 +897,100 @@
 			};
 			name = Release;
 		};
+471D7AF5AC784A57840F17E3 /* Debug */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+CODE_SIGN_STYLE = Automatic;
+CURRENT_PROJECT_VERSION = 1;
+DEVELOPMENT_ASSET_PATHS = ""Quickstart/Preview Content"";
+DEVELOPMENT_TEAM = X2GK5CM846;
+ENABLE_PREVIEWS = YES;
+GENERATE_INFOPLIST_FILE = YES;
+LD_RUNPATH_SEARCH_PATHS = (
+"$(inherited)",
+"@executable_path/Frameworks",
+);
+MARKETING_VERSION = 1.0;
+PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTV;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = appletvos;
+SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+SWIFT_EMIT_LOC_STRINGS = YES;
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = 3;
+TVOS_DEPLOYMENT_TARGET = 15.0;
+};
+name = Debug;
+};
+B46937684B3F494398AF9B1B /* Release */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+CODE_SIGN_STYLE = Automatic;
+CURRENT_PROJECT_VERSION = 1;
+DEVELOPMENT_ASSET_PATHS = ""Quickstart/Preview Content"";
+DEVELOPMENT_TEAM = X2GK5CM846;
+ENABLE_PREVIEWS = YES;
+GENERATE_INFOPLIST_FILE = YES;
+LD_RUNPATH_SEARCH_PATHS = (
+"$(inherited)",
+"@executable_path/Frameworks",
+);
+MARKETING_VERSION = 1.0;
+PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTV;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = appletvos;
+SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+SWIFT_EMIT_LOC_STRINGS = YES;
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = 3;
+TVOS_DEPLOYMENT_TARGET = 15.0;
+};
+name = Release;
+};
+E0655487101A4B16903B8926 /* Debug */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+CODE_SIGN_STYLE = Automatic;
+CURRENT_PROJECT_VERSION = 1;
+DEVELOPMENT_TEAM = X2GK5CM846;
+GENERATE_INFOPLIST_FILE = YES;
+MARKETING_VERSION = 1.0;
+PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTVOSTests;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = appletvos;
+SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+SWIFT_EMIT_LOC_STRINGS = NO;
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = 3;
+TEST_TARGET_NAME = "fusionauth-quickstart-swift-tvos-native";
+TVOS_DEPLOYMENT_TARGET = 15.0;
+};
+name = Debug;
+};
+E459CD6FF44C40BDBD37BF76 /* Release */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+CODE_SIGN_STYLE = Automatic;
+CURRENT_PROJECT_VERSION = 1;
+DEVELOPMENT_TEAM = X2GK5CM846;
+GENERATE_INFOPLIST_FILE = YES;
+MARKETING_VERSION = 1.0;
+PRODUCT_BUNDLE_IDENTIFIER = io.fusionauth.QuickstartTVOSTests;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = appletvos;
+SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+SWIFT_EMIT_LOC_STRINGS = NO;
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = 3;
+TEST_TARGET_NAME = "fusionauth-quickstart-swift-tvos-native";
+TVOS_DEPLOYMENT_TARGET = 15.0;
+};
+name = Release;
+};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -801,6 +1039,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+958EA97D529F43308AC8B33D /* Build configuration list for PBXNativeTarget "fusionauth-quickstart-swift-tvos-native" */ = {
+isa = XCConfigurationList;
+buildConfigurations = (
+471D7AF5AC784A57840F17E3 /* Debug */,
+B46937684B3F494398AF9B1B /* Release */,
+);
+defaultConfigurationIsVisible = 0;
+defaultConfigurationName = Release;
+};
+11BD7DC61773438080E05B7B /* Build configuration list for PBXNativeTarget "QuickstartTVOSTests" */ = {
+isa = XCConfigurationList;
+buildConfigurations = (
+E0655487101A4B16903B8926 /* Debug */,
+E459CD6FF44C40BDBD37BF76 /* Release */,
+);
+defaultConfigurationIsVisible = 0;
+defaultConfigurationName = Release;
+};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -812,6 +1068,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = FusionAuth;
 		};
+4EA5D25A2D3B4C3E87F33A68 /* FusionAuth */ = {
+isa = XCSwiftPackageProductDependency;
+productName = FusionAuth;
+};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0E2795ED2BD937B800738892 /* Project object */;
