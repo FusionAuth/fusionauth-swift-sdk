@@ -28,6 +28,10 @@ public class OAuthAuthorizationService {
         self.additionalScopes = additionalScopes
     }
 
+    private var defaultScopes: [String] {
+        [OIDScopeOpenID, "offline_access"] + additionalScopes
+    }
+
     /// Builds additional parameters for the OAuth authorize request.
     private func getParametersFromOptions(_ options: OAuthAuthorizeOptions) -> [String: String] {
         var additionalParameters: [String: String] = [:]
@@ -179,7 +183,7 @@ extension OAuthAuthorizationService {
             configuration: tvConfiguration,
             clientId: clientId,
             clientSecret: options.clientSecret ?? "",
-            scopes: options.scopes ?? [OIDScopeOpenID, "offline_access"] + self.additionalScopes,
+            scopes: options.scopes ?? defaultScopes,
             additionalParameters: getParametersFromDeviceOptions(options)
         )
 
@@ -264,7 +268,7 @@ extension OAuthAuthorizationService {
 
         let request = OIDAuthorizationRequest(configuration: configuration,
                                               clientId: clientId,
-                                              scopes: [OIDScopeOpenID, "offline_access"] + self.additionalScopes,
+                                              scopes: defaultScopes,
                                               redirectURL: URL(string: options.redirectUri)!,
                                               responseType: OIDResponseTypeCode,
                                               additionalParameters: getParametersFromOptions(options))
