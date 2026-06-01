@@ -254,9 +254,7 @@ extension OAuthAuthorizationService {
                 )
             }
         } onCancel: {
-            Task { @MainActor in
-                self.cancelDeviceAuthorization()
-            }
+            self.cancelDeviceAuthorization()
         }
     }
 
