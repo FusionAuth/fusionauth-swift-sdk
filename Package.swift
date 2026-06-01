@@ -26,7 +26,8 @@ let package = Package(
         .target(
             name: "FusionAuth",
             dependencies: [
-                .product(name: "AppAuth", package: "AppAuth-iOS")
+                .product(name: "AppAuth", package: "AppAuth-iOS"),
+                .product(name: "AppAuthTV", package: "AppAuth-iOS")
             ]
         ),
         .testTarget(
@@ -58,7 +59,8 @@ let package = Package(
         .target(
             name: "FusionAuth",
             dependencies: [
-                .product(name: "AppAuth", package: "AppAuth-iOS")
+                .product(name: "AppAuth", package: "AppAuth-iOS"),
+                .product(name: "AppAuthTV", package: "AppAuth-iOS")
             ]
         ),
         .testTarget(

@@ -11,6 +11,8 @@
 -   [IdToken](structs/IdToken.md)
 -   [OAuthAuthorization](structs/OAuthAuthorization.md)
 -   [OAuthAuthorizeOptions](structs/OAuthAuthorizeOptions.md)
+-   [OAuthDeviceAuthorizationData](structs/OAuthDeviceAuthorizationData.md)
+-   [OAuthDeviceAuthorizeOptions](structs/OAuthDeviceAuthorizeOptions.md)
 -   [OAuthLogoutOptions](structs/OAuthLogoutOptions.md)
 -   [UserInfo](structs/UserInfo.md)
 

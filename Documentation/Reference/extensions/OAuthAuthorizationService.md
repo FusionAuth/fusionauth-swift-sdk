@@ -6,6 +6,36 @@ extension OAuthAuthorizationService
 ```
 
 ## Methods
+### `authorizeDevice(options:onUserCodeReceived:)`
+
+```swift
+public func authorizeDevice(
+    options: OAuthDeviceAuthorizeOptions = OAuthDeviceAuthorizeOptions(),
+    onUserCodeReceived: @escaping (OAuthDeviceAuthorizationData) -> Void
+) async throws -> OIDAuthState
+```
+
+Starts OAuth Device Authorization Grant flow and polls for completion.
+
+- Parameter options: The options to configure the device authorization request.
+- Parameter onUserCodeReceived: Called when user verification data is available.
+- Returns: The OAuth authorization state once the device authorization flow completes.
+
+#### Parameters
+
+| Name | Description |
+| ---- | ----------- |
+| options | The options to configure the device authorization request. |
+| onUserCodeReceived | Called when user verification data is available. |
+
+### `cancelDeviceAuthorization()`
+
+```swift
+public func cancelDeviceAuthorization()
+```
+
+Cancels an active OAuth Device Authorization Grant request.
+
 ### `authorize(options:)`
 
 ```swift
