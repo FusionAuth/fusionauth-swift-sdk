@@ -10,4 +10,6 @@ enum OAuthError: Error {
     case unableToUpdateInternalState
     case invalidUserAgent
     case invalidIssuer
+    case deviceAuthorizationEndpointNotFound
+    case deviceAuthorizationResponseNil
 }

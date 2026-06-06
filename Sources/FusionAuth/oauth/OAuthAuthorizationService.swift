@@ -1,10 +1,11 @@
 import Foundation
 @preconcurrency import AppAuth
+@preconcurrency import AppAuthTV
 import SwiftUI
 
 /// OAuthAuthorizationService class is responsible for handling OAuth authorization and authorization process.
 /// It provides methods to authorize the user, handle the redirect intent, fetch user information,
-/// perform logout, retrieve fresh access token, and get the authorization service.
+/// perform logout, run device authorization grant, retrieve fresh access token, and get the authorization service.
 public class OAuthAuthorizationService {
     private let fusionAuthUrl: String
     private let clientId: String
@@ -17,6 +18,7 @@ public class OAuthAuthorizationService {
     private var tokenTask: Task<String, Error>?
 
     private var logoutSession: OIDExternalUserAgentSession?
+    private var deviceAuthorizationCancelBlock: OIDTVAuthorizationCancelBlock?
 
     init(fusionAuthUrl: String, clientId: String, tenantId: String?, locale: String?, additionalScopes: [String]) {
         self.fusionAuthUrl = fusionAuthUrl
@@ -24,6 +26,10 @@ public class OAuthAuthorizationService {
         self.tenantId = tenantId
         self.locale = locale
         self.additionalScopes = additionalScopes
+    }
+
+    private var defaultScopes: [String] {
+        [OIDScopeOpenID, "offline_access"] + additionalScopes
     }
 
     /// Builds additional parameters for the OAuth authorize request.
@@ -47,6 +53,29 @@ public class OAuthAuthorizationService {
         if options.prompt != nil {
             additionalParameters.updateValue(options.prompt!, forKey: "prompt")
         }
+        return additionalParameters
+    }
+
+    /// Builds additional parameters for the OAuth device authorization request.
+    private func getParametersFromDeviceOptions(_ options: OAuthDeviceAuthorizeOptions) -> [String: String] {
+        var additionalParameters = options.additionalParameters
+
+        if let tenantId {
+            additionalParameters.updateValue(tenantId, forKey: "tenantId")
+        }
+        if let locale {
+            additionalParameters.updateValue(locale, forKey: "locale")
+        }
+        if let idpHint = options.idpHint {
+            additionalParameters.updateValue(idpHint, forKey: "idp_hint")
+        }
+        if let loginHint = options.loginHint {
+            additionalParameters.updateValue(loginHint, forKey: "login_hint")
+        }
+        if let deviceDescription = options.deviceDescription {
+            additionalParameters.updateValue(deviceDescription, forKey: "metaData.device.description")
+        }
+
         return additionalParameters
     }
 }
@@ -127,6 +156,117 @@ extension OAuthAuthorizationService {
 // MARK: - Authorization
 
 extension OAuthAuthorizationService {
+    /// Starts OAuth Device Authorization Grant flow and polls for completion.
+    ///
+    /// - Parameter options: The options to configure the device authorization request.
+    /// - Parameter onUserCodeReceived: Called when user verification data is available.
+    /// - Returns: The OAuth authorization state once the device authorization flow completes.
+    @discardableResult
+    @MainActor
+    public func authorizeDevice(
+        options: OAuthDeviceAuthorizeOptions = OAuthDeviceAuthorizeOptions(),
+        onUserCodeReceived: @escaping (OAuthDeviceAuthorizationData) -> Void
+    ) async throws -> OIDAuthState {
+        let configuration = try await getConfiguration()
+
+        guard let discoveryDocument = configuration.discoveryDocument,
+              let deviceAuthorizationEndpoint = discoveryDocument.deviceAuthorizationEndpoint,
+              let tokenEndpoint = configuration.tokenEndpoint else {
+            throw OAuthError.deviceAuthorizationEndpointNotFound
+        }
+
+        let tvConfiguration = OIDTVServiceConfiguration(
+            deviceAuthorizationEndpoint: deviceAuthorizationEndpoint,
+            tokenEndpoint: tokenEndpoint
+        )
+
+        let request = OIDTVAuthorizationRequest(
+            configuration: tvConfiguration,
+            clientId: clientId,
+            clientSecret: options.clientSecret,
+            scopes: options.scopes ?? defaultScopes,
+            additionalParameters: getParametersFromDeviceOptions(options)
+        )
+
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                var didResume = false
+                let resumeLock = NSLock()
+
+                func resumeOnce(_ action: () -> Void) {
+                    resumeLock.lock()
+                    defer { resumeLock.unlock() }
+                    guard !didResume else {
+                        return
+                    }
+                    didResume = true
+                    action()
+                }
+                self.deviceAuthorizationCancelBlock = OIDTVAuthorizationService.authorizeTVRequest(
+                    request,
+                    initialization: { response, error in
+                        if let error {
+                            resumeOnce {
+                                continuation.resume(throwing: error)
+                            }
+                            return
+                        }
+
+                        guard let response else {
+                            resumeOnce {
+                                continuation.resume(throwing: OAuthError.deviceAuthorizationResponseNil)
+                            }
+                            return
+                        }
+
+                        onUserCodeReceived(OAuthDeviceAuthorizationData(response: response))
+                    },
+                    completion: { authState, error in
+                        self.deviceAuthorizationCancelBlock = nil
+
+                        if let error {
+                            resumeOnce {
+                                continuation.resume(throwing: error)
+                            }
+                            return
+                        }
+
+                        guard let authorizationState = authState else {
+                            resumeOnce {
+                                continuation.resume(throwing: OAuthError.authStateNil)
+                            }
+                            return
+                        }
+
+                        do {
+                            try AuthorizationManager.instance.updateAuthState(authState: authorizationState)
+                        } catch {
+                            resumeOnce {
+                                continuation.resume(throwing: OAuthError.unableToUpdateInternalState)
+                            }
+                            return
+                        }
+
+                        resumeOnce {
+                            continuation.resume(returning: authorizationState)
+                        }
+                    }
+                )
+            }
+        } onCancel: {
+            self.cancelDeviceAuthorization()
+        }
+    }
+
+    /// Cancels an active OAuth Device Authorization Grant request.
+    @MainActor
+    public func cancelDeviceAuthorization() {
+        deviceAuthorizationCancelBlock?()
+        deviceAuthorizationCancelBlock = nil
+    }
+}
+
+extension OAuthAuthorizationService {
     /// Authorizes the user using OAuth authorization code flow.
     ///
     /// - Parameter options: The options to configure the OAuth logout request.
@@ -139,7 +279,7 @@ extension OAuthAuthorizationService {
 
         let request = OIDAuthorizationRequest(configuration: configuration,
                                               clientId: clientId,
-                                              scopes: [OIDScopeOpenID, "offline_access"] + self.additionalScopes,
+                                              scopes: defaultScopes,
                                               redirectURL: URL(string: options.redirectUri)!,
                                               responseType: OIDResponseTypeCode,
                                               additionalParameters: getParametersFromOptions(options))
