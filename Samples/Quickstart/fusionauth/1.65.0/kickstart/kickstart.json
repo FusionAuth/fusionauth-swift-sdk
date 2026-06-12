@@ -78,7 +78,7 @@
       "tenantId": "#{defaultTenantId}",
       "body": {
         "application": {
-          "name": "Example Android App",
+          "name": "Example iOS App",
           "oauthConfiguration": {
             "authorizedRedirectURLs": [
               "io.fusionauth.Quickstart:/oauth2redirect/ios-provider"
@@ -107,7 +107,7 @@
       "tenantId": "#{tenantIdResetConfiguration}",
       "body": {
         "application": {
-          "name": "Example Android App",
+          "name": "Example iOS App",
           "oauthConfiguration": {
             "authorizedRedirectURLs": [
               "io.fusionauth.Quickstart:/oauth2redirect/ios-provider"
