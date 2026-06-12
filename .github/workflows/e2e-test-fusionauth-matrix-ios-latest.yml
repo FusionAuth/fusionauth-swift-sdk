@@ -31,13 +31,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        destination: [ "platform=iOS Simulator,OS=26.0.1,name=iPhone 17" ]
-        xcode: [ "26.0.1" ]
+        destination: [ "platform=iOS Simulator,OS=26.5,name=iPhone 17" ]
+        xcode: [ "26.5" ]
         simulator-platform: [ "iOS" ]
-        simulator-version: [ "26.0.1" ]
+        simulator-version: [ "26.5" ]
         os: [ "macos-26" ]
         postgresql-version: [ "16" ]
-        fusionauth-docker-image-version: [ "1.61.2", "1.62.1", "1.63.0", "1.64.1" ]
+        fusionauth-docker-image-version: [ "1.64.1", "1.65.0", "1.66.0", "1.67.1" ]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Initialize the latest version of Xcode.
@@ -45,11 +45,6 @@ jobs:
         uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: ${{ matrix.xcode }}
-
-      - name: Install iOS 26.0.1 Platform which was removed from the runner in https://github.com/actions/runner-images/pull/13875
-        if: matrix.os == 'macos-26'
-        shell: bash
-        run: sudo xcodebuild -downloadPlatform iOS
 
       # Remove any other Xcode version.
       - name: Remove old xcode versions
