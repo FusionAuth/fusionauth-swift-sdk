@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         # https://developer.apple.com/documentation/xcode-release-notes
-        xcode: [ "26.1.1" ]
+        xcode: [ "26.5" ]
         language: [ swift ]
         build-mode: [ manual ]
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
