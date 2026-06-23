@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.2.0...v1.3.0) (2026-06-23)
+
+
+### Features
+
+* add support for iOS 26.5 ([#168](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/168)) ([27dcca5](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/27dcca5c058f5ab93fce7698629b5cde4ed31136))
+
+
+### Build System and Dependencies
+
+* **deps:** bump github/codeql-action ([#161](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/161)) ([059d7ac](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/059d7aca83666f17789a829a83be22345fb3c965))
+* **deps:** bump github/codeql-action in the prod-github-actions group ([#157](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/157)) ([dfa2520](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/dfa2520873b9e1d513638fdc85fa3b7af1b33771))
+* **deps:** bump github/codeql-action in the prod-github-actions group ([#160](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/160)) ([16aec40](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/16aec40f7dc695824726b05746b097a833f33913))
+* **deps:** bump the gradle-minor-dependencies group across 1 directory with 2 updates ([#169](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/169)) ([b406f72](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/b406f72096ea8b45b7faf06cde357291555ca3f8))
+* **deps:** bump the prod-github-actions group across 1 directory with 2 updates ([#156](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/156)) ([821c740](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/821c7400cb280eabbe3471a5544c4c161741d988))
+* **deps:** bump the prod-github-actions group across 1 directory with 2 updates ([#166](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/166)) ([b4d5aac](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/b4d5aac9423ff9aa17520de2ed99b745bf7e9f0e))
+* The workflow Security and Code-Quality scan with CodeQL - Quickstart Sample is failing ([#163](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/163)) ([d8da820](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/d8da8206f499c2684bdc2d817679a848f1db29b0))
+
 ## [1.2.0](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.1.0...v1.2.0) (2026-04-14)
 
 
