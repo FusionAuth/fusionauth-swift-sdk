@@ -100,6 +100,9 @@ jobs:
       - name: Tap FusionAuth Homebrew formulae
         run: brew tap fusionauth/fusionauth
 
+      - name: Trust FusionAuth Homebrew tap
+        run: brew trust fusionauth/fusionauth
+
       # Install FusionAuth App with brew.
       - name: Install FusionAuth App
         run: brew install fusionauth-app -v
