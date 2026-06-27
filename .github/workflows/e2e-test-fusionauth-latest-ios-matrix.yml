@@ -112,6 +112,9 @@ jobs:
       - name: Add PostgreSQL fusionauth database
         run: createdb --owner=fusionauth fusionauth
 
+      - name: Trust FusionAuth Homebrew tap
+        run: brew trust fusionauth/fusionauth
+
       # Tap FusionAuth Homebrew formulae.
       - name: Tap FusionAuth Homebrew formulae
         run: brew tap fusionauth/fusionauth
