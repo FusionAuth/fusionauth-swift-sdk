@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.3.0-rc...v1.3.1-rc) (2026-06-28)
+
+
+### Miscellaneous Chores
+
+* trigger workflow ([acd6775](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/acd677511e7a19e7bc86bb4a9bf7a0807cdc30af))
+
 ## [1.3.0-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.2.0...v1.3.0-rc) (2026-06-23)
 
 
