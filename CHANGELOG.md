@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.3.0-rc...v1.3.1-rc) (2026-06-28)
+
+
+### Build System and Dependencies
+
+* brew requires the tap to now be trusted ([#170](https://github.com/FusionAuth/fusionauth-swift-sdk/issues/170)) ([a26d449](https://github.com/FusionAuth/fusionauth-swift-sdk/commit/a26d449e14649021201e2dae7f4918abf8bd9129))
+
 ## [1.3.0-rc](https://github.com/FusionAuth/fusionauth-swift-sdk/compare/v1.2.0...v1.3.0-rc) (2026-06-23)
 
 
