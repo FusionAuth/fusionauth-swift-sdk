@@ -86,7 +86,7 @@ jobs:
 
       # Checkout the repository.
       - name: Checkout repository
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       # Initialize CodeQL.
       - name: Initialize CodeQL
