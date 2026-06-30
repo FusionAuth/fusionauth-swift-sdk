@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A1B2C3D4-E5F6-A7B8-C9D0-E1F2A3B4C5D6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:fusionauth-quickstart-swift-ios-native.xcodeproj",
+        "identifier" : "DF2F2C055985417AB4A13E77",
+        "name" : "QuickstartTVOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}

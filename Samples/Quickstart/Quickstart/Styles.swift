@@ -42,7 +42,9 @@ struct CurrencyTextFieldStyle: TextFieldStyle {
         .overlay(
             Capsule().stroke(Color(red: 0.0353, green: 0.3882, blue: 0.1412), lineWidth: 2)
         )
+        #if !os(tvOS)
         .keyboardType(.numberPad)
         .textContentType(.oneTimeCode)
+        #endif
     }
 }

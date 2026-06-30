@@ -8,7 +8,8 @@ let package = Package(
     name: "FusionAuth",
     platforms: [
         .macOS(.v12),
-        .iOS(.v15)
+        .iOS(.v15),
+        .tvOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -26,7 +27,8 @@ let package = Package(
         .target(
             name: "FusionAuth",
             dependencies: [
-                .product(name: "AppAuth", package: "AppAuth-iOS")
+                .product(name: "AppAuth", package: "AppAuth-iOS"),
+                .product(name: "AppAuthTV", package: "AppAuth-iOS", condition: .when(platforms: [.tvOS]))
             ]
         ),
         .testTarget(
@@ -41,7 +43,8 @@ let package = Package(
     name: "FusionAuth",
     platforms: [
         .macOS(.v12),
-        .iOS(.v15)
+        .iOS(.v15),
+        .tvOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -58,7 +61,8 @@ let package = Package(
         .target(
             name: "FusionAuth",
             dependencies: [
-                .product(name: "AppAuth", package: "AppAuth-iOS")
+                .product(name: "AppAuth", package: "AppAuth-iOS"),
+                .product(name: "AppAuthTV", package: "AppAuth-iOS", condition: .when(platforms: [.tvOS]))
             ]
         ),
         .testTarget(

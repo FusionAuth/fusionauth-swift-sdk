@@ -32,6 +32,12 @@ public struct OAuthAuthorizeOptions {
     /// See [OIDC prompt parameter](https://fusionauth.io/docs/lifecycle/authenticate-users/oauth/prompt)
     /// for more information.
     let prompt: String?
+    #if os(tvOS)
+    /// Called when device authorization is initialized with the user code and verification URI.
+    /// Display these to the user so they can authorize on another device (e.g., a phone or computer).
+    /// This is only used on tvOS, which uses the OAuth 2.0 Device Authorization Grant (RFC 8628).
+    public let deviceAuthorizationCallback: ((_ userCode: String, _ verificationURI: URL) -> Void)?
+    #endif
 
     /// Creates a new instance of OAuthAuthorizeOptions.
     public init(
@@ -44,6 +50,9 @@ public struct OAuthAuthorizeOptions {
         state: String? = nil,
         userCode: String? = nil,
         prompt: String? = nil
+        #if os(tvOS)
+        , deviceAuthorizationCallback: ((_ userCode: String, _ verificationURI: URL) -> Void)? = nil
+        #endif
     ) {
         self.redirectUriSuffix = redirectUriSuffix
         self.bundleId = bundleId
@@ -55,5 +64,8 @@ public struct OAuthAuthorizeOptions {
         self.state = state
         self.userCode = userCode
         self.prompt = prompt
+        #if os(tvOS)
+        self.deviceAuthorizationCallback = deviceAuthorizationCallback
+        #endif
     }
 }

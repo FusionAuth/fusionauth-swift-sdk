@@ -89,6 +89,7 @@
             "clientSecret": "#{clientSecret}",
             "enabledGrants": [
               "authorization_code",
+              "device_authorization",
               "refresh_token"
             ],
             "requireRegistration" : "true"
@@ -118,6 +119,7 @@
             "clientSecret": "#{clientSecret}",
             "enabledGrants": [
               "authorization_code",
+              "device_authorization",
               "refresh_token"
             ],
             "requireRegistration" : "true"
@@ -147,6 +149,7 @@
             "clientSecret": "#{clientSecret}",
             "enabledGrants": [
               "authorization_code",
+              "device_authorization",
               "refresh_token"
             ],
             "requireRegistration" : "true"
