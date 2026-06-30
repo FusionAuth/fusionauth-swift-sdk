@@ -39,11 +39,12 @@ It's a highly standardized and simplified starting point for developers to easil
 
 Following OAuth 2.0 and OpenID Connect functionality are covered:
 - OAuth 2.0 Authorization Code Grant
+- OAuth 2.0 Device Authorization Grant
 - OAuth 2.0 Refresh Token Grant
 - OpenID Connect UserInfo
 - OpenID Connect End Session
 
-[AppAuth-iOS](https://github.com/openid/AppAuth-iOS) is used for the OAuth 2.0 Authorization Code Grant flow and OpenID Connect functionality.
+[AppAuth-iOS](https://github.com/openid/AppAuth-iOS) is used for OAuth 2.0 and OpenID Connect functionality.
 
 The SDK is written in Swift and compatible with Object-C.
 <!--
@@ -151,6 +152,21 @@ The `authorize` method will open the Safari browser and redirect to the FusionAu
 This will retrieve the authorization response, validates the `state` if it was provided, and exchanges the authorization
 code for an access token.
 The result of the exchange will be stored in the `TokenManager`.
+
+To start OAuth 2.0 Device Authorization Grant, call `authorizeDevice` and display the returned user code/verification URL to the user:
+
+```swift
+do {
+    try await AuthorizationManager
+        .oauth()
+        .authorizeDevice(options: OAuthDeviceAuthorizeOptions()) { data in
+            print("Visit: \(data.verificationURIComplete ?? data.verificationURI ?? "")")
+            print("Code: \(data.userCode ?? "")")
+        }
+} catch let error as NSError {
+    print("Error: \(error.localizedDescription)")
+}
+```
 
 After the user is authorized, you can use `getUserInfo()` to retrieve the [User Info](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo):
 
